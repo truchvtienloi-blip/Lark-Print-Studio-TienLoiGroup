@@ -45,6 +45,8 @@ body.sidehid .side{display:none!important}body.sidehid .layout{grid-template-col
 .cbx-native{display:none!important}.cbx{width:100%;text-align:left;font-weight:500;border:1px solid #cfd3d9;border-radius:8px;padding:7px 26px 7px 9px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23646a73' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 9px center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.cbx.open{border-color:var(--blue)}.cbx:disabled{opacity:.6}
 .cbxp{position:fixed;z-index:80;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px #1b2b4a2e;padding:6px;display:flex;flex-direction:column;gap:4px}.cbxp[hidden]{display:none}.cbxp input{padding:6px 8px}.cbxl{max-height:260px;overflow:auto}.cbxo{padding:6px 8px;border-radius:6px;cursor:pointer;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cbxo:hover,.cbxo.hi{background:#f2f3f5}.cbxo.on{background:var(--blue-soft);color:#1a47c8;font-weight:600}.cbxo.dis{opacity:.5;cursor:default}.cbxg{font-size:11px;color:var(--muted);padding:6px 8px 2px;font-weight:700;text-transform:uppercase}.cbxe{padding:8px;color:var(--muted);font-size:12px}
 .frow .cbx{flex:1 1 28%;padding:5px 22px 5px 6px;font-size:12px}
+.tools button.act{background:var(--blue-soft);border-color:#b8ccff;color:#1a47c8}
+.rowadd{position:absolute;width:18px;height:18px;margin-top:-9px;border-radius:50%;border:1px solid #b8ccff;background:#fff;color:var(--blue);font:700 14px/16px Arial,sans-serif;text-align:center;cursor:pointer;z-index:5;padding:0;box-shadow:0 1px 4px #1b2b4a22}.rowadd:hover{background:var(--blue);color:#fff}.rowadd-line{position:absolute;height:0;border-top:2px solid var(--blue);pointer-events:none;z-index:4;margin-top:-1px}
 .tm{position:relative;display:inline-flex}.tmb{display:inline-flex;align-items:center;gap:3px}.tmm{display:none;position:absolute;left:0;top:calc(100% + 4px);z-index:45;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px #1b2b4a24;padding:4px;flex-direction:column;min-width:170px}.tm.open .tmm{display:flex}.tmm button{border:0;background:none;text-align:left;width:100%;display:flex;align-items:center;gap:6px;font-weight:500;padding:6px 8px}.tmm button:hover{background:#f2f3f5}.tmm hr{border:0;border-top:1px solid var(--line);margin:3px 0}
 .design td.colhl{background-image:linear-gradient(#3370ff14,#3370ff14)}.colw input.hl{border-color:var(--blue);box-shadow:0 0 0 2px #3370ff40}
 .colgrip{position:absolute;width:11px;height:14px;margin-left:-5px;cursor:col-resize;z-index:4}.colgrip::before{content:'';position:absolute;left:3px;top:2px;width:5px;height:10px;border-radius:2px;background:#c9cdd4}.colgrip:hover::before,.colgrip.drag::before{background:var(--blue)}.colgrip::after{content:'';position:absolute;left:5px;top:14px;height:var(--h,0);width:0;border-left:2px dashed transparent;pointer-events:none}.colgrip:hover::after,.colgrip.drag::after{border-left-color:var(--blue)}.colrule{position:absolute;height:14px;border-bottom:1px solid #e5e6eb;pointer-events:none}body.coldrag,body.coldrag *{cursor:col-resize!important;user-select:none!important}
@@ -94,7 +96,7 @@ body.dashview.noside .side{display:none}body.dashview.noside .layout{grid-templa
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand">Print Studio<small>v3.6</small></div></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand">Print Studio<small>v3.7</small></div></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sec" id="secData"><h3>1 · Dữ liệu</h3>
@@ -114,7 +116,7 @@ body.dashview.noside .side{display:none}body.dashview.noside .layout{grid-templa
  <div class="sec" id="secRec"><h3>3 · Chọn bản ghi <span id="recCount" style="text-transform:none;font-weight:500"></span></h3>
   <div class="row rtools"><button id="btnSel" class="fit" title="Lấy bản ghi đang chọn trong Base">Đang chọn</button><button id="btnQ" class="fit ico" title="Tìm kiếm bản ghi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button id="btnF" class="fit ico" title="Lọc bản ghi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5z"/></svg><span id="fBadge" class="badge"></span></button><button id="btnAll" class="fit" title="Chọn tất cả bản ghi đang hiện (theo tìm kiếm và lọc)">Chọn hết</button><button id="btnNone" class="fit" title="Bỏ chọn tất cả">Bỏ</button></div>
   <div id="qBar" hidden><input type="search" id="recSearch" placeholder="Tìm bản ghi…"></div>
-  <div id="fBar" class="fbar" hidden><div class="hint" style="display:flex;align-items:center;gap:6px">Hiện bản ghi khớp <select id="fMatch" style="width:auto;padding:3px 6px"><option value="and">tất cả điều kiện</option><option value="or">bất kỳ điều kiện nào</option></select></div><div id="fRows"></div><div class="row" style="justify-content:flex-start"><button id="fAdd" class="fit">+ Thêm điều kiện</button><button id="fClear" class="fit">Xóa lọc</button></div></div>
+  <div id="fBar" class="fbar" hidden><div class="hint" style="display:flex;align-items:center;gap:6px">Hiện bản ghi khớp <select id="fMatch" style="width:auto;padding:3px 6px"><option value="and">tất cả điều kiện</option><option value="or">bất kỳ điều kiện nào</option></select></div><div id="fRows"></div><div class="hint" id="fHint" hidden></div><div class="row" style="justify-content:flex-start"><button id="fAdd" class="fit">+ Thêm điều kiện</button><button id="fClear" class="fit">Xóa lọc</button></div></div>
   <div id="recList" class="reclist"><div class="empty">Chưa có dữ liệu</div></div>
   <label class="row" style="gap:6px"><input type="checkbox" id="chkFollow" class="fit" checked><span class="hint">Tự lấy bản ghi khi bấm vào một dòng trong Base (chế độ 1 bản ghi)</span></label>
  </div>
@@ -141,8 +143,9 @@ body.dashview.noside .side{display:none}body.dashview.noside .layout{grid-templa
  <div class="bar" id="barDesign">
   <div class="tools">
    <button id="tMerge" title="Gộp các ô đang chọn; nếu chọn ô đã gộp thì bỏ gộp">Gộp ô</button>
-   <div class="tm"><button class="tmb" title="Thêm / xóa dòng, dòng lặp, ngắt trang">Dòng ▾</button><div class="tmm"><button id="tRowAdd">Thêm dòng bên dưới</button><button id="tRowDel">Xóa dòng đang chọn</button><hr><button id="tRep" title="Dòng này sẽ lặp theo từng bản ghi (bảng hàng hóa)">Bật / tắt dòng lặp</button><button id="tPb" title="Bắt đầu trang mới từ dòng đang chọn">Bật / tắt ngắt trang</button></div></div>
-   <div class="tm"><button class="tmb" title="Thêm / xóa cột">Cột ▾</button><div class="tmm"><button id="tColAdd">Thêm cột bên phải</button><button id="tColDel">Xóa cột đang chọn</button></div></div><label class="hint" style="display:inline-flex;align-items:center;gap:3px;margin:0 4px" title="Hiện đường ranh giới các trang khi in"><input type="checkbox" id="chkGuide" checked style="width:auto;margin:0">Vạch trang</label><button id="tFx" title="Chèn công thức tính toán vào ô">ƒx Công thức</button>
+   <div class="tm"><button class="tmb" title="Thêm / xóa dòng, dòng lặp, ngắt trang">Dòng ▾</button><div class="tmm"><button id="tRowAdd">Thêm dòng bên dưới</button><button id="tRowDel">Xóa dòng đang chọn</button></div></div>
+   <div class="tm"><button class="tmb" title="Thêm / xóa cột">Cột ▾</button><div class="tmm"><button id="tColAdd">Thêm cột bên phải</button><button id="tColDel">Xóa cột đang chọn</button></div></div>
+   <button id="tRep" title="Dòng đang chọn sẽ lặp theo từng bản ghi (bảng hàng hóa). Bấm lại để tắt">⟳ Dòng lặp</button><button id="tPb" title="Bắt đầu trang mới từ dòng đang chọn. Bấm lại để bỏ">⤓ Ngắt trang</button><label class="hint" style="display:inline-flex;align-items:center;gap:3px;margin:0 4px" title="Hiện đường ranh giới các trang khi in"><input type="checkbox" id="chkGuide" checked style="width:auto;margin:0">Vạch trang</label><button id="tFx" title="Chèn công thức tính toán vào ô">ƒx Công thức</button>
    <button id="tBold"><b>B</b></button><button id="tItalic"><i>I</i></button>
    <div class="tm"><button class="tmb" id="tAlignBtn" title="Căn lề chữ trong ô"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6H20"/><path d="M4 10H14"/><path d="M4 14H20"/><path d="M4 18H14"/></svg> ▾</button><div class="tmm"><button id="tL"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6H20"/><path d="M4 10H14"/><path d="M4 14H20"/><path d="M4 18H14"/></svg> Căn trái</button><button id="tC"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6H20"/><path d="M7 10H17"/><path d="M4 14H20"/><path d="M7 18H17"/></svg> Căn giữa</button><button id="tR"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6H20"/><path d="M10 10H20"/><path d="M4 14H20"/><path d="M10 18H20"/></svg> Căn phải</button></div></div>
    <select id="tBorder" title="Kẻ viền cho vùng ô đang chọn"><option value="">Viền…</option><option value="all">Tất cả viền</option><option value="out">Viền ngoài</option><option value="in">Viền trong</option><option value="t">Viền trên</option><option value="b">Viền dưới</option><option value="l">Viền trái</option><option value="r">Viền phải</option><option value="none">Bỏ viền</option></select><select id="tBw" title="Độ đậm viền"><option value="1">Mảnh</option><option value="2">Vừa</option><option value="3">Đậm</option></select><span class="clr" title="Màu nền ô"><span class="hint" style="padding:0 2px">Nền</span><input type="color" id="tBg" value="#fff2cc"><button class="sw" data-bg="#fff2cc" style="background:#fff2cc"></button><button class="sw" data-bg="#e2efda" style="background:#e2efda"></button><button class="sw" data-bg="#ddebf7" style="background:#ddebf7"></button><button class="sw" data-bg="#d9d9d9" style="background:#d9d9d9"></button><button id="tBgNone" title="Bỏ màu nền">✕</button></span><span class="clr" title="Màu chữ"><b style="padding:0 2px">A</b><input type="color" id="tFg" value="#c00000"><button id="tFgNone" title="Màu chữ mặc định (đen)">✕</button></span>
@@ -676,7 +679,33 @@ function hlCols(c0, n, fromInput) {
 $('pages').addEventListener('mouseover', (e) => { if (S.tab !== 'design' || document.body.classList.contains('coldrag')) return; const td = e.target.closest('td[data-c]'); if (td) hlCols(+td.dataset.c, td.colSpan || 1); else if (!e.target.closest('.colgrip')) hlCols(-1, 0); });
 $('pages').addEventListener('mouseleave', () => { if (!document.body.classList.contains('coldrag')) hlCols(-1, 0); });
 // Kéo giãn độ rộng cột trực tiếp trên mẫu: tay kéo nằm ở ranh giới giữa 2 cột, kéo thì cột trái rộng ra / cột phải hẹp lại
+// Nút "+" ở lề trái, ngay dưới dòng đang trỏ chuột: bấm để thêm 1 dòng bên dưới dòng đó
+let rowAddBtn = null, rowAddLine = null, rowAddAt = -1;
+function hideRowAdd() { if (rowAddBtn) rowAddBtn.style.display = 'none'; if (rowAddLine) rowAddLine.style.display = 'none'; }
+function showRowAdd(tr) {
+  const tbl = tr.closest('table.design'); if (!tbl) return; const pg = tbl.closest('.page');
+  const r = [...tr.parentElement.children].indexOf(tr); if (r < 0) return; rowAddAt = r;
+  if (!rowAddBtn || !pg.contains(rowAddBtn)) {
+    rowAddBtn = document.createElement('button'); rowAddBtn.className = 'rowadd'; rowAddBtn.type = 'button'; rowAddBtn.textContent = '+'; rowAddBtn.title = 'Thêm dòng bên dưới';
+    rowAddLine = document.createElement('div'); rowAddLine.className = 'rowadd-line'; pg.appendChild(rowAddLine); pg.appendChild(rowAddBtn);
+    rowAddBtn.addEventListener('mouseenter', () => { rowAddLine.style.display = ''; });
+    rowAddBtn.addEventListener('mouseleave', () => { rowAddLine.style.display = 'none'; });
+    rowAddBtn.addEventListener('pointerdown', (e) => { e.preventDefault(); e.stopPropagation(); });
+    rowAddBtn.addEventListener('click', (e) => { e.stopPropagation(); const at = rowAddAt; if (at < 0) return; S.rect = { r0: at, c0: 0, r1: at, c1: 0 }; addRow(); toast('Đã thêm 1 dòng bên dưới dòng ' + (at + 1) + '.'); });
+  }
+  const y = tbl.offsetTop + tr.offsetTop + tr.offsetHeight;
+  Object.assign(rowAddBtn.style, { display: '', left: (tbl.offsetLeft - 24) + 'px', top: y + 'px' });
+  Object.assign(rowAddLine.style, { display: 'none', left: tbl.offsetLeft + 'px', width: tbl.offsetWidth + 'px', top: y + 'px' });
+}
+$('pages').addEventListener('mousemove', (e) => {
+  if (S.tab !== 'design' || document.body.classList.contains('coldrag')) { hideRowAdd(); return; }
+  if (e.target.closest('.rowadd')) return;
+  const tr = e.target.closest('table.design > tbody > tr');
+  if (tr) showRowAdd(tr); else if (!e.target.closest('.page')) hideRowAdd();
+});
+$('pages').addEventListener('mouseleave', hideRowAdd);
 function drawGrips() {
+  rowAddBtn = null; rowAddLine = null;
   document.querySelectorAll('#pages .colgrip, #pages .colrule').forEach((g) => g.remove());
   if (S.tab !== 'design') return;
   const tbl = document.querySelector('#pages table.design'); if (!tbl) return;
@@ -740,6 +769,7 @@ function applySel() {
   const sel = selected();
   for (const x of sel) { const el = document.querySelector(`#pages td[data-r="${x.r}"][data-c="${x.c}"]`); if (el) el.classList.add('sel'); }
   $('tMerge').textContent = sel.length === 1 && (sel[0].cell.cs > 1 || sel[0].cell.rs > 1) ? 'Bỏ gộp' : 'Gộp ô';
+  const rr = S.rect ? S.tpl.rows[S.rect.r0] : null; $('tRep').classList.toggle('act', !!(rr && rr.rep)); $('tPb').classList.toggle('act', !!(rr && rr.pb));
   if (sel[0]) { const src = $({ l: 'tL', c: 'tC', r: 'tR' }[sel[0].cell.a] || 'tL').querySelector('svg'); if (src) $('tAlignBtn').innerHTML = src.outerHTML + ' ▾'; }
 }
 let anchor = null, dragging = false;
@@ -1042,9 +1072,19 @@ function renderFilters() {
       + `<button class="fit fx" data-k="del" title="Bỏ điều kiện">✕</button>${vals.length ? `<datalist id="fdl${i}">${vals.map((v) => `<option value="${esc(v)}">`).join('')}</datalist>` : ''}</div>`;
   }).join('') || '<div class="hint">Chưa có điều kiện lọc.</div>';
   box.querySelectorAll('select[data-k="f"]').forEach(enhanceSelect);
+  updFHint();
+}
+function updFHint() {
+  const fh = $('fHint');
+  if (fh) {
+    const inDash = S.dash === 'Create' || S.dash === 'Config', live = S.dash === 'View' || S.dash === 'FullScreen';
+    const names = activeFilters().map((f) => (S.metas.find((m) => m.id === f.f) || {}).name).filter(Boolean);
+    fh.hidden = !(inDash && names.length) && !live;
+    fh.innerHTML = live ? 'Lọc trên dữ liệu đang có trong khối. Bộ lọc mặc định do người sửa khối đặt.' : `Bộ lọc được lưu cùng khối và tự áp dụng cả với dữ liệu mới. Cột dùng để lọc (<b>${names.map(esc).join(', ')}</b>) sẽ được đưa vào cột gói: bấm <b>Tạo / cập nhật cột gói</b>, dán lại công thức rồi <b>Kiểm tra</b> trước khi Lưu khối.`;
+  }
   const n = activeFilters().length; $('fBadge').textContent = n ? String(n) : ''; $('btnF').classList.toggle('on', !!n || !$('fBar').hidden);
 }
-function onFilterChange() { clearTimeout(onFilterChange.t); onFilterChange.t = setTimeout(() => { S.shown = 300; renderRecList(); const n = activeFilters().length; $('fBadge').textContent = n ? String(n) : ''; }, 200); }
+function onFilterChange() { clearTimeout(onFilterChange.t); onFilterChange.t = setTimeout(() => { S.shown = 300; if (S.liveCfg && S.liveCfg.useAll) { const ds = S.desel || new Set(); S.sel = S.order.filter((id) => !ds.has(id) && recPass(S.recMap.get(id))); if (S.mode === 'one') S.sel = S.sel.slice(0, 1); render(); } renderRecList(); updFHint(); const n = activeFilters().length; $('fBadge').textContent = n ? String(n) : ''; }, 200); }
 $('btnQ').onclick = () => { const b = $('qBar'); b.hidden = !b.hidden; $('btnQ').classList.toggle('on', !b.hidden || !!$('recSearch').value); if (!b.hidden) $('recSearch').focus(); };
 $('btnF').onclick = () => { const b = $('fBar'); b.hidden = !b.hidden; if (!b.hidden && !(S.filters || []).length) S.filters = [{ f: '', op: '', v: '' }]; renderFilters(); };
 $('fAdd').onclick = () => { (S.filters = S.filters || []).push({ f: '', op: '', v: '' }); renderFilters(); };
@@ -1069,13 +1109,14 @@ $('recList').onclick = (e) => {
   if (e.target.closest('#recMore')) { S.shown += 300; renderRecList(); return; }
   const row = e.target.closest('.rec[data-id]'); if (!row) return; const id = row.dataset.id;
   if (S.mode === 'one') S.sel = [id]; else S.sel = S.sel.includes(id) ? S.sel.filter((x) => x !== id) : [...S.sel, id];
+  S.desel = S.desel || new Set(); if (S.sel.includes(id)) S.desel.delete(id); else S.desel.add(id);
   onSelChange();
 };
 function onSelChange() { renderRecList(); if (S.tab === 'print') render(); }
 $('recSearch').oninput = () => { S.shown = 300; renderRecList(); };
 function filteredIds() { const q = fold($('recSearch').value); return S.order.filter((id) => { const r = S.recMap.get(id); if (!recPass(r)) return false; if (!q) return true; if (!r) return false; let s = S.searchText.get(id); if (s === undefined) { s = fold(S.metas.map((m) => fmtCell(m, r.fields[m.id])).join(' ')); S.searchText.set(id, s); } return s.includes(q); }); }
-$('btnAll').onclick = () => { const ids = filteredIds(); S.sel = S.mode === 'one' ? ids.slice(0, 1) : [...new Set([...S.sel, ...ids])]; onSelChange(); };
-$('btnNone').onclick = () => { S.sel = []; onSelChange(); };
+$('btnAll').onclick = () => { const ids = filteredIds(); S.desel = new Set(); S.sel = S.mode === 'one' ? ids.slice(0, 1) : [...new Set([...S.sel, ...ids])]; onSelChange(); };
+$('btnNone').onclick = () => { S.desel = new Set(S.order); S.sel = []; onSelChange(); };
 document.querySelectorAll('input[name=mode]').forEach((el) => el.onchange = () => { S.mode = el.value; $('modeHint').textContent = MODE_HINT[S.mode]; if (S.mode === 'one') S.sel = S.sel.slice(0, 1); onSelChange(); });
 $('modeHint').textContent = MODE_HINT.one;
 async function pickCurrent(quiet) {
@@ -1596,7 +1637,7 @@ $('btnPdf').onclick = async () => {
     const [W, H] = paperDims(), land = W > H, fmt = [Math.min(W, H), Math.max(W, H)], orient = land ? 'l' : 'p';
     const pdf = new window.jspdf.jsPDF({ orientation: orient, unit: 'mm', format: fmt }); let first = true;
     for (const pg of [...$('pages').querySelectorAll('.page')]) {
-      const c = pg.cloneNode(true); c.querySelectorAll('.pgmark, .colgrip, .colrule').forEach((e) => e.remove()); c.style.cssText += `;width:${W}mm;margin:0;box-shadow:none`; host.appendChild(c);
+      const c = pg.cloneNode(true); c.querySelectorAll('.pgmark, .colgrip, .colrule, .rowadd, .rowadd-line').forEach((e) => e.remove()); c.style.cssText += `;width:${W}mm;margin:0;box-shadow:none`; host.appendChild(c);
       const url = await window.htmlToImage.toPng(c, { pixelRatio: 2, backgroundColor: '#fff' }); host.removeChild(c);
       const img = await loadImg(url), hmm = img.height * W / img.width, n = Math.max(1, Math.ceil(hmm / H - 0.01));
       for (let k = 0; k < n; k++) {
@@ -1610,7 +1651,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '3.6', ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '3.7', ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -1833,6 +1874,8 @@ function applyLiveRows(rows, c) {
   if (!sel.length && !S.liveInit) sel = c.useAll ? [...order] : (c.selKeys || []).map((k) => 'k:' + k).filter((id) => recMap.has(id));
   if (!sel.length && !S.liveInit && !c.useAll && order.length) sel = [order[0]];
   if (c.useAll && S.liveInit) for (const id of order) if (!S.liveSeen.has(id)) sel.push(id); // bản ghi mới thêm cũng được in
+  // In toàn bộ: luôn lấy lại theo dữ liệu mới nhất + bộ lọc (bản ghi vừa đổi trạng thái cho khớp lọc cũng vào), trừ các dòng người xem tự bỏ chọn
+  if (c.useAll && S.liveInit) { const ds = S.desel || new Set(); sel = order.filter((id) => !ds.has(id)); }
   if (c.useAll && activeFilters().length) sel = sel.filter((id) => recPass(recMap.get(id)));
   S.liveSeen = new Set(order); S.liveInit = true; S.sel = S.mode === 'one' ? sel.slice(0, 1) : sel; renderFilters();
   dlog('live.data', { rows: order.length, cols: cols.length });
@@ -1850,7 +1893,9 @@ async function refreshLive(c, quiet) {
     if (ungrouped(data)) throw new Error(`Lark chỉ trả về tổng số (${(data && data[1] && data[1][0] && data[1][0].text) || '?'} bản ghi) thay vì từng dòng: khối chưa được Lark nhóm theo cột gói. Mở sửa khối → Kiểm tra (phải báo "đủ N cột") → Lưu khối. Nếu Kiểm tra vẫn đúng mà xem khối vẫn lỗi, hãy rút gọn cột gói (bớt cột chữ dài).`);
     if (rows.tagged && rows.missing.length) throw new Error('Cột gói thiếu dữ liệu của: ' + rows.missing.map((g) => g.name).join(', ') + '. Mở sửa khối → Tạo / cập nhật cột gói → dán lại công thức → Lưu khối.');
     if (rows.parts !== need) throw new Error(`Lark trả ${rows.length} dòng nhưng mỗi dòng có ${rows.parts || 0}/${need} phần — cột gói chưa khớp mẫu hoặc khối chưa lưu nhóm theo cột gói. Hãy sửa khối, bấm "Tạo / cập nhật cột gói" rồi Lưu khối.`);
-    applyLiveRows(rows, c); renderRecList(); render(); S.liveAt = Date.now(); snapNote('');
+    applyLiveRows(rows, c); renderRecList(); render(); S.liveAt = Date.now();
+    const lostF = activeFilters().filter((f) => !(c.packCols || []).some((g) => g.id === f.f));
+    snapNote(lostF.length ? 'Bộ lọc của khối đang bị bỏ qua vì cột gói chưa có cột dùng để lọc. Mở sửa khối → Tạo / cập nhật cột gói → dán lại công thức → Lưu khối.' : '');
   } finally { S.liveBusy = false; }
 }
 // Gắn các nguồn làm mới đúng 1 lần: Lark báo dữ liệu đổi, quay lại tab, và định kỳ 30 giây
