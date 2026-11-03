@@ -205,6 +205,22 @@ body.booting .app{visibility:hidden}body.booting::after{content:'Đang kết n�
 }
 @media(max-width:520px){body.rv .ngrid{grid-template-columns:1fr}body.rv .ncard span{display:none}body.rv #btnSaveTop{padding:7px 10px}}
 .srcopt .mrow label{border:0;padding:0;background:none;box-shadow:none}.srcopt .mrow .lbl{display:flex;flex-direction:column;gap:4px;align-items:stretch;font-weight:600;font-size:12px}
+.insbar{display:flex;gap:6px;align-items:center;margin-bottom:8px}.insbar input{flex:1}.insbar button{padding:6px 10px;font-size:12px}
+.inscols label.on{background:#f0f5fc;border-radius:6px}.inscols .ty,.vrow .ty{flex:0 0 22px;height:20px;border-radius:5px;background:#eef1f6;color:#5b6472;font:700 10.5px/20px Arial,sans-serif;text-align:center}
+.inscols .ord{margin-left:auto;font-style:normal;font-weight:800;color:var(--blue);font-size:11px;min-width:16px;text-align:right}
+.inscols label{padding:4px 6px}
+body.rv .chips{display:block;padding:4px}
+body.rv .chip.vrow{display:flex;align-items:flex-start;gap:8px;width:100%;text-align:left;border:1px solid #e3e9f3;border-radius:7px;background:#f5f8fc;color:#1f2329;padding:5px 7px;font-size:12.5px;font-weight:500;margin:0 0 4px;cursor:grab;line-height:1.35}
+body.rv .chip.vrow:hover{background:#e6eefa;border-color:#b9cbe6}
+body.rv .chip.vrow[data-g=dt]{background:#f1f9f5;border-color:#d6eee2}body.rv .chip.vrow[data-g=dt]:hover{background:#e3f4eb;border-color:#a9dcc2}
+body.rv .chip.vrow[data-g=sys]{background:#fff8ee;border-color:#f6e2c2}body.rv .chip.vrow[data-g=sys]:hover{background:#ffefd8}
+body.rv .chip.vrow.hide{display:none}
+.vrow .vn{flex:1;min-width:0;white-space:normal;overflow-wrap:anywhere;padding-top:1px}
+.vrow .vk{font:11px ui-monospace,Consolas,monospace;color:#8a919c;opacity:0;max-width:45%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.rv .chip.vrow[data-g=dt] .ty{background:#e6f5ee;color:#0b7a50}body.rv .chip.vrow[data-g=sys] .ty{background:#fff3e0;color:#a65400}body.rv .chip.vrow.vsum .ty{background:#e9f0fa;color:var(--blue)}
+body.rv .chiphd{display:block;position:sticky;top:-4px;background:#fff;padding:7px 4px 5px;margin:0;z-index:1;font:600 12px/1.3 Arial,'Segoe UI',sans-serif;text-transform:none;letter-spacing:0;color:#4b5563}
+.insdet{display:block;width:100%;margin:0 0 6px;padding:6px 8px;font-size:12px;border:1px dashed #a9dcc2;background:#fff;color:#0b7a50;border-radius:7px;text-align:left}.insdet:hover{background:#f1f9f5}
+.ctabs{margin:6px 0}.ctabs button{flex:1;padding:5px 6px;font-size:12px}
 .rvbanner{display:flex;align-items:center;gap:10px;justify-content:center;background:#fff;border:1px solid #b9cbe6;border-radius:12px;padding:9px 12px;margin:0 auto 14px;max-width:640px;font-size:12.5px;color:#334}
 #hdrName,#btnSaveTop{display:none}
 body.rv:not(.rvhome) #hdrName{display:block;width:min(320px,34vw);border:1px solid transparent;background:transparent;font-weight:700;font-size:14.5px;border-radius:8px;padding:6px 9px}
@@ -232,7 +248,7 @@ body.rv .srcopt label{padding:7px 10px}body.rv .srcopt label:not(.on) small{disp
 <body class="booting">
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><button id="btnHome" class="fit" title="Về danh mục mẫu in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Danh mục mẫu</button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.4</small></div><input id="hdrName" type="text" placeholder="Đặt tên mẫu…" title="Tên mẫu"></div><div class="status"><button id="btnSaveTop" class="primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Lưu mẫu</button><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><button id="btnHome" class="fit" title="Về danh mục mẫu in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Danh mục mẫu</button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.5.1</small></div><input id="hdrName" type="text" placeholder="Đặt tên mẫu…" title="Tên mẫu"></div><div class="status"><button id="btnSaveTop" class="primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Lưu mẫu</button><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
 <section id="home"><div class="hwrap" id="homeIn"></div></section>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
@@ -247,7 +263,7 @@ body.rv .srcopt label{padding:7px 10px}body.rv .srcopt label:not(.on) small{disp
   <div class="srcopt" id="srcOpt">
    <div class="mrow" data-m="cur"><label><input type="checkbox">Bản ghi hiện tại</label><small>In đúng record đang mở</small></div>
    <div class="mrow" data-m="link"><label><input type="checkbox">Bản ghi &amp; Chi tiết</label><small>Thông tin chung ở record này, dòng hàng lấy từ bảng khác qua cột liên kết</small>
-    <div class="mcfg"><label class="lbl">Cột liên kết tới bảng chi tiết<select id="srcLink"></select></label><button id="btnInsDet" type="button">Chèn bảng chi tiết…</button></div></div>
+    <div class="mcfg"><label class="lbl">Cột liên kết tới bảng chi tiết<select id="srcLink"></select></label></div></div>
    <div class="mrow" data-m="group"><label><input type="checkbox">Nhiều bản ghi</label><small>Gộp các record của bảng này có chung giá trị ở một cột</small>
     <div class="mcfg"><label class="lbl">Cột xác định (VD Số phiếu)<select id="srcGroup"></select></label></div></div>
   </div>
@@ -1897,7 +1913,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '5.4', ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '5.5.1', ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -2499,46 +2515,138 @@ async function rvSync() {
   } catch (e) { dlog('rv.sync.error', String(e && e.message || e)); rvInfo('Lỗi đọc dữ liệu: ' + (e && e.message || e), 'err'); }
 }
 
-/* ---- Chèn bảng chi tiết (nhiều cột của bảng liên kết) vào mẫu ---- */
-function rvGrowCols(n) {
+/* ---- Chèn cột chi tiết vào đúng dòng đang chọn ---- */
+// Thêm cột lưới: ô cuối của dòng `own` được tách thành ô mới, các dòng khác kéo dài ô cuối để giữ bố cục
+function rvGrowCols(n, own = new Set()) {
   const N = S.tpl.cols.length; if (n <= N) return; const extra = n - N, vis = visCells(), done = new Set();
   S.tpl.rows.forEach((row, r) => {
-    const o = vis.find((x) => x.c <= N - 1 && N - 1 < x.c + x.cell.cs && x.r <= r && r < x.r + x.cell.rs);
+    const o = own.has(r) ? null : vis.find((x) => x.c <= N - 1 && N - 1 < x.c + x.cell.cs && x.r <= r && r < x.r + x.cell.rs);
     if (o && !done.has(o.cell)) { o.cell.cs += extra; done.add(o.cell); }
-    for (let i = 0; i < extra; i++) row.cells.push(o ? C('', { h: true }) : C(''));
+    const last = row.cells[N - 1] && !row.cells[N - 1].h ? row.cells[N - 1] : null;
+    for (let i = 0; i < extra; i++) row.cells.push(o ? C('', { h: true }) : C('', last ? { br: last.br, bd: last.bd ? [...last.bd] : undefined, fs: last.fs } : {}));
   });
   const avg = S.tpl.cols.reduce((a, b) => a + (+b || 1), 0) / N; for (let i = 0; i < extra; i++) S.tpl.cols.push(Math.round(avg * 10) / 10);
 }
 function rvOpenInsDetail() {
-  if (!RV.dMetas || !RV.dMetas.length) { toast('Chưa đọc được bảng chi tiết: hãy bật kiểu "Bản ghi & Chi tiết", chọn cột liên kết và mở một record có dòng chi tiết.', 6000); return; }
+  if (!RV.dMetas || !RV.dMetas.length) { toast('Chưa đọc được bảng chi tiết: hãy bật kiểu "Bản ghi & Chi tiết", chọn cột liên kết và chọn một bản ghi có dòng chi tiết.', 6000); return; }
+  if (!S.rect) { toast('Bấm chọn ô bắt đầu trong mẫu (ô đầu tiên của dòng hàng) rồi bấm lại "Chèn bảng chi tiết…".', 6000); return; }
   const cols = RV.dMetas.filter((m) => !isLink(m) && !isAtt(m));
-  openModal('Chèn bảng chi tiết từ "' + RV.dName + '"', `<p class="hint" style="margin:0 0 8px">Chọn các cột cần in (theo thứ tự hiển thị). Mẫu sẽ thêm 1 dòng tiêu đề, 1 dòng lặp theo từng dòng chi tiết và 1 dòng tổng (tùy chọn). Lưới mẫu tự thêm cột nếu cần.</p>
-<div class="inscols">${cols.map((m, i) => `<label><input type="checkbox" data-id="${esc(m.id)}" ${i < 6 ? 'checked' : ''}>${esc(m.name)}${isNumMeta(m) ? ' <small>(số)</small>' : ''}</label>`).join('')}</div>
-<div class="row" style="margin-top:10px;gap:14px;justify-content:flex-start"><label class="row fit" style="gap:6px"><input type="checkbox" id="insStt" checked class="fit">Cột STT</label><label class="row fit" style="gap:6px"><input type="checkbox" id="insSum" checked class="fit">Dòng tổng cộng</label><div class="grow"></div><button id="insGo" class="primary fit">Chèn vào mẫu</button></div>`);
+  const startCol = String.fromCharCode(65 + (S.rect.c0 % 26)), startRow = S.rect.r0 + 1;
+  openModal('Chèn cột chi tiết từ "' + RV.dName + '"', `<p class="hint" style="margin:0 0 8px">Các cột được điền lần lượt vào dòng <b>${startRow}</b>, bắt đầu từ ô <b>${startCol}${startRow}</b>, mỗi ô một cột; dòng này thành <b>dòng lặp</b> theo từng dòng chi tiết. Thứ tự điền = thứ tự tích chọn.</p>
+<div class="insbar"><input type="search" id="insQ" placeholder="Tìm cột…"><button id="insAll" type="button">Chọn tất cả</button><button id="insNone" type="button">Bỏ chọn</button><span id="insCnt" class="hint"></span></div>
+<div class="inscols" id="insList">${cols.map((m) => `<label data-n="${esc(fold(m.name))}"><input type="checkbox" data-id="${esc(m.id)}"><span class="ty">${rvTypeGlyph(m)}</span>${esc(m.name)}<i class="ord"></i></label>`).join('')}</div>
+<div class="row" style="margin-top:10px;gap:14px;justify-content:flex-start"><label class="row fit" style="gap:6px"><input type="checkbox" id="insHead" class="fit">Ghi tên cột vào dòng tiêu đề phía trên</label><label class="row fit" style="gap:6px"><input type="checkbox" id="insSum" class="fit">Thêm dòng tổng cộng phía dưới</label><div class="grow"></div><button id="insGo" class="primary fit">Chèn vào mẫu</button></div>`);
+  const order = [];
+  const sync = () => {
+    document.querySelectorAll('#insList label').forEach((l) => { const id = l.querySelector('input').dataset.id, k = order.indexOf(id); l.querySelector('.ord').textContent = k >= 0 ? k + 1 : ''; l.classList.toggle('on', k >= 0); });
+    $('insCnt').textContent = order.length ? order.length + ' cột đã chọn' : '';
+  };
+  document.querySelectorAll('#insList input').forEach((i) => i.onchange = () => { const id = i.dataset.id, k = order.indexOf(id); if (i.checked && k < 0) order.push(id); if (!i.checked && k >= 0) order.splice(k, 1); sync(); });
+  const shown = () => [...document.querySelectorAll('#insList label')].filter((l) => l.style.display !== 'none').map((l) => l.querySelector('input'));
+  $('insQ').oninput = () => { const q = fold($('insQ').value); document.querySelectorAll('#insList label').forEach((l) => { l.style.display = !q || l.dataset.n.includes(q) ? '' : 'none'; }); };
+  $('insAll').onclick = () => { shown().forEach((i) => { if (!i.checked) { i.checked = true; order.push(i.dataset.id); } }); sync(); };
+  $('insNone').onclick = () => { shown().forEach((i) => { if (i.checked) { i.checked = false; const k = order.indexOf(i.dataset.id); if (k >= 0) order.splice(k, 1); } }); sync(); };
+  $('insQ').focus();
   $('insGo').onclick = () => {
-    const pick = [...document.querySelectorAll('.inscols input:checked')].map((i) => cols.find((m) => m.id === i.dataset.id)).filter(Boolean);
+    const pick = order.map((id) => cols.find((m) => m.id === id)).filter(Boolean);
     if (!pick.length) { toast('Chọn ít nhất 1 cột.'); return; }
-    rvInsertDetail(pick, $('insStt').checked, $('insSum').checked); $('modal').classList.remove('show');
+    if (rvInsertDetail(pick, $('insHead').checked, $('insSum').checked)) $('modal').classList.remove('show');
   };
 }
-function rvInsertDetail(pick, stt, sum) {
-  const need = pick.length + (stt ? 1 : 0); rvGrowCols(need);
-  const N = S.tpl.cols.length, head = new Set(S.metas.map((m) => fold(m.name)));
+function rvInsertDetail(pick, withHead, withSum) {
+  const r = S.rect.r0, c0 = S.rect.c0, row = S.tpl.rows[r];
+  if (row.cells.some((c) => !c.h && c.rs > 1) || visCells().some((x) => x.r < r && x.r + x.cell.rs - 1 >= r)) { toast('Dòng này có ô gộp nhiều dòng nên không làm dòng lặp được. Hãy bỏ gộp hoặc chọn dòng khác.', 6000); return false; }
+  const slots = () => S.tpl.rows[r].cells.map((c, i) => ({ c, i })).filter((x) => !x.c.h && x.i >= c0);
+  let have = slots().length;
+  if (have < pick.length) {
+    const own = new Set([r]); if (withHead && r > 0) own.add(r - 1);
+    rvGrowCols(S.tpl.cols.length + pick.length - have, own); have = slots().length;
+  }
+  const head = new Set(S.metas.map((m) => fold(m.name)));
   const nm = (m) => (head.has(fold(m.name)) ? 'CT.' + m.name : m.name);
-  const spread = (items, base, n) => { const k = items.length, w = Math.floor(n / k), out = []; items.forEach((it, j) => { const cs = j === k - 1 ? n - w * (k - 1) : w; out.push(C(it.t, { ...base, ...(it.o || {}), cs })); for (let x = 1; x < cs; x++) out.push(C('', { h: true })); }); return out; };
-  const line = (first, items, base) => (stt ? [C(first.t, { ...base, ...(first.o || {}) }), ...spread(items, base, N - 1)] : spread(items, base, N));
-  const hd = { b: true, a: 'c', br: true, bg: '#eef2f8' };
-  const rows = [
-    { rep: false, cells: line({ t: 'STT' }, pick.map((m) => ({ t: m.name })), hd) },
-    { rep: true, cells: line({ t: '{{STT}}', o: { a: 'c' } }, pick.map((m) => ({ t: `{{${nm(m)}}}`, o: isNumMeta(m) ? { a: 'r' } : {} })), { br: true }) },
-  ];
-  if (sum) rows.push({ rep: false, cells: line({ t: '' }, pick.map((m, j) => ({ t: isNumMeta(m) ? `{{SUM:${nm(m)}}}` : j === 0 ? 'Tổng cộng' : '', o: { b: true, a: isNumMeta(m) ? 'r' : 'c' } })), { br: true }) });
-  let at = S.rect ? S.rect.r1 : S.tpl.rows.length - 1;
-  if (visCells().some((x) => x.r <= at && x.r + x.cell.rs - 1 > at)) at = S.tpl.rows.length - 1;
-  S.tpl.rows.splice(at + 1, 0, ...rows); S.rect = { r0: at + 2, c0: 0, r1: at + 2, c1: 0 };
-  S.tab = 'design'; render(); toast('Đã chèn bảng chi tiết ' + pick.length + ' cột. Dòng nền xanh là dòng lặp theo từng dòng chi tiết.', 5000);
+  const use = slots().slice(0, pick.length);
+  use.forEach((x, j) => { const m = pick[j]; x.c.t = `{{${nm(m)}}}`; if (isNumMeta(m)) x.c.a = 'r'; });
+  S.tpl.rows[r].rep = true;
+  const clone = (src, text) => ({ rep: false, cells: src.cells.map((c, i) => C(text(i, c), { cs: c.cs, rs: 1, h: c.h, br: c.br, bd: c.bd ? [...c.bd] : undefined, fs: c.fs, a: c.a })) });
+  const at = new Map(use.map((x, j) => [x.i, pick[j]]));
+  let rr = r;
+  if (withSum) {
+    const txt = use.find((x, j) => !isNumMeta(pick[j]));
+    const labelAt = txt ? txt.i : (c0 > 0 ? row.cells.slice(0, c0).map((c, i) => ({ c, i })).filter((x) => !x.c.h).pop()?.i : null);
+    const sumRow = clone(S.tpl.rows[r], (i) => { const m = at.get(i); if (m && isNumMeta(m)) return `{{SUM:${nm(m)}}}`; if (i === labelAt) return 'Tổng cộng'; return ''; });
+    sumRow.cells.forEach((c, i) => { if (c.t) c.b = true; if (i === labelAt) c.a = 'c'; });
+    S.tpl.rows.splice(r + 1, 0, sumRow);
+  }
+  if (withHead) {
+    const hdRow = clone(S.tpl.rows[r], (i) => (at.get(i) ? at.get(i).name : ''));
+    hdRow.cells.forEach((c) => { c.b = true; c.a = 'c'; if (c.t) c.bg = '#eef2f8'; });
+    S.tpl.rows.splice(r, 0, hdRow); rr = r + 1;
+  }
+  S.rect = { r0: rr, c0, r1: rr, c1: c0 };
+  S.tab = 'design'; render();
+  toast(`Đã điền ${pick.length} cột vào dòng ${rr + 1} (dòng lặp nền xanh)${withSum ? ', thêm dòng tổng cộng' : ''}${withHead ? ', thêm dòng tiêu đề' : ''}.`, 5000);
+  return true;
 }
-$('btnInsDet').onclick = rvOpenInsDetail;
+
+/* ---- Bảng chọn biến: danh sách có loại cột, nhóm và tab lọc ---- */
+function rvTypeGlyph(m) {
+  if (!m) return 'Aa'; const t = m.type, F = (k, d) => FT(k, d);
+  if ([F('Number', 2), F('Currency', 99003), F('Progress', 99004), F('Rating', 99005), F('AutoNumber', 1005)].includes(t)) return '#';
+  if ([F('DateTime', 5), F('CreatedTime', 1001), F('ModifiedTime', 1002)].includes(t)) return '◷';
+  if ([F('SingleSelect', 3), F('MultiSelect', 4)].includes(t)) return '◉';
+  if (t === F('Checkbox', 7)) return '☑';
+  if ([F('User', 11), F('CreatedUser', 1003), F('ModifiedUser', 1004)].includes(t)) return '@';
+  if (t === F('Formula', 20) || t === F('Lookup', 19)) return 'ƒ';
+  if (isLink(m)) return '⇄'; if (isAtt(m)) return '⎘';
+  return 'Aa';
+}
+RV.chipTab = 'all';
+const SYS_TOK = new Set(['{{STT}}', '{{TODAY}}', '{{COUNT}}', '{{@Tên ô}}']);
+const _renderChips = renderChips;
+renderChips = function () {
+  _renderChips();
+  if (!S.rv) return;
+  const box = $('chips'), byName = new Map([...(RV.dMetas || []).map((m) => ['d:' + m.name, m]), ...S.metas.map((m) => ['h:' + m.name, m])]);
+  const SYS_NAME = { '{{STT}}': 'Số thứ tự dòng', '{{TODAY}}': 'Ngày in', '{{COUNT}}': 'Số dòng chi tiết', '{{@Tên ô}}': 'Ô điền tay' };
+  box.querySelectorAll('.chip').forEach((b) => {
+    const tok = b.title, lab = b.textContent; let g = 'hd', ty = 'Aa', name = lab, sum = false;
+    if (SYS_TOK.has(tok)) { g = 'sys'; ty = '★'; name = SYS_NAME[tok] || lab; }
+    else {
+      if (/^Σ /.test(name)) { sum = true; name = name.slice(2); }
+      if (/^↳ /.test(name)) { g = 'dt'; name = name.slice(2); }
+      const m = byName.get((g === 'dt' ? 'd:' : 'h:') + name); ty = sum ? 'Σ' : rvTypeGlyph(m);
+      if (sum) name = 'Tổng · ' + name;
+    }
+    b.dataset.g = g; b.classList.add('vrow'); if (sum) b.classList.add('vsum');
+    b.innerHTML = `<span class="ty">${esc(ty)}</span><span class="vn">${esc(name)}</span>`; b.title = name + '  ·  ' + tok + '  (bấm để chèn, hoặc kéo thả vào ô)';
+  });
+  box.querySelectorAll('.chiphd').forEach((h) => { h.dataset.g = /^Cột chi tiết/.test(h.textContent) ? 'dt' : 'hd'; });
+  if (!box.querySelector('.chiphd[data-g="sys"]')) { const h = document.createElement('div'); h.className = 'chiphd'; h.dataset.g = 'sys'; h.textContent = 'Biến hệ thống'; box.prepend(h); }
+  if (!box.querySelector('.chiphd[data-g="hd"]')) { const first = box.querySelector('.chip[data-g="hd"]'); if (first) { const h = document.createElement('div'); h.className = 'chiphd'; h.dataset.g = 'hd'; h.textContent = 'Cột của phiếu · ' + ((S.tableMeta && S.tableMeta.name) || 'bảng chính'); first.before(h); } }
+  const dh = box.querySelector('.chiphd[data-g="dt"]');
+  if (dh) { dh.textContent = 'Cột chi tiết · ' + RV.dName; const ib = document.createElement('button'); ib.type = 'button'; ib.className = 'insdet'; ib.textContent = '+ Chèn nhiều cột vào dòng đang chọn'; ib.dataset.g = 'dt'; ib.onmousedown = (e) => e.preventDefault(); ib.onclick = rvOpenInsDetail; dh.after(ib); }
+  rvChipTabs(); filterChips();
+};
+function rvChipTabs() {
+  let bar = $('chipTabs');
+  if (!bar) { bar = document.createElement('div'); bar.id = 'chipTabs'; bar.className = 'modebar ctabs'; $('chipSearch').after(bar); }
+  const tabs = [['all', 'Tất cả'], ['hd', 'Phiếu'], ...(RV.dMetas ? [['dt', 'Chi tiết']] : []), ['sys', 'Hệ thống']];
+  if (!tabs.some((t) => t[0] === RV.chipTab)) RV.chipTab = 'all';
+  bar.innerHTML = tabs.map(([k, t]) => `<button type="button" data-t="${k}" class="${k === RV.chipTab ? 'on' : ''}">${t}</button>`).join('');
+  bar.querySelectorAll('button').forEach((b) => b.onclick = () => { RV.chipTab = b.dataset.t; rvChipTabs(); filterChips(); });
+}
+const _filterChips = filterChips;
+filterChips = function () {
+  _filterChips();
+  if (!S.rv) return;
+  const box = $('chips'), t = RV.chipTab, q = $('chipSearch').value.trim();
+  box.querySelectorAll('.chip').forEach((b) => { if (t !== 'all' && b.dataset.g !== t) b.classList.add('hide'); });
+  box.querySelectorAll('.insdet').forEach((x) => { x.style.display = t === 'all' || t === 'dt' ? '' : 'none'; });
+  box.querySelectorAll('.chiphd').forEach((h) => { const any = box.querySelector(`.chip[data-g="${h.dataset.g}"]:not(.hide)`); h.style.display = any ? '' : 'none'; });
+  void q;
+};
+$('chipSearch').oninput = () => filterChips();
+$('chipSearch').placeholder = 'Tìm biến theo tên cột…';
 
 /* ---- Danh mục mẫu (màn hình đầu) ---- */
 function rvShowHome(on) { document.body.classList.toggle('rvhome', on); if (on) renderHome(); else render(); }
