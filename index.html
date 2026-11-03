@@ -3,11 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Print Studio v2 — Mẫu in cho Lark Base</title>
-<link rel="preconnect" href="https://esm.sh" crossorigin>
-<link rel="modulepreload" href="https://esm.sh/@lark-base-open/js-sdk@1.0.2">
-<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+<title>Print Studio — Tiến Lợi Group</title>
+
 <style>
 :root{--ink:#1f2329;--muted:#646a73;--line:#dee0e3;--soft:#f5f6f7;--blue:#3370ff;--blue-soft:#e8efff;--ok:#18a874;--err:#d92d20;--warn:#a65400;--warn-soft:#fff5e6}
 *{box-sizing:border-box}html,body{margin:0;height:100%}
@@ -87,6 +84,138 @@ body.dashview .layout{grid-template-columns:300px minmax(0,1fr);padding:6px}body
 body.linkmode .side{display:none!important}body.linkmode .layout{grid-template-columns:1fr}
 body.dashview.noside .side{display:none}body.dashview.noside .layout{grid-template-columns:1fr}
 @media(max-width:900px){.layout{grid-template-columns:1fr;overflow:auto}.side{overflow:visible}.stage{padding:8px;min-height:60vh}.top{padding:8px 10px}}
+
+/* ===== v5 Record View: giao diện app + danh mục mẫu ===== */
+:root{--bg:#f3f5f9;--card:#fff;--ring:#1f56a033;--grad:linear-gradient(135deg,#1b1f5a,#1f56a0)}
+body{background:var(--bg)}
+.top{padding:9px 16px;box-shadow:0 1px 0 #e6e8eb,0 4px 14px #1b2b4a0a;position:relative;z-index:5}
+.brand{display:flex;align-items:center;gap:9px;font-size:15px}
+.brand .logo-sq{width:28px;height:28px;border-radius:8px;background:var(--grad);display:inline-flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 3px 10px #3370ff40}
+.brand small{background:#eef2ff;color:#4554d9;border-radius:20px;padding:1px 8px;font-size:11px;font-weight:700}
+#btnHome{display:none;align-items:center;gap:6px;border-radius:20px;padding:6px 12px;font-size:12.5px}
+body.rv:not(.rvhome) #btnHome{display:inline-flex}
+body.rvhome #btnSide{display:none}
+body.rvhome .layout{display:none!important}
+body:not(.rvhome) #home{display:none}
+.side,.bar,.stage{border-radius:14px}
+.side{box-shadow:0 1px 3px #1b2b4a0d}
+button.primary{background:var(--grad);border:0;box-shadow:0 2px 8px #3370ff40}
+#home{flex:1;overflow:auto;min-height:0}
+.hwrap{max-width:1180px;margin:0 auto;padding:22px 24px 40px}
+.hhero{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.hhero h1{margin:0;font-size:22px;letter-spacing:-.01em}
+.hhero p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.hhero .hs{display:flex;gap:8px;align-items:center}
+.hhero input{width:240px;border-radius:20px;padding:8px 14px;background:#fff}
+.hsec{margin:22px 0 10px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8a919c;display:flex;align-items:center;gap:8px}
+.hsec .cnt{background:#e9ecf2;color:#5b6472;border-radius:10px;padding:0 7px;font-size:11px;letter-spacing:0}
+.ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.ncard{display:flex;gap:12px;align-items:center;text-align:left;padding:14px;border-radius:14px;border:1px solid var(--line);background:#fff;transition:.15s;font-weight:500}
+.ncard:hover{border-color:#b8ccff;box-shadow:0 8px 22px #3370ff1f;transform:translateY(-1px);background:#fff}
+.ncard .ni{flex:0 0 40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px}
+.ncard b{display:block;font-size:13.5px}.ncard span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:.15s;position:relative}
+.tcard:hover{box-shadow:0 12px 30px #1b2b4a1f;transform:translateY(-2px);border-color:#c9d6f5}
+.tcard.fit::after{content:'Hợp bảng này';position:absolute;top:10px;left:10px;background:#18a874;color:#fff;font-size:10.5px;font-weight:700;border-radius:20px;padding:2px 8px}
+.thumb{height:190px;overflow:hidden;background:linear-gradient(#eef1f6,#e4e8ef);position:relative;cursor:pointer;display:flex;justify-content:center;padding-top:14px}
+.thumb .tin{transform:scale(.27);transform-origin:top center;pointer-events:none;width:0;display:flex;justify-content:center}
+.thumb .page{box-shadow:0 4px 18px #1b2b4a33;flex:0 0 auto}
+.thumb .page td{outline:none}
+.tbody{padding:12px 14px 12px;display:flex;flex-direction:column;gap:6px;border-top:1px solid #eef0f3}
+.tname{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tmeta{display:flex;gap:5px;flex-wrap:wrap}
+.badge{font-size:10.5px;font-weight:700;border-radius:20px;padding:2px 8px;background:#f2f3f5;color:#5b6472}
+.badge.sh{background:#e8f3ff;color:#1d5fd6}.badge.pe{background:#fff3e0;color:#a65400}.badge.bi{background:#f0eaff;color:#5b3fd1}.badge.src{background:#e9f8f1;color:#0b7a50}
+.tact{display:flex;gap:6px;margin-top:4px}.tact button{flex:1;padding:6px 8px;font-size:12px;border-radius:9px}.tact .more{flex:0 0 34px}
+.tmenu{position:absolute;right:12px;bottom:48px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px #1b2b4a2e;padding:4px;display:none;z-index:4;min-width:150px}
+.tmenu.show{display:block}.tmenu button{display:block;width:100%;text-align:left;border:0;font-weight:500;font-size:12.5px;padding:7px 10px}
+.hnote{margin-top:14px;padding:12px 14px;border-radius:12px;background:#fff8e6;border:1px solid #ffe2a8;color:#7a4b00;font-size:12.5px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hnote button{font-size:12px}
+.hempty{padding:34px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #cfd5df;border-radius:16px}
+.srcopt{display:flex;flex-direction:column;gap:6px}
+.srcopt label{display:flex;gap:9px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:12.5px;background:#fff}
+.srcopt label:hover{border-color:#b8ccff}.srcopt label.on{border-color:var(--blue);background:#f3f6ff;box-shadow:0 0 0 3px var(--ring)}
+.srcopt input{width:auto;margin-top:2px}.srcopt b{display:block;font-size:12.5px}.srcopt small{color:var(--muted);font-size:11px}
+.chip.dt{background:#eefaf4;border-color:#bfe8d3;color:#0b7a50}
+body.rv #secMode,body.rv #secRec,body.rv #rowBase,body.rv .rvhide{display:none!important}
+/* v5.2 · màu thương hiệu Tiến Lợi (xanh navy + xanh thép theo logo) */
+body.rv{--blue:#1f56a0;--blue-soft:#e9f0fa;--ring:#1f56a033;--navy:#1b1f5a;--grad:linear-gradient(135deg,#1b1f5a 0%,#1f56a0 100%);--bg:#f2f4f8}
+body.rv .brand{color:var(--navy)}body.rv .brand img{height:26px;width:auto;display:block}
+body.rv .brand small{background:#e9f0fa;color:var(--blue)}
+body.rv .tabs button.on,body.rv .tools button.act,body.rv .sidebtn.on{background:var(--blue-soft);border-color:#b9cbe6;color:var(--blue)}
+body.rv .hhero{background:var(--grad);color:#fff;border-radius:18px;padding:20px 22px;align-items:center}
+body.rv .hhero p{color:#d6e2f5}body.rv .hbrand{display:flex;align-items:center;gap:14px}
+body.rv .hbrand img{height:46px;background:#fff;border-radius:10px;padding:4px 6px}
+body.rv .hhero input{border:0}body.rv .hhero #homeRe{background:#ffffff1f;border:1px solid #ffffff55;color:#fff}
+body.rv .ngrid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));margin-top:16px}
+body.rv .ncard .ni{background:var(--blue-soft);color:var(--blue)}
+body.rv .ncard:hover,body.rv .tcard:hover{border-color:#b9cbe6;box-shadow:0 10px 26px #1b1f5a1f}
+body.rv .tcard.fit::after{background:var(--blue)}
+body.rv .badge.src{background:#e9f0fa;color:var(--navy)}
+.mrow{border:1px solid var(--line);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;background:#fff}
+.mrow.on{border-color:#b9cbe6;background:#f6f9fd}
+.mrow>label:first-child{display:flex;gap:8px;align-items:center;font-size:12.5px;font-weight:700;cursor:pointer}.mrow>label:first-child input{width:auto}
+.mrow small{color:var(--muted);font-size:11px;margin-top:-3px}
+.mrow .mcfg{display:none;flex-direction:column;gap:6px}.mrow.on .mcfg{display:flex}
+.srcopt{gap:8px}
+.modebar{display:flex;gap:4px;background:#f2f4f8;border-radius:10px;padding:3px}
+.modebar button{border:0;background:transparent;padding:6px 11px;font-size:12.5px;border-radius:8px;color:#4b5563}
+.modebar button.on{background:#fff;color:var(--navy);box-shadow:0 1px 3px #1b1f5a26}.modebar button:disabled{opacity:1;cursor:default}
+.rvinfo{font-size:12px;color:var(--muted);max-width:340px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rvinfo.warn{color:var(--warn)}.rvinfo.err{color:var(--err)}
+body:not(.rvprint) #modeBar,body:not(.rvprint) #rvInfo{display:none}
+body.rvprint #secSrc{display:none!important}
+body.rv .layout{grid-template-columns:var(--sw,320px) 6px minmax(0,1fr);gap:6px}
+#sideGrip{display:none}body.rv #sideGrip{display:block;cursor:col-resize;border-radius:4px;margin:8px 0}body.rv #sideGrip:hover,body.dragw #sideGrip{background:#b9cbe6}
+body.dragw{cursor:col-resize;user-select:none}
+body.rv.sidehid #sideGrip,body.rvnoside #sideGrip,body.rvnoside .side{display:none!important}
+body.rvnoside .layout,body.rv.sidehid .layout{grid-template-columns:minmax(0,1fr)!important}
+body.rv .chips{max-height:none;height:240px;min-height:90px;resize:vertical;align-content:flex-start;border:1px solid #eef0f3;border-radius:8px;padding:6px}
+.chiphd{flex-basis:100%;font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#8a919c;margin:4px 0 0}
+.inscols{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px 10px;max-height:46vh;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px}
+.inscols label{display:flex;gap:6px;align-items:center;font-size:12.5px;padding:3px 0}.inscols input{width:auto}.inscols small{color:var(--muted)}
+body.rvhome .top{display:none!important}
+body.rv .status #dot,body.rv .status #stText,body.rv #btnDiag{display:none!important}
+.hico{width:36px;padding:0;font-size:15px}body.rv .hhero .hico{background:#ffffff1f;border:1px solid #ffffff55;color:#fff}
+.rolebadge{font-size:11px;font-weight:700;vertical-align:middle;background:#ffffff26;border:1px solid #ffffff4d;border-radius:20px;padding:2px 9px;margin-left:6px}
+.hfoot{margin-top:16px;text-align:center}.linkbtn{border:0;background:none;color:var(--blue);font-weight:600;font-size:12.5px;text-decoration:underline;padding:4px}
+body.rvviewer .ngrid,body.rvviewer #tabDesign,body.rvviewer #btnSaveTop,body.rvviewer #btnSide,body.rvviewer .tact [data-act=edit],body.rvviewer .tact .more,body.rvviewer .tmenu{display:none!important}
+body.rvviewer #hdrName{pointer-events:none;border-color:transparent!important;background:transparent!important}
+body.rvviewer .hsec{margin-top:18px}
+body.rv .hhero input{color:#1f2329;background:#fff}body.rv .hhero input::placeholder{color:#8a919c}
+.fabdiag{position:fixed;right:16px;bottom:16px;width:38px;height:38px;border-radius:50%;padding:0;font-size:16px;background:#fff;border:1px solid var(--line);color:#5b6472;box-shadow:0 4px 14px #1b1f5a26;z-index:20}
+.fabdiag:hover{color:var(--blue);border-color:#b9cbe6}
+body.rvviewer .fabdiag{display:none!important}
+body.booting .app{visibility:hidden}body.booting::after{content:'Đang kết nối Lark Base…';position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#646a73;font-size:13px}
+/* thanh bên hẹp: cột thiết lập nằm trên trang phiếu, đóng/mở bằng nút ở góc trái */
+@media(max-width:900px){
+ body.rv .layout{display:flex!important;flex-direction:column;padding:8px;gap:8px;overflow:auto}
+ body.rv .layout>.side,body.rv .layout>.main{flex:0 0 auto;min-height:auto}
+ body.rv #sideGrip{display:none!important}
+ body.rv .side{max-height:none;overflow:visible}
+ body.rv .stage{min-height:70vh;padding:8px}
+ body.rv:not(.rvhome) #hdrName{width:auto;flex:1;min-width:0}
+ body.rv .top{padding:7px 10px;gap:6px}body.rv .top>div:first-child{flex:1;min-width:0}
+ body.rv .hwrap{padding:12px 12px 60px}body.rv .hhero{padding:14px;flex-direction:column;align-items:stretch;gap:10px}
+ body.rv .hhero .hs{width:100%}body.rv .hhero input{flex:1;width:auto}
+ body.rv .hbrand img{height:38px}body.rv .hhero h1{font-size:19px}
+ body.rv .ngrid{grid-template-columns:1fr 1fr;gap:8px}body.rv .ncard{padding:10px;gap:8px}body.rv .ncard .ni{flex-basis:34px;height:34px}
+ body.rv .tgrid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}body.rv .thumb{height:150px}body.rv .thumb .tin{transform:scale(.21)}
+ body.rv .bar{padding:6px 8px;gap:6px}body.rv .rvinfo{max-width:100%;white-space:normal}
+}
+@media(max-width:520px){body.rv .ngrid{grid-template-columns:1fr}body.rv .ncard span{display:none}body.rv #btnSaveTop{padding:7px 10px}}
+.srcopt .mrow label{border:0;padding:0;background:none;box-shadow:none}.srcopt .mrow .lbl{display:flex;flex-direction:column;gap:4px;align-items:stretch;font-weight:600;font-size:12px}
+.rvbanner{display:flex;align-items:center;gap:10px;justify-content:center;background:#fff;border:1px solid #b9cbe6;border-radius:12px;padding:9px 12px;margin:0 auto 14px;max-width:640px;font-size:12.5px;color:#334}
+#hdrName,#btnSaveTop{display:none}
+body.rv:not(.rvhome) #hdrName{display:block;width:min(320px,34vw);border:1px solid transparent;background:transparent;font-weight:700;font-size:14.5px;border-radius:8px;padding:6px 9px}
+body.rv:not(.rvhome) #hdrName:hover{border-color:#dee0e3;background:#fff}body.rv:not(.rvhome) #hdrName:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px var(--ring);outline:0}
+body.rv:not(.rvhome) #btnSaveTop{display:inline-flex;align-items:center;gap:6px;padding:7px 14px}
+body.rv:not(.rvhome) .brand{display:none}
+body.rv #sideLbl{display:none}body.rv #btnSide{padding:7px 9px}
+body.rv .sidetools,body.rv #secData,body.rv #colw{display:none!important}
+body.rv.rvprint #secChips,body.rv.rvprint #secTpl{display:none!important}
+body.rv .srcopt label{padding:7px 10px}body.rv .srcopt label:not(.on) small{display:none}
+
 #printRoot{display:none}
 @media print{
   /* Chỉ in vùng #printRoot: mọi thứ khác bị ẩn hẳn (display:none) nên không còn chiếm chỗ sinh trang trắng */
@@ -100,10 +229,11 @@ body.dashview.noside .side{display:none}body.dashview.noside .layout{grid-templa
 }
 </style>
 </head>
-<body>
+<body class="booting">
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand">Print Studio<small>v4.0</small></div></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><button id="btnHome" class="fit" title="Về danh mục mẫu in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Danh mục mẫu</button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.4</small></div><input id="hdrName" type="text" placeholder="Đặt tên mẫu…" title="Tên mẫu"></div><div class="status"><button id="btnSaveTop" class="primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Lưu mẫu</button><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
+<section id="home"><div class="hwrap" id="homeIn"></div></section>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sec" id="secData"><h3>1 · Dữ liệu</h3>
@@ -111,6 +241,17 @@ body.dashview.noside .side{display:none}body.dashview.noside .layout{grid-templa
   <label class="lbl" id="rowBase" style="display:none">Base nguồn<select id="selBase"></select></label>
   <label class="lbl">Bảng<select id="selTable" disabled></select></label>
   <div class="row"><label class="lbl">Lọc theo view<select id="selView"><option value="">Tất cả bản ghi</option></select></label><label class="lbl">Cột hiển thị tên<select id="selLabel"></select></label></div>
+ </div>
+ <div class="sec" id="secSrc" style="display:none"><h3>Kiểu in của mẫu</h3>
+  <p class="hint">Bật các kiểu in mẫu này được dùng và gắn cột cho từng kiểu. Phần Xem &amp; in chỉ hiện những kiểu đã bật.</p>
+  <div class="srcopt" id="srcOpt">
+   <div class="mrow" data-m="cur"><label><input type="checkbox">Bản ghi hiện tại</label><small>In đúng record đang mở</small></div>
+   <div class="mrow" data-m="link"><label><input type="checkbox">Bản ghi &amp; Chi tiết</label><small>Thông tin chung ở record này, dòng hàng lấy từ bảng khác qua cột liên kết</small>
+    <div class="mcfg"><label class="lbl">Cột liên kết tới bảng chi tiết<select id="srcLink"></select></label><button id="btnInsDet" type="button">Chèn bảng chi tiết…</button></div></div>
+   <div class="mrow" data-m="group"><label><input type="checkbox">Nhiều bản ghi</label><small>Gộp các record của bảng này có chung giá trị ở một cột</small>
+    <div class="mcfg"><label class="lbl">Cột xác định (VD Số phiếu)<select id="srcGroup"></select></label></div></div>
+  </div>
+  <div id="srcInfo" class="msg">Đang chờ bản ghi…</div>
  </div>
  <div class="sec" id="secMode"><h3>2 · Chế độ in</h3>
   <div class="seg" id="modeSeg">
@@ -143,7 +284,7 @@ body.dashview.noside .side{display:none}body.dashview.noside .layout{grid-templa
 </aside>
 <main class="main">
  <div class="bar">
-  <div class="tabs"><button id="tabDesign" class="on">Thiết kế mẫu</button><button id="tabPrint">Xem &amp; in</button></div>
+  <div class="tabs"><button id="tabDesign" class="on">Thiết kế mẫu</button><button id="tabPrint">Xem &amp; in</button></div><div id="modeBar" class="modebar"></div><span id="rvInfo" class="rvinfo"></span>
   <div class="grow"></div>
   <span id="pageInfo" class="hint"></span><span id="warn" class="hint"></span>
   <div class="dl" id="dlWrap"><button id="btnDl" class="ib" title="Tải về PDF / Excel / Word"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> Tải về <span class="car">▾</span></button><div class="dlmenu"><button id="btnPdf">PDF</button><button id="btnXlsx">Excel (.xlsx)</button><button id="btnDocx">Word (.docx)</button></div></div><button id="btnPrint" class="primary ib" title="In phiếu"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8V3h10v5M7 17H4v-7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7h-3"/><rect x="7" y="14" width="10" height="7"/></svg> In</button>
@@ -165,7 +306,7 @@ body.dashview.noside .side{display:none}body.dashview.noside .layout{grid-templa
   </div>
   <div class="colw" id="colw"></div>
  </div>
- <div class="stage" id="stage"><div id="snapNote" class="hint" style="display:none;text-align:center;margin-bottom:8px"></div><div class="pages" id="pages"></div></div>
+ <div class="stage" id="stage"><div id="snapNote" class="hint" style="display:none;text-align:center;margin-bottom:8px"></div><div id="rvBanner" class="rvbanner" style="display:none">Đang bắt đầu từ mẫu trống.<button id="btnUseDef" class="primary">Lấy mẫu mặc định</button><button id="btnHideDef">Ẩn</button></div><div class="pages" id="pages"></div></div>
 </main>
 </div></div>
 <div class="modal" id="modal"><div class="card"><b id="mTitle"></b><div id="mBody"></div><div class="row" style="justify-content:flex-end"><button id="mClose" class="fit">Đóng</button></div></div></div>
@@ -617,6 +758,7 @@ function designHTML() {
   return h + '</tbody></table></div>';
 }
 function getPages() {
+  if (S.rv) return RV.pages || [];
   const recs = selRecords();
   if (!recs.length) return [];
   if (S.mode === 'each') return recs.map((r) => [r]);
@@ -627,10 +769,10 @@ function getPages() {
 }
 function printHTML(missing) {
   const pages = getPages();
-  if (!pages.length) return '<div class="empty" style="background:#fff;border-radius:10px">Chọn ít nhất 1 bản ghi ở cột bên trái để xem phiếu.</div>';
+  if (!pages.length) return '<div class="empty" style="background:#fff;border-radius:10px">' + (S.rv ? (S.rvKind === 'record' ? 'Hãy mở một bản ghi để xem phiếu.' : 'Hãy bấm chọn một dòng trong bảng để xem phiếu.') : 'Chọn ít nhất 1 bản ghi ở cột bên trái để xem phiếu.') + '</div>';
   const now = new Date();
   return pages.map((recs) => {
-    const ctx = { recs, idx: S.idx, manual: S.manual, now, fmtCell, missing, rec: null, i: 0 };
+    const ctx = { recs, idx: (S.rv && RV.idx) || S.idx, manual: S.manual, now, fmtCell, missing, rec: null, i: 0 };
     const open = `<div class="page print" style="${pageStyle()}"><table>${colGroup()}<tbody>`;
     let h = open, started = false;
     for (const row of pageRows(S.tpl, recs)) {
@@ -657,7 +799,7 @@ function render() {
   $('barDesign').style.display = S.tab === 'design' ? '' : 'none';
   $('tabDesign').classList.toggle('on', S.tab === 'design'); $('tabPrint').classList.toggle('on', S.tab === 'print');
   const nOv = Object.keys(S.overrides).length;
-  const unm = S.tab === 'design' && S.metas.length ? templateVars(S.tpl).filter((v) => !S.idx.has(fold(v))) : [];
+  const unm = S.tab === 'design' && S.metas.length ? templateVars(S.tpl).filter((v) => !((S.rv && RV.idx) || S.idx).has(fold(v))) : [];
   $('warn').innerHTML = S.tab === 'design' ? (unm.length ? `⚠ ${unm.length} biến chưa khớp cột của bảng này. <button id="btnMapWarn">Khớp cột</button>` : '') : S.tab === 'print' ? ((missing.size ? `⚠ Biến chưa khớp cột: ${esc([...missing].slice(0, 6).join(', '))}${missing.size > 6 ? '…' : ''}. ` : '') + (nOv ? `<button id="btnResetOv">Đặt lại ${nOv} ô đã sửa tay</button>` : '')) : '';
   if ($('btnMapWarn')) $('btnMapWarn').onclick = openMap;
   $('mapHint').textContent = unm.length ? unm.length + ' biến chưa khớp cột' : '';
@@ -799,8 +941,10 @@ function renderChips() {
   const box = $('chips'); box.innerHTML = '';
   const add = (label, token, cls) => { const b = document.createElement('button'); b.className = 'chip ' + (cls || ''); b.textContent = label; b.title = token; b.draggable = true; b.ondragstart = (e) => { e.dataTransfer.setData('text/plain', token); e.dataTransfer.effectAllowed = 'copy'; }; b.onmousedown = (e) => e.preventDefault(); b.onclick = () => insertToken(token); box.appendChild(b); };
   add('STT', '{{STT}}', 'fx'); add('Ngày in', '{{TODAY}}', 'fx'); add('Số dòng', '{{COUNT}}', 'fx'); add('@Điền tay', '{{@Tên ô}}', 'fx');
+  if (S.rv && RV.dMetas) { const d = document.createElement("div"); d.className = "chiphd"; d.textContent = "Cột của phiếu · " + ((S.tableMeta && S.tableMeta.name) || "bảng chính"); box.appendChild(d); }
   for (const m of S.metas) add(m.name, `{{${m.name}}}`);
   for (const m of S.metas) if ([FT('Number', 2), FT('Currency', 99003), FT('Formula', 20)].includes(m.type)) add('Σ ' + m.name, `{{SUM:${m.name}}}`, 'fx');
+  if (S.rv && RV.dMetas) { const nm = (m) => (S.idx.has(fold(m.name)) ? 'CT.' + m.name : m.name); { const d = document.createElement('div'); d.className = 'chiphd'; d.textContent = 'Cột chi tiết · ' + RV.dName + ' (đặt trong dòng lặp)'; box.appendChild(d); } for (const m of RV.dMetas.filter((x) => !isLink(x) && !isAtt(x))) add('↳ ' + m.name, `{{${nm(m)}}}`, 'dt'); for (const m of RV.dMetas) if ([FT('Number', 2), FT('Currency', 99003), FT('Formula', 20)].includes(m.type)) add('Σ ↳ ' + m.name, `{{SUM:${nm(m)}}}`, 'fx'); }
   filterChips();
 }
 function filterChips() {
@@ -1278,7 +1422,7 @@ async function loadTable(tableId, opts = {}) {
   if (!opts.keepFilters) { S.filters = []; } renderFilters();
   renderChips(); renderRecList(); if (S.tab === 'design') render(); dlog('table.meta', Math.round(performance.now() - t0) + 'ms');
   boxMsg(`Đã kết nối: ${S.metas.length} cột. Đang tải bản ghi nền…`, 'ok');
-  S.recP = loadRecordsBg(seq).then(() => { if (seq === S.loadSeq) boxMsg(`Đã kết nối: ${S.metas.length} cột · ${S.order.length} bản ghi.`, 'ok'); }).catch((e) => { S.loading = false; renderRecList(); boxMsg('Tải bản ghi lỗi: ' + e.message, 'err'); });
+  S.recP = S.rv ? (boxMsg(`Đã kết nối: ${S.metas.length} cột.`, 'ok'), null) : loadRecordsBg(seq).then(() => { if (seq === S.loadSeq) boxMsg(`Đã kết nối: ${S.metas.length} cột · ${S.order.length} bản ghi.`, 'ok'); }).catch((e) => { S.loading = false; renderRecList(); boxMsg('Tải bản ghi lỗi: ' + e.message, 'err'); });
 }
 $('selTable').onchange = () => loadTable($('selTable').value).catch((e) => boxMsg('Lỗi tải bảng: ' + e.message, 'err'));
 $('selView').onchange = () => { const seq = ++S.loadSeq; S.recMap = new Map(); S.order = []; S.sel = []; S.searchText = new Map(); loadRecordsBg(seq).catch(() => {}); };
@@ -1323,7 +1467,7 @@ async function reloadTemplates(keepId) {
 function renderTplSelect(selId) {
   const sel = $('selTpl'); const opt = (e, i) => `<option value="${i}">${esc(e.tpl.name || 'Mẫu không tên')}</option>`;
   const sh = S.templates.map((e, i) => [e, i]).filter(([e]) => e.scope === 'shared'), pe = S.templates.map((e, i) => [e, i]).filter(([e]) => e.scope === 'personal');
-  sel.innerHTML = (S.dashTpl ? `<option value="__dash">Mẫu đang lưu trong khối${S.dashTpl.name ? ': ' + esc(S.dashTpl.name) : ''}</option>` : '') + '<option value="">— Mẫu mặc định —</option>' + (sh.length ? `<optgroup label="Dùng chung trong Base">${sh.map(([e, i]) => opt(e, i)).join('')}</optgroup>` : '') + (pe.length ? `<optgroup label="Cá nhân">${pe.map(([e, i]) => opt(e, i)).join('')}</optgroup>` : '');
+  sel.innerHTML = (S.dashTpl ? `<option value="__dash">Mẫu đang lưu trong khối${S.dashTpl.name ? ': ' + esc(S.dashTpl.name) : ''}</option>` : '') + '<option value="">— Mẫu mặc định —</option>' + (sh.length ? `<optgroup label="Dùng chung trong Base">${sh.map(([e, i]) => opt(e, i)).join('')}</optgroup>` : '') + (pe.length ? `<optgroup label="Cá nhân">${pe.map(([e, i]) => opt(e, i)).join('')}</optgroup>` : '') + (() => { const bi = S.templates.map((e, i) => [e, i]).filter(([e]) => e.scope === 'builtin'); return bi.length ? `<optgroup label="Cài sẵn trong extension">${bi.map(([e, i]) => opt(e, i)).join('')}</optgroup>` : ''; })();
   const idx = S.templates.findIndex((e) => e.tpl.id === selId); sel.value = idx >= 0 ? String(idx) : (S.dashTpl && (!selId || selId === S.dashTpl.id) && !S.cur ? '__dash' : '');
   if (S.sharedErr) { sel.title = 'Không đọc được mẫu dùng chung: ' + S.sharedErr; }
 }
@@ -1753,7 +1897,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '4.0', ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '5.4', ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -2176,15 +2320,27 @@ $('selBase').onchange = async () => {
   try { boxMsg('Đang mở base…'); const t = await useBase($('selBase').value); $('selTable').value = t[0].id; S.cur = null; await loadTable(t[0].id); reloadTemplates(); }
   catch (e) { boxMsg(e.message, 'err'); }
 };
+/* Record view: SDK + thư viện được đóng gói sẵn trong bundle (src/index.js) và gắn vào window */
+/* Một file chạy được ở cả 3 nơi: record view (SDK đóng gói sẵn), extension thanh bên dán URL, khối dashboard Base App */
+async function loadRecordViewSdk() {
+  if (window.__LARK_SDK__) { dlog('sdk.source', 'bundle (record view)'); S.rvKind = 'record'; return window.__LARK_SDK__; }
+  dlog('sdk.source', 'esm.sh (thanh bên / dashboard)'); S.rvKind = 'sidebar';
+  const sdk = await import(SDK_URL);
+  if (!window.htmlToImage) loadScript('https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js').catch(() => dlog('lib.error', 'html-to-image'));
+  if (!window.jspdf) loadScript('https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js').catch(() => dlog('lib.error', 'jspdf'));
+  return sdk;
+}
 async function boot() {
   const t0 = performance.now();
   if (Q.get('link') === '1') return bootLink();
   try {
-    SDK = await import(SDK_URL); bitable = SDK.bitable; FieldType = SDK.FieldType; dashboard = SDK.dashboard || null; workspace = SDK.workspace || null; fmtCell = makeFmt(FT);
+    SDK = await loadRecordViewSdk(); bitable = SDK.bitable; FieldType = SDK.FieldType; dashboard = SDK.dashboard || null; workspace = SDK.workspace || null; fmtCell = makeFmt(FT);
     dlog('sdk.loaded', Math.round(performance.now() - t0) + 'ms');
     if (!bitable || !bitable.base) throw new Error('Không thấy ngữ cảnh Lark Base. Hãy mở trang này từ Base Extensions hoặc làm khối trong Dashboard của Base App.');
     setStatus('wait', 'Đang đọc Base…');
     const dm = await detectDashboard(); S.dash = dm; dlog('dashMode', dm);
+    if (!dm) { S.rv = true; document.body.classList.add('rv', 'rvhome', 'rv-' + (S.rvKind || 'sidebar')); }
+    document.body.classList.remove('booting');
     const viewOnly = dm === 'View' || dm === 'FullScreen';
     if (dm === 'Create' || dm === 'Config') { $('btnDashSave').style.display = ''; $('secDash').style.display = ''; }
     if (viewOnly) { document.body.classList.add('dashview'); S.tab = 'print'; applyUi(); }
@@ -2201,15 +2357,361 @@ async function boot() {
       renderChips(); setStatus('ok', 'Đã kết nối Lark Base');
       await Promise.all([loadTable(tid), reloadTemplates()]);
       dlog('boot.ready', Math.round(performance.now() - t0) + 'ms');
-      if (!dm) pickCurrent(true);
+      if (!dm) { if (S.rv) rvStart(); else pickCurrent(true); }
     }
     if (dc && dm === 'Config') reloadTemplates();
     if (dm) { try { dashboard.setRendered(); } catch (e) {} try { dashboard.onConfigChange(async (e) => { if (S.dash === 'Create' || S.saving) return; try { const c = await unpackCfg(e && e.data && e.data.customConfig); if (c && c.v === 2) await applyDash(c); } catch (err) { dlog('onConfigChange.error', String(err && err.message || err)); } }); } catch (e) {} }
-    if (!dm) try { bitable.base.onSelectionChange(async () => { if (S.dash || S.mode !== 'one' || !$('chkFollow').checked || S.srcToken) return; await pickCurrent(true); }); } catch (e) {}
+    if (!dm) try { bitable.base.onSelectionChange(async () => { if (S.rv) { clearTimeout(RV.t); RV.t = setTimeout(rvSync, 150); return; } if (S.dash || S.mode !== 'one' || !$('chkFollow').checked || S.srcToken) return; await pickCurrent(true); }); } catch (e) {}
     // Base App / Dashboard: nhận diện khối và liệt kê các base trong Base App (chạy nền, không chặn giao diện)
     if (workspace && dm !== 'View' && dm !== 'FullScreen') listBases().then((bases) => { if (!bases.length) return; $('selBase').innerHTML = '<option value="">Base hiện tại</option>' + bases.map((b) => `<option value="${esc(b.token)}">${esc(b.name || b.token)}</option>`).join(''); $('rowBase').style.display = ''; dlog('bases', bases.length); });
-  } catch (e) { dlog('boot.error', String(e && e.message || e)); if ([...Q.keys()].some((k) => k.startsWith('v.'))) return bootLink(); setStatus('err', 'Chưa kết nối'); boxMsg('Không kết nối được: ' + (e && e.message || e), 'err'); if (S.dash === 'View' || S.dash === 'FullScreen') snapNote('Không kết nối được: ' + (e && e.message || e)); }
+  } catch (e) { document.body.classList.remove('booting'); dlog('boot.error', String(e && e.message || e)); if ([...Q.keys()].some((k) => k.startsWith('v.'))) return bootLink(); setStatus('err', 'Chưa kết nối'); boxMsg('Không kết nối được: ' + (e && e.message || e), 'err'); if (S.dash === 'View' || S.dash === 'FullScreen') snapNote('Không kết nối được: ' + (e && e.message || e)); }
 }
+const BRAND_LOGO = 'data:image/jpeg;base64,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';
+/* ============ v5.2 · Record View: kiểu in theo mẫu + danh mục mẫu in ============ */
+const RV = { seq: 0, pages: null, idx: null, dMetas: null, dName: '', rec: null, t: null, q: '', info: '', mode: '', lastTpl: null };
+const MODES = [
+  ['cur', 'Bản ghi hiện tại', 'In đúng record đang mở'],
+  ['link', 'Bản ghi & Chi tiết', 'Thông tin chung ở record này, dòng hàng lấy từ bảng khác qua cột liên kết'],
+  ['group', 'Nhiều bản ghi', 'Gộp các record của bảng này có chung giá trị ở một cột (VD Số phiếu)'],
+];
+const MODE_NAME = Object.fromEntries(MODES.map((m) => [m[0], m[1]]));
+const ICO = {
+  blank: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>',
+  imp: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M12 18v-6M9 15l3 3 3-3"/></svg>',
+};
+const isLink = (m) => !!m && [FT('SingleLink', 18), FT('DuplexLink', 21)].includes(m.type);
+const isAtt = (m) => !!m && m.type === FT('Attachment', 17);
+const isNumMeta = (m) => !!m && [FT('Number', 2), FT('Currency', 99003), FT('Formula', 20)].includes(m.type);
+// Cấu hình kiểu in lưu trong mẫu: { cur:{on}, link:{on,link,linkName}, group:{on,group,groupName} } (đọc được cả dạng src cũ của v5)
+function rvModes() {
+  if (!S.tpl.modes) {
+    const s = S.tpl.src || {};
+    S.tpl.modes = { cur: { on: !s.k || s.k === 'cur' || s.k === 'view' }, link: { on: s.k === 'link', link: s.link || '', linkName: s.linkName || '' }, group: { on: s.k === 'group', group: s.group || '', groupName: s.groupName || '' } };
+  }
+  const m = S.tpl.modes; if (!m.cur.on && !m.link.on && !m.group.on) m.cur.on = true;
+  return m;
+}
+const rvEnabled = () => { const m = rvModes(); return MODES.map((x) => x[0]).filter((k) => m[k].on); };
+function rvActive() { const en = rvEnabled(); if (!en.includes(RV.mode)) RV.mode = ['link', 'group', 'cur'].find((k) => en.includes(k)); return RV.mode; }
+function linkIds(v) {
+  if (!v) return [];
+  const one = (x) => (!x ? [] : Array.isArray(x.recordIds) ? x.recordIds : Array.isArray(x.record_ids) ? x.record_ids : x.recordId ? [x.recordId] : x.record_id ? [x.record_id] : typeof x === 'string' && /^rec/.test(x) ? [x] : []);
+  return [...new Set(Array.isArray(v) ? v.flatMap(one) : one(v))];
+}
+function linkTable(m, v) { const p = (m && m.property) || {}, first = Array.isArray(v) ? v[0] : v; return p.tableId || p.table_id || (first && (first.tableId || first.table_id)) || ''; }
+const rvLinkMeta = () => { const c = rvModes().link; return S.metas.find((m) => m.id === c.link) || S.metas.find((m) => isLink(m) && m.name === c.linkName) || null; };
+const rvGroupMeta = () => { const c = rvModes().group; return S.metas.find((m) => m.id === c.group) || S.metas.find((m) => m.name === c.groupName) || null; };
+function rvInfo(t, type = 'ok') {
+  RV.info = t; const el = $('srcInfo'); if (el) { el.className = 'msg ' + type; el.textContent = t; }
+  const b = $('rvInfo'); if (b) { b.textContent = t; b.className = 'rvinfo ' + type; } rvHomeSub();
+}
+
+/* ---- Thiết kế: bật kiểu in + gắn cột ---- */
+function rvFillSrc() {
+  if (!S.rv) return; const m = rvModes();
+  const links = S.metas.filter(isLink);
+  fillSelect($('srcLink'), links, links.length ? '— Chọn cột liên kết —' : 'Bảng này chưa có cột liên kết');
+  fillSelect($('srcGroup'), S.metas.filter((x) => !isLink(x) && !isAtt(x)), '— Chọn cột —');
+  const lm = rvLinkMeta(), gm = rvGroupMeta();
+  $('srcLink').value = lm ? lm.id : ''; $('srcGroup').value = gm ? gm.id : '';
+  document.querySelectorAll('#srcOpt .mrow').forEach((row) => { const k = row.dataset.m, on = !!m[k].on; row.classList.toggle('on', on); row.querySelector('input[type=checkbox]').checked = on; });
+  rvModeBar();
+}
+document.querySelectorAll('#srcOpt .mrow input[type=checkbox]').forEach((el) => el.onchange = () => {
+  const k = el.closest('.mrow').dataset.m, m = rvModes(); m[k].on = el.checked;
+  if (el.checked) RV.mode = k;
+  if (!m.cur.on && !m.link.on && !m.group.on) { m[k].on = true; el.checked = true; toast('Mẫu cần ít nhất 1 kiểu in.'); }
+  if (k === 'link' && m.link.on && !m.link.link) { const l = S.metas.find(isLink); if (l) Object.assign(m.link, { link: l.id, linkName: l.name }); }
+  rvFillSrc(); rvSync();
+});
+$('srcLink').onchange = () => { const x = S.metas.find((y) => y.id === $('srcLink').value); Object.assign(rvModes().link, { link: x ? x.id : '', linkName: x ? x.name : '' }); rvSync(); };
+$('srcGroup').onchange = () => { const x = S.metas.find((y) => y.id === $('srcGroup').value); Object.assign(rvModes().group, { group: x ? x.id : '', groupName: x ? x.name : '' }); rvSync(); };
+['srcLink', 'srcGroup'].forEach((id) => enhanceSelect($(id)));
+
+/* ---- Xem & in: chỉ chọn giữa các kiểu đã bật ---- */
+function rvModeBar() {
+  const bar = $('modeBar'); if (!bar) return; const en = rvEnabled(), act = rvActive();
+  bar.innerHTML = en.map((k) => `<button type="button" data-m="${k}" class="${k === act ? 'on' : ''}"${en.length === 1 ? ' disabled' : ''}>${MODE_NAME[k]}</button>`).join('');
+  bar.querySelectorAll('button').forEach((b) => b.onclick = () => { RV.mode = b.dataset.m; rvModeBar(); rvSync(); });
+}
+
+// Chỉ tải toàn bộ bản ghi của bảng khi thật sự cần (kiểu Nhiều bản ghi)
+async function rvEnsureAll() { if (!S.recP) S.recP = loadRecordsBg(S.loadSeq).catch(() => {}); await S.recP; }
+async function rvSync() {
+  if (!S.rv) return; const seq = ++RV.seq;
+  try {
+    let s = null; try { s = await withTimeout(bitable.base.getSelection(), 4000); } catch (e) { dlog('rv.sel.error', String(e && e.message || e)); }
+    if (!s || !s.recordId) { RV.pages = []; RV.rec = null; rvInfo(S.rvKind === 'record' ? 'Hãy mở một bản ghi để xem phiếu.' : 'Hãy bấm chọn một dòng trong bảng để xem phiếu.', 'warn'); if (!document.body.classList.contains('rvhome')) render(); return; }
+    if (s.tableId && s.tableId !== (S.tableMeta && S.tableMeta.id)) { try { $('selTable').value = s.tableId; } catch (e) {} await loadTable(s.tableId); }
+    if (seq !== RV.seq) return;
+    rvFillSrc();
+    S.recMap.delete(s.recordId); const head = await ensureRecord(s.recordId);
+    if (!S.order.includes(s.recordId)) S.order.push(s.recordId);
+    S.sel = [s.recordId];
+    const act = rvActive(), label = recLabel(head);
+    let pages = [[head]], idx = null, dMetas = null, info = 'Bản ghi: ' + label, warn = false;
+    // Bảng chi tiết: đọc danh sách cột khi kiểu "Bản ghi & Chi tiết" đã bật (để thiết kế), đọc dòng khi đang in kiểu này
+    if (rvModes().link.on) {
+      const lm = rvLinkMeta();
+      if (!lm) { if (act === 'link') { info = 'Kiểu "Bản ghi & Chi tiết" chưa gắn cột liên kết (sửa ở phần Thiết kế mẫu).'; warn = true; } }
+      else {
+        const v = head.fields[lm.id], ids = linkIds(v), tid = linkTable(lm, v);
+        dlog('rv.link', { field: lm.name, n: ids.length, tid, raw: JSON.stringify(v || null).slice(0, 160) });
+        if (!tid) { if (act === 'link') { info = 'Không xác định được bảng chi tiết của cột "' + lm.name + '".'; warn = true; } }
+        else {
+          const dt = await withTimeout(S.base.getTableById(tid), 15000);
+          dMetas = (await withTimeout(dt.getFieldMetaList(), 15000)) || [];
+          RV.dName = ((S.tables.find((t) => t.id === tid) || {}).name) || 'bảng chi tiết';
+          idx = new Map();
+          for (const m of dMetas) idx.set(fold('CT.' + m.name), m);
+          for (const m of dMetas) idx.set(fold(m.name), m);
+          for (const m of S.metas) idx.set(fold(m.name), m);
+          if (act === 'link') {
+            const got = [];
+            for (let i = 0; i < ids.length; i += 20) {
+              const part = await Promise.all(ids.slice(i, i + 20).map((id) => withTimeout(dt.getRecordById(id), 15000).then((r) => ({ recordId: id, fields: (r && r.fields) || r || {} })).catch(() => null)));
+              got.push(...part.filter(Boolean));
+            }
+            pages = [got.length ? got.map((d) => ({ recordId: d.recordId, fields: { ...head.fields, ...d.fields } })) : [head]];
+            info = `${label} · ${got.length} dòng chi tiết từ "${RV.dName}"`; if (!got.length) warn = true;
+          }
+        }
+      }
+    }
+    if (act === 'group') {
+      const gm = rvGroupMeta();
+      if (!gm) { info = 'Kiểu "Nhiều bản ghi" chưa chọn cột xác định (sửa ở phần Thiết kế mẫu).'; warn = true; }
+      else {
+        rvInfo('Đang tải các bản ghi cùng nhóm…', '');
+        await rvEnsureAll(); if (seq !== RV.seq) return;
+        const key = grpKey(head, gm);
+        const recs = S.order.map((id) => (id === head.recordId ? head : S.recMap.get(id))).filter((r) => r && grpKey(r, gm) === key);
+        if (!recs.includes(head)) recs.unshift(head);
+        pages = [recs]; info = `${recs.length} bản ghi có ${gm.name} = "${key}"`;
+      }
+    }
+    if (seq !== RV.seq) return;
+    RV.pages = pages; RV.idx = idx; RV.dMetas = dMetas; RV.rec = head;
+    rvInfo(info, warn ? 'warn' : 'ok');
+    dlog('rv.sync', { mode: act, rec: s.recordId, n: pages[0].length });
+    renderChips();
+    if (!document.body.classList.contains('rvhome')) render();
+  } catch (e) { dlog('rv.sync.error', String(e && e.message || e)); rvInfo('Lỗi đọc dữ liệu: ' + (e && e.message || e), 'err'); }
+}
+
+/* ---- Chèn bảng chi tiết (nhiều cột của bảng liên kết) vào mẫu ---- */
+function rvGrowCols(n) {
+  const N = S.tpl.cols.length; if (n <= N) return; const extra = n - N, vis = visCells(), done = new Set();
+  S.tpl.rows.forEach((row, r) => {
+    const o = vis.find((x) => x.c <= N - 1 && N - 1 < x.c + x.cell.cs && x.r <= r && r < x.r + x.cell.rs);
+    if (o && !done.has(o.cell)) { o.cell.cs += extra; done.add(o.cell); }
+    for (let i = 0; i < extra; i++) row.cells.push(o ? C('', { h: true }) : C(''));
+  });
+  const avg = S.tpl.cols.reduce((a, b) => a + (+b || 1), 0) / N; for (let i = 0; i < extra; i++) S.tpl.cols.push(Math.round(avg * 10) / 10);
+}
+function rvOpenInsDetail() {
+  if (!RV.dMetas || !RV.dMetas.length) { toast('Chưa đọc được bảng chi tiết: hãy bật kiểu "Bản ghi & Chi tiết", chọn cột liên kết và mở một record có dòng chi tiết.', 6000); return; }
+  const cols = RV.dMetas.filter((m) => !isLink(m) && !isAtt(m));
+  openModal('Chèn bảng chi tiết từ "' + RV.dName + '"', `<p class="hint" style="margin:0 0 8px">Chọn các cột cần in (theo thứ tự hiển thị). Mẫu sẽ thêm 1 dòng tiêu đề, 1 dòng lặp theo từng dòng chi tiết và 1 dòng tổng (tùy chọn). Lưới mẫu tự thêm cột nếu cần.</p>
+<div class="inscols">${cols.map((m, i) => `<label><input type="checkbox" data-id="${esc(m.id)}" ${i < 6 ? 'checked' : ''}>${esc(m.name)}${isNumMeta(m) ? ' <small>(số)</small>' : ''}</label>`).join('')}</div>
+<div class="row" style="margin-top:10px;gap:14px;justify-content:flex-start"><label class="row fit" style="gap:6px"><input type="checkbox" id="insStt" checked class="fit">Cột STT</label><label class="row fit" style="gap:6px"><input type="checkbox" id="insSum" checked class="fit">Dòng tổng cộng</label><div class="grow"></div><button id="insGo" class="primary fit">Chèn vào mẫu</button></div>`);
+  $('insGo').onclick = () => {
+    const pick = [...document.querySelectorAll('.inscols input:checked')].map((i) => cols.find((m) => m.id === i.dataset.id)).filter(Boolean);
+    if (!pick.length) { toast('Chọn ít nhất 1 cột.'); return; }
+    rvInsertDetail(pick, $('insStt').checked, $('insSum').checked); $('modal').classList.remove('show');
+  };
+}
+function rvInsertDetail(pick, stt, sum) {
+  const need = pick.length + (stt ? 1 : 0); rvGrowCols(need);
+  const N = S.tpl.cols.length, head = new Set(S.metas.map((m) => fold(m.name)));
+  const nm = (m) => (head.has(fold(m.name)) ? 'CT.' + m.name : m.name);
+  const spread = (items, base, n) => { const k = items.length, w = Math.floor(n / k), out = []; items.forEach((it, j) => { const cs = j === k - 1 ? n - w * (k - 1) : w; out.push(C(it.t, { ...base, ...(it.o || {}), cs })); for (let x = 1; x < cs; x++) out.push(C('', { h: true })); }); return out; };
+  const line = (first, items, base) => (stt ? [C(first.t, { ...base, ...(first.o || {}) }), ...spread(items, base, N - 1)] : spread(items, base, N));
+  const hd = { b: true, a: 'c', br: true, bg: '#eef2f8' };
+  const rows = [
+    { rep: false, cells: line({ t: 'STT' }, pick.map((m) => ({ t: m.name })), hd) },
+    { rep: true, cells: line({ t: '{{STT}}', o: { a: 'c' } }, pick.map((m) => ({ t: `{{${nm(m)}}}`, o: isNumMeta(m) ? { a: 'r' } : {} })), { br: true }) },
+  ];
+  if (sum) rows.push({ rep: false, cells: line({ t: '' }, pick.map((m, j) => ({ t: isNumMeta(m) ? `{{SUM:${nm(m)}}}` : j === 0 ? 'Tổng cộng' : '', o: { b: true, a: isNumMeta(m) ? 'r' : 'c' } })), { br: true }) });
+  let at = S.rect ? S.rect.r1 : S.tpl.rows.length - 1;
+  if (visCells().some((x) => x.r <= at && x.r + x.cell.rs - 1 > at)) at = S.tpl.rows.length - 1;
+  S.tpl.rows.splice(at + 1, 0, ...rows); S.rect = { r0: at + 2, c0: 0, r1: at + 2, c1: 0 };
+  S.tab = 'design'; render(); toast('Đã chèn bảng chi tiết ' + pick.length + ' cột. Dòng nền xanh là dòng lặp theo từng dòng chi tiết.', 5000);
+}
+$('btnInsDet').onclick = rvOpenInsDetail;
+
+/* ---- Danh mục mẫu (màn hình đầu) ---- */
+function rvShowHome(on) { document.body.classList.toggle('rvhome', on); if (on) renderHome(); else render(); }
+function rvHomeSub() {
+  const el = $('homeSub'); if (!el) return; const tn = (S.tableMeta && S.tableMeta.name) || '';
+  el.textContent = (RV.rec ? (S.rvKind === 'record' ? 'Đang mở: ' : 'Đang chọn: ') + recLabel(RV.rec) : (S.rvKind === 'record' ? 'Chưa có bản ghi nào đang mở' : 'Chưa chọn dòng nào trong bảng')) + (tn ? ' · bảng ' + tn : '');
+}
+function tplThumb(t) { const keep = S.tpl; let h = ''; try { S.tpl = normalizeTpl(t); h = designHTML().replace(/ contenteditable="[^"]*"/g, ''); } catch (e) { h = ''; } S.tpl = keep; return h; }
+function tplModes(t) { const keep = S.tpl; S.tpl = { ...t, modes: t.modes, src: t.src }; const en = rvEnabled(); const m = S.tpl.modes; S.tpl = keep; t.modes = t.modes || m; return en; }
+function renderHome() {
+  const box = $('homeIn'); if (!box || !S.rv) return;
+  const tn = (S.tableMeta && S.tableMeta.name) || '', q = fold(RV.q || '');
+  const list = S.templates.map((e, i) => ({ e, i })).filter(({ e }) => !q || fold(e.tpl.name || '').includes(q));
+  list.sort((a, b) => ((b.e.tpl.tableName === tn) - (a.e.tpl.tableName === tn)) || String(a.e.tpl.name || '').localeCompare(String(b.e.tpl.name || ''), 'vi'));
+  const BADGE = { shared: ['sh', 'Dùng chung'], personal: ['pe', 'Cá nhân'], builtin: ['bi', 'Cài sẵn'] };
+  const cards = list.map(({ e, i }) => {
+    const t = e.tpl, b = BADGE[e.scope] || ['', ''], en = tplModes(t);
+    return `<div class="tcard${tn && t.tableName === tn ? ' fit' : ''}" data-i="${i}"><div class="thumb" data-act="print" title="Bấm để in phiếu bằng mẫu này"><div class="tin">${tplThumb(t)}</div></div>`
+      + `<div class="tbody"><div class="tname" title="${esc(t.name || '')}">${esc(t.name || 'Mẫu không tên')}</div><div class="tmeta"><span class="badge ${b[0]}">${b[1]}</span>${t.tableName ? `<span class="badge">${esc(t.tableName)}</span>` : ''}</div><div class="tmeta">${en.map((k) => `<span class="badge src">${MODE_NAME[k]}</span>`).join('')}</div>`
+      + `<div class="tact"><button class="primary" data-act="print">In phiếu</button><button data-act="edit">Sửa mẫu</button><button class="more" data-act="more" title="Thêm">⋯</button></div></div>`
+      + `<div class="tmenu"><button data-act="dup">Nhân bản</button>${e.scope === 'builtin' ? '' : '<button data-act="del" class="danger">Xóa mẫu</button>'}</div></div>`;
+  }).join('');
+  const noShared = !S.tables.some((t) => t.name === TPL_TABLE);
+  box.innerHTML = `<div class="hhero"><div class="hbrand"><img src="${BRAND_LOGO}" alt="Tiến Lợi Group"><div><h1>Mẫu in <span class="rolebadge">${RV.realRole === 'viewer' ? 'Chỉ in' : RV.preview ? 'Đang xem như nhân viên' : 'Thiết kế'}</span></h1><p id="homeSub"></p></div></div><div class="hs"><input type="search" id="homeQ" placeholder="Tìm mẫu…" value="${esc(RV.q || '')}"><button id="homeRe" title="Tải lại danh sách mẫu">Tải lại</button></div></div><button id="homeDiag" class="fabdiag" title="Thông tin chẩn đoán">⚙</button>
+<div class="ngrid">
+ <button class="ncard" data-new="blank"><span class="ni">${ICO.blank}</span><div><b>Mẫu trống</b><span>Tạo mẫu mới từ lưới ô trống, có thể lấy mẫu mặc định</span></div></button>
+ <button class="ncard" data-new="import"><span class="ni">${ICO.imp}</span><div><b>Nhập mẫu có sẵn</b><span>Từ file Word, Excel hoặc file mẫu JSON</span></div></button>
+</div>
+<div class="hsec">Mẫu đã có <span class="cnt">${list.length}</span></div>
+${list.length ? `<div class="tgrid">${cards}</div>` : `<div class="hempty">${q ? 'Không có mẫu nào khớp tìm kiếm.' : 'Chưa có mẫu nào. Bấm "Mẫu trống" để bắt đầu.'}</div>`}
+${RV.realRole === 'designer' ? `<div class="hfoot"><button id="homePrev" class="linkbtn">${RV.preview ? 'Thoát chế độ xem như nhân viên' : 'Xem thử giao diện của nhân viên (chỉ in)'}</button></div>` : ''}
+${noShared && RV.role === 'designer' ? `<div class="hnote"><div style="flex:1;min-width:240px"><b>Base này chưa có bảng ${TPL_TABLE}.</b> Bảng sẽ được tạo tự động khi anh lưu mẫu "Trong Base" lần đầu, hoặc bấm nút bên cạnh để tạo ngay. Trong Base App: nếu bảng đã có ở base gốc, hãy thêm nó vào app rồi bấm Tải lại.${S.sharedErr ? ' Chi tiết: ' + esc(S.sharedErr) : ''}</div><button id="homeMkTbl">Tạo bảng mẫu dùng chung</button></div>` : ''}`;
+  rvHomeSub();
+  $('homeDiag').onclick = () => $('btnDiag').click();
+  const qi = $('homeQ'); qi.oninput = () => { RV.q = qi.value; const pos = qi.selectionStart; renderHome(); const n = $('homeQ'); n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) {} };
+  $('homeRe').onclick = async () => { $('homeRe').disabled = true; try { S.tables = (await S.base.getTableMetaList()) || S.tables; await reloadTemplates(); toast('Đã tải lại danh sách mẫu.'); } finally { const b = $('homeRe'); if (b) b.disabled = false; } };
+  if ($('homeMkTbl')) $('homeMkTbl').onclick = async () => {
+    try { $('homeMkTbl').disabled = true; await sharedTable(true); S.sharedErr = ''; await reloadTemplates(); toast('Đã tạo bảng ' + TPL_TABLE + '.', 5000); }
+    catch (e) { toast('Không tạo được bảng: ' + (e && e.message || e), 7000); const b = $('homeMkTbl'); if (b) b.disabled = false; }
+  };
+  if ($('homePrev')) $('homePrev').onclick = () => { RV.preview = !RV.preview; rvApplyRole(); renderHome(); };
+  box.querySelectorAll('[data-new]').forEach((b) => b.onclick = () => rvNew(b.dataset.new));
+  box.querySelectorAll('.tcard').forEach((card) => card.onclick = (ev) => {
+    const a = ev.target.closest('[data-act]'); if (!a) return; const i = +card.dataset.i, act = a.dataset.act;
+    if (act === 'more') { ev.stopPropagation(); const m = card.querySelector('.tmenu'); const was = m.classList.contains('show'); box.querySelectorAll('.tmenu.show').forEach((x) => x.classList.remove('show')); m.classList.toggle('show', !was); return; }
+    if (act === 'print' || act === 'edit') rvOpen(i, act === 'print' ? 'print' : 'design');
+    else if (act === 'dup') rvDup(i); else if (act === 'del') rvDel(i);
+  });
+}
+document.addEventListener('click', (e) => { if (!e.target.closest('.tmenu,[data-act="more"]')) document.querySelectorAll('.tmenu.show').forEach((x) => x.classList.remove('show')); });
+function rvOpen(i, tab) { S.rvFresh = false; S.tab = RV.role === 'viewer' ? 'print' : tab; RV.mode = ''; $('selTpl').value = String(i); $('selTpl').onchange(); rvShowHome(false); }
+function rvBegin(tpl, fresh) { S.cur = null; S.tpl = tpl; S.rvFresh = !!fresh; RV.mode = ''; $('tplName').value = tpl.name || ''; $('selTpl').value = ''; S.overrides = {}; S.rect = null; S.logoDirty = !!tpl.logo; S.tab = 'design'; rvShowHome(false); }
+function rvDup(i) { const e = S.templates[i]; if (!e) return; const t = normalizeTpl(JSON.parse(JSON.stringify(e.tpl))); t.id = uid(); t.name = (t.name || 'Mẫu') + ' (bản sao)'; $('saveWhere').value = e.scope === 'personal' ? 'personal' : 'shared'; rvBegin(t); toast('Đã nhân bản. Sửa xong bấm "Lưu mẫu".'); }
+async function rvDel(i) { const e = S.templates[i]; if (!e) return; $('selTpl').value = String(i); S.cur = e; await $('btnDel').onclick(); renderHome(); }
+const blankTpl = () => normalizeTpl({ name: '', paper: 'A4', font: 'Times New Roman', fs: 11, cols: Array(8).fill(12.5), rows: Array.from({ length: 14 }, () => ({ cells: Array.from({ length: 8 }, () => ({})) })) });
+function rvNew(kind) {
+  if (kind === 'blank') { rvBegin(blankTpl(), true); return; }
+  if (kind === 'import') {
+    openModal('Nhập mẫu có sẵn', `<div class="ngrid" style="grid-template-columns:1fr 1fr"><button class="ncard" id="impOff"><span class="ni">${ICO.imp}</span><div><b>File Word / Excel</b><span>.docx hoặc .xlsx: bảng và chữ trong file thành mẫu in</span></div></button><button class="ncard" id="impJson"><span class="ni">${ICO.imp}</span><div><b>File mẫu JSON</b><span>File đã xuất từ Print Studio (Sao lưu mẫu)</span></div></button></div>`);
+    $('impOff').onclick = () => { $('modal').classList.remove('show'); rvShowHome(false); $('btnImpOff').click(); };
+    $('impJson').onclick = () => { $('modal').classList.remove('show'); rvShowHome(false); $('btnImp').click(); };
+  }
+}
+function rvTplChanged() { if (!S.rv) return; rvFillSrc(); rvSync(); }
+$('btnHome').onclick = () => rvShowHome(true);
+$('btnUseDef').onclick = () => { const m = S.tpl.modes; S.tpl = defaultTpl(); S.tpl.modes = m; S.rvFresh = false; RV.lastTpl = S.tpl; S.rect = null; render(); toast('Đã lấy mẫu mặc định. Chỉnh lại rồi bấm "Lưu mẫu".'); };
+$('btnHideDef').onclick = () => { S.rvFresh = false; render(); };
+
+// Mẫu cài sẵn trong extension (src/templates.json) + vẽ lại danh mục mỗi khi danh sách mẫu đổi
+const _reloadTemplates = reloadTemplates;
+reloadTemplates = async function (keepId) {
+  await _reloadTemplates(keepId);
+  const bi = Array.isArray(window.__PS_BUILTIN__) ? window.__PS_BUILTIN__ : [];
+  if (bi.length) { S.templates = S.templates.filter((e) => e.scope !== 'builtin').concat(bi.map((t) => ({ scope: 'builtin', tpl: normalizeTpl(t) }))); renderTplSelect(keepId); }
+  if (S.rv) renderHome();
+};
+// Tạo bảng _PrintTemplates: SDK record view (bản cũ) có thể không nhận addTable kèm danh sách cột → tạo bảng trước, thêm cột sau
+const _sharedTable = sharedTable;
+sharedTable = async function (create) {
+  try { return await _sharedTable(create); }
+  catch (e0) {
+    if (!create) throw e0;
+    dlog('tpltable.fallback', String(e0 && e0.message || e0));
+    let metas = (await withTimeout(S.base.getTableMetaList(), 15000)) || [], m = metas.find((t) => t.name === TPL_TABLE), lastErr = e0;
+    if (!m) {
+      let r = null;
+      for (const tryAdd of [() => S.base.addTable({ name: TPL_TABLE, fields: [] }), () => S.base.addTable({ name: TPL_TABLE }), () => S.base.addTable(TPL_TABLE)]) {
+        try { r = await withTimeout(tryAdd(), 20000); break; } catch (e) { lastErr = e; dlog('tpltable.add', String(e && e.message || e)); }
+      }
+      metas = (await withTimeout(S.base.getTableMetaList(), 15000)) || [];
+      m = metas.find((t) => t.name === TPL_TABLE) || (r && { id: typeof r === 'string' ? r : (r.tableId || r.table_id || r.id) });
+      if (!m || !m.id) throw new Error('Không tạo được bảng ' + TPL_TABLE + ': ' + (lastErr && lastErr.message || lastErr) + '. Kiểm tra quyền tạo bảng của app trong Developer Console (Permissions & Scopes).');
+    }
+    const table = await withTimeout(S.base.getTableById(m.id), 15000), fm = (await withTimeout(table.getFieldMetaList(), 15000)) || [];
+    for (const n of SH_FIELDS) if (!fm.some((x) => x.name === n)) { try { await withTimeout(table.addField({ type: FT('Text', 1), name: n }), 15000); } catch (e) { dlog('tpltable.field', n + ': ' + String(e && e.message || e)); } }
+    if (!fm.some((x) => x.name === LOGO_COL)) { try { await withTimeout(table.addField({ type: FT('Attachment', 17), name: LOGO_COL }), 15000); } catch (e) {} }
+    S.tables = (await S.base.getTableMetaList()) || S.tables;
+    return await _sharedTable(false);
+  }
+};
+
+/* ---- Khung soạn: tên mẫu + Lưu trên thanh tiêu đề, cột trái theo tab, kéo rộng cột trái ---- */
+const _render = render;
+render = function () {
+  if (S.rv && S.tpl !== RV.lastTpl) { RV.lastTpl = S.tpl; rvModes(); setTimeout(rvTplChanged, 0); }
+  _render();
+  if (!S.rv) return;
+  if (RV.role === 'viewer' && S.tab !== 'print') S.tab = 'print';
+  const pr = S.tab === 'print';
+  document.body.classList.toggle('rvprint', pr);
+  document.body.classList.toggle('rvnoside', pr && !listManual(S.tpl).length);
+  $('rvBanner').style.display = !pr && S.rvFresh ? '' : 'none';
+  if (document.activeElement !== $('hdrName')) $('hdrName').value = $('tplName').value;
+  rvModeBar();
+};
+$('hdrName').oninput = () => { $('tplName').value = $('hdrName').value; };
+$('hdrName').onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); $('btnSaveTop').click(); } };
+$('btnSaveTop').onclick = async () => {
+  if (!$('hdrName').value.trim()) { toast('Đặt tên mẫu ở ô cạnh nút quay lại trước khi lưu.'); $('hdrName').focus(); return; }
+  $('tplName').value = $('hdrName').value.trim(); $('btnSaveTop').disabled = true;
+  try { rvModes(); await $('btnSave').onclick(); S.rvFresh = false; render(); } finally { $('btnSaveTop').disabled = false; }
+};
+function rvShell() {
+  const h = (id, t) => { const el = $(id) && $(id).querySelector('h3'); if (el) el.textContent = t; };
+  h('secTpl', 'Lưu trữ mẫu'); h('secManual', 'Điền nhanh'); h('secChips', 'Biến trong mẫu');
+  for (const id of ['selTpl', 'tplName']) { const l = $(id).closest('label'); if (l) l.classList.add('rvhide'); }
+  for (const id of ['btnSave', 'btnNew']) $(id).classList.add('rvhide');
+  $('btnImpOff').closest('.row').classList.add('rvhide');
+  $('btnDel').textContent = 'Xóa mẫu này';
+  const side = document.querySelector('.side'); side.appendChild($('secTpl'));
+  // tay kéo đổi độ rộng cột trái (nhớ theo trình duyệt)
+  const g = document.createElement('div'); g.id = 'sideGrip'; g.title = 'Kéo để đổi độ rộng cột thiết lập'; side.after(g);
+  const lay = document.querySelector('.layout'), setW = (w) => lay.style.setProperty('--sw', Math.max(260, Math.min(620, w)) + 'px');
+  const u0 = uiLoad(); if (u0.rvSideW) setW(u0.rvSideW);
+  g.onpointerdown = (e) => {
+    e.preventDefault(); g.setPointerCapture(e.pointerId); const x0 = e.clientX, w0 = side.getBoundingClientRect().width; document.body.classList.add('dragw');
+    g.onpointermove = (ev) => setW(w0 + ev.clientX - x0);
+    g.onpointerup = () => { g.onpointermove = null; document.body.classList.remove('dragw'); const u = uiLoad(); u.rvSideW = Math.round(side.getBoundingClientRect().width); uiSave(u); fit(); };
+  };
+}
+async function rvStart() {
+  $('secSrc').style.display = ''; rvShell();
+  try { $('selTable').closest('label').classList.add('rvhide'); $('selView').closest('.row').classList.add('rvhide'); } catch (e) {}
+  S.mode = 'one';
+  if (Array.isArray(window.__PS_BUILTIN__) && window.__PS_BUILTIN__.length) await reloadTemplates();
+  await rvDetectRole();
+  rvFillSrc(); renderHome(); await rvSync(); renderHome();
+}
+
+/* ---- v5.3: phân quyền theo quyền sửa bảng _PrintTemplates (Cách A) ---- */
+RV.role = 'designer'; RV.realRole = 'designer'; RV.preview = false; RV.roleHow = '';
+async function rvDetectRole() {
+  let role = 'designer', how = '';
+  const tpl = S.tables.find((t) => t.name === TPL_TABLE);
+  if (!tpl) how = 'Base chưa có bảng ' + TPL_TABLE + ': mọi người được thiết kế';
+  else if (typeof bitable.base.getPermission !== 'function') how = 'SDK record view không có getPermission: tạm cho mọi người thiết kế';
+  else {
+    const PE = (SDK && SDK.PermissionEntity) || {}, OT = (SDK && SDK.OperationType) || {};
+    const ask = (entity) => withTimeout(bitable.base.getPermission({ entity, param: { tableId: tpl.id }, type: OT.Editable || 'editable' }), 6000);
+    try { const ok = await ask(PE.Record || 'Record'); role = ok ? 'designer' : 'viewer'; how = 'getPermission(Record, sửa ' + TPL_TABLE + ') = ' + ok; }
+    catch (e) {
+      try { const ok = await ask(PE.Table || 'Table'); role = ok ? 'designer' : 'viewer'; how = 'getPermission(Record) lỗi (' + (e && e.message || e) + '); getPermission(Table) = ' + ok; }
+      catch (e2) { how = 'getPermission lỗi: ' + (e2 && e2.message || e2) + ': tạm cho thiết kế'; }
+    }
+  }
+  RV.realRole = role; RV.roleHow = how; dlog('rv.role', { role, how }); rvApplyRole();
+}
+function rvApplyRole() {
+  RV.role = RV.realRole === 'viewer' || RV.preview ? 'viewer' : 'designer';
+  document.body.classList.toggle('rvviewer', RV.role === 'viewer');
+  if (RV.role === 'viewer') S.tab = 'print';
+}
+
 S.tpl = defaultTpl(); render(); renderChips(); boot();
 
 </script>
