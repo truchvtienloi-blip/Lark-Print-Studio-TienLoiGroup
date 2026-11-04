@@ -1903,7 +1903,7 @@ $('btnDiag').onclick = async () => {
     await tryGet('dashboard.state', async () => dashboard.state);
     await tryGet('dashboard.getConfig', async () => { const c = await dashboard.getConfig(); const cc = c && c.customConfig ? { ...c.customConfig, d: c.customConfig.d ? '(' + c.customConfig.d.length + ' ký tự)' : undefined } : null; return { dataConditions: c && c.dataConditions, customConfig: cc }; });
     if (dashboard.getTableDataRange && S.tableMeta) await tryGet('getTableDataRange', () => dashCall((d) => d.getTableDataRange(S.tableMeta.id), 'diag.range'));
-    info.baseToken = (S.srcToken || S.selfToken || '').slice(0, 6) + '…';
+    info.baseToken = (S.srcToken || S.selfToken || (S.liveCfg && (S.liveCfg.dataToken || S.liveCfg.baseToken || (S.liveCfg.__dc && S.liveCfg.__dc.baseToken))) || '').slice(0, 6) + '…';
     await tryGet('viewer', async () => { const id = await bitable.bridge.getUserId(); return id ? String(id).slice(0, 4) + '…' + String(id).slice(-4) : '(không rõ)'; });
     info.liveRows = S.liveSeen ? S.liveSeen.size : 0; info.snapRows = (S.snapRows || 0);
     await tryGet('savedAt', async () => { const c = await dashboard.getConfig(); const t = c && c.customConfig && c.customConfig.ts; return t ? new Date(t).toLocaleString('vi-VN') : '(khối lưu bằng bản cũ, chưa có dấu thời gian)'; });
@@ -2030,12 +2030,13 @@ async function previewPack(silent) {
   await baseTokenNow();
   let pv; try { pv = await dashCall((d) => withTimeout(d.getPreviewData(packCondition(packId, range)), 15000), 'pack.preview'); } catch (e) { dlog('pack.preview.error', String(e && e.message || e)); if (!silent) toast('Lark không cho nhóm theo cột này: ' + (e && e.message || e), 9000); return { ok: false, msg: 'Lark không cho nhóm theo cột gói: ' + (e && e.message || e) }; }
   const rows = unpackRows(pv, cols), parts = rows.parts || 0;
-  dlog('pack.preview', { rows: rows.length, parts, need: cols.length, sample: JSON.stringify((pv || []).slice(0, 2)).slice(0, 400) });
+  const lens = (Array.isArray(pv) ? pv.slice(1) : []).map((r) => String((r && r[0] && (r[0].text || r[0].value)) || '').length), maxLen = lens.length ? Math.max(...lens) : 0;
+  dlog('pack.preview', { rows: rows.length, parts, need: cols.length, maxLen, sample: JSON.stringify((pv || []).slice(0, 2)).slice(0, 400) });
   let ok = rows.length > 0 && parts === cols.length, msg;
   if (!rows.length) msg = 'Cột gói chưa có dữ liệu (công thức trống hoặc bảng rỗng).';
   else if (rows.tagged && rows.missing.length) msg = `Cột gói còn thiếu: ${rows.missing.map((g) => g.name).join(', ')}. Bấm "Tạo / cập nhật cột gói" và dán lại công thức mới.`;
   else if (parts !== cols.length) msg = `Cột gói có ${parts} phần nhưng mẫu cần ${cols.length} cột. Bấm "Tạo / cập nhật cột gói" để làm mới công thức.`;
-  else msg = `Cột gói hoạt động: Lark trả ${rows.length} dòng${S.order.length ? ' / bảng có ' + S.order.length + ' bản ghi' : ''}, đủ ${cols.length} cột.`;
+  else msg = `Cột gói hoạt động: Lark trả ${rows.length} dòng${S.order.length ? ' / bảng có ' + S.order.length + ' bản ghi' : ''}, đủ ${cols.length} cột; chuỗi gói dài nhất ${maxLen} ký tự.`;
   if (ok && !rows.tagged) { ok = false; msg = 'Cột gói đang dùng công thức kiểu cũ (dữ liệu xếp theo thứ tự nên dễ bị lệch vị trí khi thứ tự cột thay đổi). Bấm "Tạo / cập nhật cột gói" và dán công thức mới có gắn mã cột.'; }
   if (!silent) toast(msg, 9000);
   return { ok, msg, rows: rows.length };
@@ -2132,7 +2133,25 @@ async function refreshLive(c, quiet) {
   try {
     let data; try { data = await withTimeout(dashboard.getData(), 25000); } catch (e) { const tk = c.dataToken || c.baseToken; if (!tk) throw e; dlog('getData.base', String(e && e.message || e)); data = await withTimeout((await dashFor(tk)).getData(), 25000); }
     const ungrouped = (d) => !Array.isArray(d) || d.length < 2 || !d[0] || d[0].length < 2;
-    if ((rows0(data) === 0 || ungrouped(data)) && (c.dataToken || c.baseToken)) { try { const d2 = await dashFor(c.dataToken || c.baseToken); if (d2 !== dashboard) { const alt = await withTimeout(d2.getData(), 25000); if (rows0(alt) > 0 && !ungrouped(alt)) { data = alt; dlog('getData.viaBase', rows0(alt)); } } } catch (e) {} }
+    if (rows0(data) === 0 || ungrouped(data)) {
+      // Base App: dashboard chung có thể không thuộc base chứa bảng → thử mọi đường: dashboard của từng base, getData / getPreviewData theo điều kiện đã lưu (như v5.6.2)
+      const shape = (d) => (Array.isArray(d) ? `${d.length - 1} dòng × ${(d[0] || []).length} cột: ` + JSON.stringify(d.slice(0, 2)).slice(0, 160) : String(d));
+      const cond = c.__dc || null, toks = [...new Set([c.dataToken, c.baseToken, cond && cond.baseToken].filter(Boolean))];
+      dlog('live.try', 'chung getData → ' + shape(data));
+      const tries = [];
+      for (const tk of toks) {
+        let d2 = null; try { d2 = await dashFor(tk); } catch (e) { dlog('live.try', 'dashFor ' + tk.slice(0, 6) + ': ' + String(e && e.message || e)); }
+        if (d2 && d2 !== dashboard) { tries.push(['base ' + tk.slice(0, 6) + ' getData', () => d2.getData()]); if (cond && d2.getPreviewData) tries.push(['base ' + tk.slice(0, 6) + ' getPreviewData', () => d2.getPreviewData(cond)]); }
+        else dlog('live.try', 'base ' + tk.slice(0, 6) + ': không lấy được dashboard riêng của base (dùng dashboard chung)');
+      }
+      if (cond && dashboard.getPreviewData) tries.push(['chung getPreviewData', () => dashboard.getPreviewData(cond)]);
+      // Lần mở đầu Lark có thể trả tổng số trước khi áp nhóm đã lưu: đợi một nhịp rồi đọc lại
+      tries.push(['chung getData (đọc lại)', async () => { await sleep(1500); return dashboard.getData(); }]);
+      for (const [label, fn] of tries) {
+        try { const alt = await withTimeout(fn(), 25000); dlog('live.try', label + ' → ' + shape(alt)); if (rows0(alt) > 0 && !ungrouped(alt)) { data = alt; dlog('getData.viaBase', label); break; } }
+        catch (e) { dlog('live.try', label + ' lỗi: ' + String(e && e.message || e)); }
+      }
+    }
     if (!quiet) dlog('data.shape', JSON.stringify(data && data.slice(0, 2)).slice(0, 500));
     const rows = unpackRows(data, c.packCols || []);
     const need = (c.packCols || []).length;
@@ -2140,6 +2159,7 @@ async function refreshLive(c, quiet) {
     if (rows.tagged && rows.missing.length) throw new Error('Cột gói thiếu dữ liệu của: ' + rows.missing.map((g) => g.name).join(', ') + '. Mở sửa khối → Tạo / cập nhật cột gói → dán lại công thức → Lưu khối.');
     if (rows.parts !== need) throw new Error(`Lark trả ${rows.length} dòng nhưng mỗi dòng có ${rows.parts || 0}/${need} phần — cột gói chưa khớp mẫu hoặc khối chưa lưu nhóm theo cột gói. Hãy sửa khối, bấm "Tạo / cập nhật cột gói" rồi Lưu khối.`);
     applyLiveRows(rows, c); renderRecList(); render(); S.liveAt = Date.now();
+    if (S.liveErr) { S.liveErr = false; setStatus('ok', 'Đã kết nối Lark Base'); }
     const lostF = activeFilters().filter((f) => !(c.packCols || []).some((g) => g.id === f.f));
     snapNote(lostF.length ? 'Bộ lọc của khối đang bị bỏ qua vì cột gói chưa có cột dùng để lọc. Mở sửa khối → Tạo / cập nhật cột gói → dán lại công thức → Lưu khối.' : '');
   } finally { S.liveBusy = false; }
@@ -2177,7 +2197,8 @@ async function applyDash(c) {
       try { await refreshLive(c, false); startLive(c); }
       catch (e) {
         dlog('getData.fail', String(e && e.message || e));
-        if (!(c.snap && c.snap.rows)) throw new Error('Không đọc được dữ liệu: ' + (e && e.message || e) + ' (hãy sửa khối, bấm Kiểm tra cột gói rồi Lưu khối).');
+        // Không có bản chụp: vẫn báo lỗi nhưng không dừng hẳn — khối tự đọc lại khi Lark báo dữ liệu đổi, khi quay lại tab và mỗi 30 giây
+        if (!(c.snap && c.snap.rows)) { S.liveErr = true; snapNote('Không đọc được dữ liệu: ' + (e && e.message || e) + ' Khối sẽ tự thử lại; nếu vẫn lỗi hãy bấm ⚙ và gửi chẩn đoán (mục log → live.try).'); startLive(c); renderRecList(); return; }
         snapNote('Dữ liệu chụp lúc ' + snapDate(c.snap.at) + '. Chưa đọc được dữ liệu mới (' + (e && e.message || e) + '); khối sẽ tự thử lại.');
         startLive(c);
       }
@@ -2342,7 +2363,7 @@ async function boot() {
     const dc = dm === 'Config' || viewOnly ? await getDashCfg() : null;
     if (dc) {
       const cc = { ...dc.customConfig }; const dcond = [].concat(dc.dataConditions || [])[0]; cc.__dc = dcond || null; if (!cc.baseToken && !cc.dataToken && dcond && dcond.baseToken && dcond.tableId === cc.tableId) cc.baseToken = dcond.baseToken;
-      await applyDash(cc); setStatus('ok', 'Đã kết nối Lark Base'); dlog('boot.ready', Math.round(performance.now() - t0) + 'ms');
+      await applyDash(cc); setStatus(S.liveErr ? 'err' : 'ok', S.liveErr ? 'Chưa đọc được dữ liệu' : 'Đã kết nối Lark Base'); dlog('boot.ready', Math.round(performance.now() - t0) + 'ms');
     } else if (viewOnly) {
       setStatus('wait', 'Khối chưa cấu hình'); snapNote('Khối chưa được cấu hình. Hãy sửa khối và bấm Lưu khối.');
     } else {
