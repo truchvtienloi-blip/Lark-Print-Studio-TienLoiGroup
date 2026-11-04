@@ -97,16 +97,13 @@ button.primary{background:var(--grad);border:0;box-shadow:0 2px 8px #1f56a040}
 #hdrName{display:none;font-weight:700;font-size:14px;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 body.dashview #hdrName{display:block}
 /* Kiểu in: thanh chọn dạng viên thuốc (ẩn được từng kiểu mà không vỡ viền) */
-.seg{border:0;background:#f2f4f8;border-radius:10px;padding:3px;gap:3px}
-.seg label{border:0!important;border-radius:8px;background:transparent;color:#4b5563;padding:6px 4px}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:0;background:#f2f4f8;border-radius:10px;padding:3px;gap:3px}
+.seg label{display:flex;align-items:center;justify-content:center;gap:3px;border:0!important;border-radius:8px;background:transparent;color:#4b5563;padding:5px 4px;font-size:12px;line-height:1.25;white-space:nowrap}
 .seg label:has(input:checked){background:#fff!important;color:var(--navy)!important;box-shadow:0 1px 3px #1b1f5a26}.seg input:checked+span{color:inherit}
-.seg[hidden],.seg label[hidden]{display:none}.seg label.off{opacity:.5;text-decoration:line-through}
-.allow{display:flex;flex-direction:column;gap:6px;padding:8px 10px;border:1px solid #b9cbe6;background:#f6f9fd;border-radius:10px}
-.allow[hidden]{display:none}.allow b{font-size:12px;color:var(--navy)}
-.achk{display:flex;flex-direction:column;gap:2px}
-.achk label{display:flex;align-items:center;gap:7px;font-size:12.5px;padding:4px 6px;border-radius:6px;cursor:pointer;background:#fff;border:1px solid var(--line)}
-.achk label:hover{border-color:#b9cbe6}.achk input{width:auto;margin:0}.achk span{flex:1}
-.achk em{font-style:normal;font-size:10.5px;font-weight:700;color:#fff;background:var(--blue);border-radius:20px;padding:1px 7px}
+.seg[hidden],.seg label[hidden]{display:none}.seg label.off span{opacity:.45;text-decoration:line-through}
+.seg .eye{display:none;flex:0 0 18px;height:18px;border-radius:5px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231f56a0' stroke-width='2.2'%3E%3Cpath d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E") no-repeat center/14px}.seg .eye:hover{background-color:#e3eaf5}
+body.dashedit .seg .eye{display:inline-block}.seg label.off .eye{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238f959e' stroke-width='2.2'%3E%3Cpath d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/%3E%3Cpath d='M3 3l18 18'/%3E%3C/svg%3E")}
+#modeHint,#allowHint{font-size:11px;line-height:1.35}#allowHint[hidden],#modeHint[hidden],#linkRow[hidden]{display:none}#secMode{gap:6px}
 /* Bảng chọn biến (giống bản Record View): danh sách có loại cột, nhóm, tab lọc */
 .ctabs{display:flex;gap:3px;background:#f2f4f8;border-radius:10px;padding:3px}
 .ctabs button{flex:1;border:0;background:transparent;padding:5px 6px;font-size:12px;border-radius:8px;color:#4b5563}
@@ -120,10 +117,10 @@ body.dashview #hdrName{display:block}
 .vrow .vu{flex:0 0 auto;font-size:10px;font-weight:700;color:var(--blue);background:#fff;border:1px solid #b9cbe6;border-radius:20px;padding:0 6px;margin-top:2px;display:none}.vrow.used .vu{display:inline-block}
 .vrow[data-g=sys]{background:#fff8ee;border-color:#f6e2c2}.vrow[data-g=sys]:hover{background:#ffefd8}.vrow[data-g=sys] .ty{background:#fff3e0;color:#a65400}
 .vrow[data-g=sum] .ty{background:#e9f0fa;color:var(--blue)}
+.vrow[data-g=dt]{background:#f1f9f5;border-color:#d6eee2}.vrow[data-g=dt]:hover{background:#e3f4eb;border-color:#a9dcc2}.vrow[data-g=dt] .ty{background:#e6f5ee;color:#0b7a50}
 .vlist .nohit{display:block;padding:10px;font-size:12px;color:#8f959e}
 /* Độ rộng cột hiện ngay trên tiêu đề cột (thẳng hàng với cột thật), bấm đúp để nhập */
 .chl{display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap}.chl b{font-weight:700}
-.chl i{font-style:normal;font-weight:500;font-size:9.5px;color:#8f959e}.chl.on i{color:var(--blue)}.chl.narrow i,body.nocolw .chl i{display:none}
 .chl.hl{background:#e9f0fa}
 .chlin{position:absolute;top:0;height:18px;z-index:8;padding:0 2px!important;border:1.5px solid var(--blue)!important;border-radius:3px!important;font:600 10.5px Arial,sans-serif!important;text-align:center;background:#fff}
 #printRoot{display:none}
@@ -142,7 +139,7 @@ body.dashview #hdrName{display:block}
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v4.1</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v4.2</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sec" id="secData"><h3>1 · Dữ liệu</h3>
@@ -153,14 +150,14 @@ body.dashview #hdrName{display:block}
  </div>
  <div class="sec" id="secMode"><h3>2 · Chế độ in</h3>
   <div class="seg" id="modeSeg">
-   <label><input type="radio" name="mode" value="one" checked><span>1 bản ghi</span></label>
-   <label><input type="radio" name="mode" value="multi"><span>Gộp 1 phiếu</span></label>
-   <label><input type="radio" name="mode" value="each"><span>Mỗi dòng 1 phiếu</span></label>
+   <label><input type="radio" name="mode" value="one" checked><span>1 bản ghi</span><i class="eye"></i></label>
+   <label><input type="radio" name="mode" value="multi"><span>Gộp 1 phiếu</span><i class="eye"></i></label>
+   <label><input type="radio" name="mode" value="each"><span>Mỗi dòng 1 phiếu</span><i class="eye"></i></label>
+   <label><input type="radio" name="mode" value="link"><span>Phiếu &amp; chi tiết</span><i class="eye"></i></label>
   </div>
   <p class="hint" id="modeHint"></p>
-  <div class="allow" id="allowBox" hidden><b>Kiểu in hiển thị khi xem khối</b><span class="hint">Người xem khối chỉ thấy và chọn được các kiểu đã bật. Kiểu đang chọn ở trên là kiểu mặc định khi mở khối.</span>
-   <div class="achk"><label><input type="checkbox" value="one"><span>1 bản ghi</span></label><label><input type="checkbox" value="multi"><span>Gộp 1 phiếu</span></label><label><input type="checkbox" value="each"><span>Mỗi dòng 1 phiếu</span></label></div>
-  </div>
+  <p class="hint" id="allowHint" hidden>Bấm <b>👁</b> để ẩn / hiện từng kiểu khi xem khối · kiểu đang chọn là mặc định.</p>
+  <div class="lbl" id="linkRow" hidden>Cột liên kết tới bảng chi tiết<select id="selLink"></select><span class="hint" id="linkInfo" style="font-weight:400"></span></div>
   <label class="lbl" id="grpRow" hidden style="display:none">Gom bản ghi theo cột (ví dụ Mã phiếu)<select id="selGroup"></select><span class="hint" style="font-weight:400">Mỗi nhóm in thành 1 phiếu riêng. Bấm 1 nhóm để chọn cả nhóm (bấm lại để bỏ chọn và thu gọn), bấm ▸ để mở và bỏ bớt dòng.</span></label>
  </div>
  <div class="sec" id="secRec"><h3>3 · Chọn bản ghi <span id="recCount" style="text-transform:none;font-weight:500"></span></h3>
@@ -195,7 +192,7 @@ body.dashview #hdrName{display:block}
    <button id="tMerge" class="ib" title="Gộp ô đang chọn (chọn ô đã gộp thì bỏ gộp)"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M7 12h10M9 9.5 6.5 12 9 14.5M15 9.5l2.5 2.5-2.5 2.5"/></svg></button>
    <div class="tm"><button class="tmb ib" title="Thêm / xóa dòng"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9.5h18M3 14.5h18"/></svg><span class="car">▾</span></button><div class="tmm"><button id="tRowAdd">Thêm dòng bên dưới</button><button id="tRowDel">Xóa dòng đang chọn</button></div></div>
    <div class="tm"><button class="tmb ib" title="Thêm / xóa cột"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M9 4v16M15 4v16"/></svg><span class="car">▾</span></button><div class="tmm"><button id="tColAdd">Thêm cột bên phải</button><button id="tColDel">Xóa cột đang chọn</button></div></div>
-   <button id="tRep" title="Dòng đang chọn sẽ lặp theo từng bản ghi (bảng hàng hóa). Bấm lại để tắt" class="ib"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a8 8 0 0 1 14-4l2 2M20 4v4h-4M20 14a8 8 0 0 1-14 4l-2-2M4 20v-4h4"/></svg></button><button id="tPb" title="Bắt đầu trang mới từ dòng đang chọn. Bấm lại để bỏ" class="ib"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v5h12V3M6 21v-5h12v5"/><path d="M3 12h3M9 12h2M13 12h2M18 12h3"/></svg></button><div class="tm"><button class="tmb ib" title="Hiển thị khi thiết kế"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="car">▾</span></button><div class="tmm tchk"><label title="Đường ranh giới các trang khi in"><input type="checkbox" id="chkGuide" checked> Vạch trang</label><label><input type="checkbox" id="chkColHead" checked> Tiêu đề cột (A, B, C…)</label><label title="Hiện số độ rộng ngay trên tiêu đề từng cột. Bấm đúp tiêu đề cột để nhập độ rộng"><input type="checkbox" id="chkColW" checked> Độ rộng cột trên tiêu đề</label><label><input type="checkbox" id="chkRowHead" checked> Số dòng (1, 2, 3…)</label></div></div><button id="tFx" title="Chèn công thức tính toán vào ô">ƒx Công thức</button>
+   <button id="tRep" title="Dòng đang chọn sẽ lặp theo từng bản ghi (bảng hàng hóa). Bấm lại để tắt" class="ib"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a8 8 0 0 1 14-4l2 2M20 4v4h-4M20 14a8 8 0 0 1-14 4l-2-2M4 20v-4h4"/></svg></button><button id="tPb" title="Bắt đầu trang mới từ dòng đang chọn. Bấm lại để bỏ" class="ib"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v5h12V3M6 21v-5h12v5"/><path d="M3 12h3M9 12h2M13 12h2M18 12h3"/></svg></button><button id="tSkip" class="ib" title="Bỏ dòng lặp trống: khi in, dòng lặp nào mà mọi biến dữ liệu trong dòng đều trống thì không in dòng đó (STT tự đánh lại). Bấm lại để tắt"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="5" rx="1"/><rect x="3" y="14" width="18" height="5" rx="1" stroke-dasharray="2 2"/><path d="M8 16.5h8"/></svg> Bỏ dòng trống</button><div class="tm"><button class="tmb ib" title="Hiển thị khi thiết kế"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="car">▾</span></button><div class="tmm tchk"><label title="Đường ranh giới các trang khi in"><input type="checkbox" id="chkGuide" checked> Vạch trang</label><label><input type="checkbox" id="chkColHead" checked> Tiêu đề cột (A, B, C…)</label><label><input type="checkbox" id="chkRowHead"> Số dòng (1, 2, 3…)</label></div></div><button id="tFx" title="Chèn công thức tính toán vào ô">ƒx Công thức</button>
    <button id="tBold"><b>B</b></button><button id="tItalic"><i>I</i></button>
    <div class="tm"><button class="tmb" id="tAlignBtn" title="Căn lề chữ trong ô"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6H20"/><path d="M4 10H14"/><path d="M4 14H20"/><path d="M4 18H14"/></svg> ▾</button><div class="tmm"><button id="tL"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6H20"/><path d="M4 10H14"/><path d="M4 14H20"/><path d="M4 18H14"/></svg> Căn trái</button><button id="tC"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6H20"/><path d="M7 10H17"/><path d="M4 14H20"/><path d="M7 18H17"/></svg> Căn giữa</button><button id="tR"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6H20"/><path d="M10 10H20"/><path d="M4 14H20"/><path d="M10 18H20"/></svg> Căn phải</button></div></div>
    <div class="tm" id="bdMenu"><button class="tmb ib" title="Viền ô (kiểu và độ đậm)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 4h16v16H4zM12 4v16M4 12h16" stroke="#c9cdd4" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M4 4h16 M4 20h16 M4 4v16 M20 4v16 M12 4v16 M4 12h16" stroke="currentColor" stroke-width="2.2"/></svg><span class="car">▾</span></button><div class="tmm bdm"><div class="bdgrid"><button type="button" class="bdk" data-bd="all" title="Tất cả viền"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 4h16v16H4zM12 4v16M4 12h16" stroke="#c9cdd4" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M4 4h16 M4 20h16 M4 4v16 M20 4v16 M12 4v16 M4 12h16" stroke="currentColor" stroke-width="2.2"/></svg><span>Tất cả viền</span></button><button type="button" class="bdk" data-bd="out" title="Viền ngoài"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 4h16v16H4zM12 4v16M4 12h16" stroke="#c9cdd4" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M4 4h16 M4 20h16 M4 4v16 M20 4v16" stroke="currentColor" stroke-width="2.2"/></svg><span>Viền ngoài</span></button><button type="button" class="bdk" data-bd="in" title="Viền trong"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 4h16v16H4zM12 4v16M4 12h16" stroke="#c9cdd4" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M12 4v16 M4 12h16" stroke="currentColor" stroke-width="2.2"/></svg><span>Viền trong</span></button><button type="button" class="bdk" data-bd="none" title="Bỏ viền"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 4h16v16H4zM12 4v16M4 12h16" stroke="#c9cdd4" stroke-width="1.2" stroke-dasharray="2 2"/></svg><span>Bỏ viền</span></button><button type="button" class="bdk" data-bd="t" title="Viền trên"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 4h16v16H4zM12 4v16M4 12h16" stroke="#c9cdd4" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M4 4h16" stroke="currentColor" stroke-width="2.2"/></svg><span>Viền trên</span></button><button type="button" class="bdk" data-bd="b" title="Viền dưới"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 4h16v16H4zM12 4v16M4 12h16" stroke="#c9cdd4" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M4 20h16" stroke="currentColor" stroke-width="2.2"/></svg><span>Viền dưới</span></button><button type="button" class="bdk" data-bd="l" title="Viền trái"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 4h16v16H4zM12 4v16M4 12h16" stroke="#c9cdd4" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M4 4v16" stroke="currentColor" stroke-width="2.2"/></svg><span>Viền trái</span></button><button type="button" class="bdk" data-bd="r" title="Viền phải"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-linecap="square"><path d="M4 4h16v16H4zM12 4v16M4 12h16" stroke="#c9cdd4" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M20 4v16" stroke="currentColor" stroke-width="2.2"/></svg><span>Viền phải</span></button></div><div class="bdws"><span class="hint">Độ đậm</span><button type="button" class="bdw on" data-w="1" title="Mảnh"><i style="border-top-width:1px"></i><span>Mảnh</span></button><button type="button" class="bdw" data-w="2" title="Vừa"><i style="border-top-width:2px"></i><span>Vừa</span></button><button type="button" class="bdw" data-w="3" title="Đậm"><i style="border-top-width:3px"></i><span>Đậm</span></button></div></div></div><select id="tBorder" hidden title="Kẻ viền cho vùng ô đang chọn"><option value="">Viền…</option><option value="all">Tất cả viền</option><option value="out">Viền ngoài</option><option value="in">Viền trong</option><option value="t">Viền trên</option><option value="b">Viền dưới</option><option value="l">Viền trái</option><option value="r">Viền phải</option><option value="none">Bỏ viền</option></select><select id="tBw" hidden title="Độ đậm viền"><option value="1">Mảnh</option><option value="2">Vừa</option><option value="3">Đậm</option></select>
@@ -488,7 +485,10 @@ function fillText(text, ctx) {
     const meta = ctx.idx.get(fold(k));
     if (!meta) { if (ctx.missing) ctx.missing.add(k); return ''; }
     if (!ctx.rec) return '';
-    return ctx.fmtCell(meta, ctx.rec.fields[meta.id]);
+    const v = ctx.fmtCell(meta, ctx.rec.fields[meta.id]);
+    // Ô ngoài dòng lặp (thông tin chung): bản ghi đầu nhóm trống thì lấy giá trị ở bản ghi khác trong nhóm (dữ liệu điền qua nhiều form / nhiều lần)
+    if (v === '' && ctx.fill && ctx.recs && ctx.recs.length > 1) for (const r of ctx.recs) { const x = ctx.fmtCell(meta, r.fields[meta.id]); if (x !== '') return x; }
+    return v;
   });
 }
 /* Chuỗi đã thay biến -> HTML (an toàn), chèn logo vào vị trí {{LOGO}} */
@@ -496,13 +496,30 @@ function toHTML(str, logo) {
   return String(str).split(LOGO_MARK).map(esc).join(logo ? `<img class="logo" src="${logo}" alt="">` : '');
 }
 /* Nhân dòng "lặp theo bản ghi": trả về danh sách dòng cần in */
-function pageRows(tpl, recs) {
+function pageRows(tpl, recs, ctx) {
   const out = [];
   tpl.rows.forEach((row, r) => {
-    if (row.rep && recs.length) recs.forEach((rec, i) => out.push({ r, rec, i, row }));
+    // Bỏ dòng lặp trống (tùy chọn của mẫu): dòng lặp mà mọi biến dữ liệu đều trống thì không in, STT đánh lại liên tục
+    if (row.rep && recs.length) (tpl.skipEmpty && ctx ? recs.filter((rec) => !repRowEmpty(row, rec, ctx)) : recs).forEach((rec, i) => out.push({ r, rec, i, row }));
     else out.push({ r, rec: recs[0] || null, i: 0, row });
   });
   return out;
+}
+// Dòng lặp "trống" với 1 bản ghi: có ít nhất 1 biến dữ liệu và tất cả đều trống (bỏ qua STT, ngày in, tổng, ô điền tay…)
+const NOT_DATA = /^(STT|TODAY|NGAY|THANG|NAM|COUNT|LOGO)$/i;
+function repRowEmpty(row, rec, ctx) {
+  let any = false;
+  const filled = (name) => { const m = ctx.idx.get(fold(name)); if (!m) return null; return ctx.fmtCell(m, rec.fields[m.id]) !== ''; };
+  for (const c of row.cells) {
+    if (c.h) continue;
+    for (const mt of String(c.t || '').matchAll(/\{\{\s*([^{}]+?)\s*\}\}/g)) {
+      const k = mt[1].trim();
+      if (k[0] === '@' || NOT_DATA.test(k) || /^(SUM|AVG|MIN|MAX)\s*:/i.test(k)) continue;
+      const names = k[0] === '=' ? fxRefs(k).filter((n) => n[0] !== '@') : [k]; // công thức: trống khi mọi cột nó dùng đều trống
+      for (const n of names) { const f = filled(n); if (f === null) continue; any = true; if (f) return false; }
+    }
+  }
+  return any;
 }
 function listManual(tpl) {
   const s = new Set();
@@ -516,9 +533,12 @@ const PACK_SEP = '‖', PACK_NAME = 'Gói dữ liệu in';
 const LOGO_COL = 'Logo';
 const TPL_TABLE = '_PrintTemplates', LOCAL_KEY = 'print-studio-v2-templates', SH_FIELDS = ['Tên mẫu', 'Dữ liệu mẫu', 'Bảng áp dụng', 'Cập nhật'];
 const PAPER = { A4: [210, 297, 'A4 portrait'], A4L: [297, 210, 'A4 landscape'], A5: [148, 210, 'A5 portrait'], Letter: [215.9, 279.4, 'letter portrait'] };
-const MODE_HINT = { one: 'In 1 phiếu từ 1 bản ghi. Bấm 1 dòng trong Base là có ngay.', multi: 'Gộp nhiều bản ghi vào 1 phiếu: dòng "lặp" của mẫu sinh ra 1 dòng cho mỗi bản ghi; thông tin chung lấy từ bản ghi đầu tiên.', each: 'Mỗi bản ghi được chọn in thành 1 phiếu riêng.' };
-const MODE_HINT_VIEW = { one: 'In 1 phiếu cho bản ghi đang chọn.', multi: 'Gộp các bản ghi đã chọn vào 1 phiếu.', each: 'Mỗi bản ghi đã chọn in thành 1 phiếu riêng.' };
-const MODES = ['one', 'multi', 'each']; // kiểu in; S.allow = các kiểu người xem khối được dùng
+const MODE_HINT = { one: 'In 1 phiếu từ 1 bản ghi. Bấm 1 dòng trong Base là có ngay.', multi: 'Gộp nhiều bản ghi vào 1 phiếu: dòng "lặp" của mẫu sinh ra 1 dòng cho mỗi bản ghi; thông tin chung lấy từ bản ghi đầu tiên.', each: 'Mỗi bản ghi được chọn in thành 1 phiếu riêng.', link: 'Mỗi phiếu (bản ghi bảng này) in 1 trang; dòng lặp của mẫu lấy từ bảng chi tiết qua cột liên kết.' };
+const MODE_HINT_VIEW = { one: 'In 1 phiếu cho bản ghi đang chọn.', multi: 'Gộp các bản ghi đã chọn vào 1 phiếu.', each: 'Mỗi bản ghi đã chọn in thành 1 phiếu riêng.', link: 'Mỗi phiếu đã chọn in 1 trang kèm các dòng chi tiết.' };
+const MODES = ['one', 'multi', 'each', 'link']; // kiểu in; S.allow = các kiểu người xem khối được dùng
+const MODE_NAME = { one: '1 bản ghi', multi: 'Gộp 1 phiếu', each: 'Mỗi dòng 1 phiếu', link: 'Phiếu & chi tiết' };
+// 'link' đọc dữ liệu từ bảng chi tiết (cột gói đặt ở bảng chi tiết) nên không dùng chung 1 khối với 3 kiểu còn lại
+const modeFam = (m) => (m === 'link' ? 'link' : 'tbl');
 const diagLog = []; const dlog = (step, info) => { const e = { t: new Date().toISOString().slice(11, 19), step, info }; diagLog.push(e); if (diagLog.length > 80) diagLog.shift(); if (/^save\./.test(step)) { try { const a = JSON.parse(localStorage.getItem('ps-savelog') || '[]'); a.push(e); localStorage.setItem('ps-savelog', JSON.stringify(a.slice(-40))); } catch (x) {} } };
 const withTimeout = (p, ms) => Promise.race([p, new Promise((_, no) => setTimeout(() => no(new Error('timeout')), ms))]);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -528,7 +548,7 @@ const uid = () => 'T' + Date.now().toString(36) + Math.random().toString(36).sli
 const CE = (() => { const d = document.createElement('div'); try { d.contentEditable = 'plaintext-only'; } catch (e) {} return d.contentEditable === 'plaintext-only' ? 'plaintext-only' : 'true'; })();
 let SDK = null, bitable = null, dashboard = null, workspace = null, FieldType = null, fmtCell = makeFmt((k, d) => d);
 const S = { base: null, srcToken: '', tables: [], table: null, tableMeta: null, metas: [], idx: new Map(), labelId: '', recMap: new Map(), order: [], sel: [], mode: 'one', tab: 'design',
-  tpl: null, cur: null, templates: [], manual: {}, overrides: {}, rect: null, loadSeq: 0, loading: false, searchText: new Map(), shown: 300, allow: MODES.slice(), chipTab: 'all' };
+  tpl: null, cur: null, templates: [], manual: {}, overrides: {}, rect: null, loadSeq: 0, loading: false, searchText: new Map(), shown: 300, allow: ['one', 'multi', 'each'], chipTab: 'all', link: null, dMetas: null, dRecMap: new Map(), dTable: null, linkSeq: 0 };
 
 /* ============ Mẫu ============ */
 const C = (t = '', o = {}) => ({ t, cs: 1, rs: 1, h: false, b: false, i: false, a: 'l', br: false, fs: 0, bg: '', co: '', ...o });
@@ -664,6 +684,8 @@ function getPages() {
   if (!recs.length) return [];
   if (S.mode === 'each') return recs.map((r) => [r]);
   if (S.mode === 'one') return [[recs[0]]];
+  // Phiếu & chi tiết: mỗi phiếu 1 trang; các dòng lặp chạy theo dòng của bảng chi tiết (mỗi dòng mang kèm thông tin phiếu)
+  if (S.mode === 'link') return recs.map((h) => { const ds = detailsOf(h); return ds.length ? ds.map((d) => ({ recordId: h.recordId + '/' + d.recordId, fields: { ...h.fields, ...d.fields } })) : [h]; });
   const gm = grpMeta();
   if (gm) { const m = new Map(); for (const r of recs) { const k = grpKey(r, gm); if (!m.has(k)) m.set(k, []); m.get(k).push(r); } return [...m.values()]; }
   return [recs];
@@ -676,8 +698,8 @@ function printHTML(missing) {
     const ctx = { recs, idx: S.idx, manual: S.manual, now, fmtCell, missing, rec: null, i: 0 };
     const open = `<div class="page print" style="${pageStyle()}"><table>${colGroup()}<tbody>`;
     let h = open, started = false;
-    for (const row of pageRows(S.tpl, recs)) {
-      ctx.rec = row.rec; ctx.i = row.i;
+    for (const row of pageRows(S.tpl, recs, ctx)) {
+      ctx.rec = row.rec; ctx.i = row.i; ctx.fill = !row.row.rep;
       if (row.row.pb && row.i === 0 && started) h += '</tbody></table></div>' + open; // ngắt trang thủ công
       started = true;
       h += '<tr>';
@@ -708,7 +730,7 @@ function render() {
   NUMLOC = S.tpl.nf === 'en' ? 'en-US' : 'vi-VN'; $('tNum').value = S.tpl.nf === 'en' ? 'en' : 'vi'; $('tDp').value = NUMDP === null ? '' : String(NUMDP);
   $('tPaper').value = S.tpl.paper; $('tFont').value = S.tpl.font;
   $('pageCss').textContent = `@page{size:${paperDims()[2]};margin:10mm}`;
-  $('hdrName').textContent = S.tpl.name || 'Mẫu in'; if (S.tab === 'design') markUsedChips();
+  $('hdrName').textContent = S.tpl.name || 'Mẫu in'; $('tSkip').classList.toggle('act', !!S.tpl.skipEmpty); if (S.tab === 'design') markUsedChips();
   renderManual(); applySel(); fit(); drawGuides(); drawGrips();
   st.scrollTop = top;
 }
@@ -737,13 +759,11 @@ function fit() {
   $('pages').style.zoom = Math.min(1, Math.max(0.3, avail / w));
 }
 window.addEventListener('resize', fit);
-// Độ rộng cột hiển thị ngay trên tiêu đề cột (A 12, B 22…) nên luôn thẳng hàng với cột thật; bấm đúp tiêu đề để nhập số
+// Tiêu đề cột chỉ hiện chữ cột (A, B, C…); độ rộng xem ở chú thích, bấm đúp tiêu đề để nhập số ngay tại cột đó
 const fmtW = (w) => String(Math.round((+w || 1) * 10) / 10);
-function colLabel(lab, i, pxW) {
-  const w = S.tpl.cols[i];
-  lab.innerHTML = `<b>${colName(i)}</b><i>${fmtW(w)}</i>`;
-  lab.classList.toggle('narrow', pxW < 30); // cả trang cùng tỉ lệ thu phóng nên so theo px của trang là đủ
-  lab.title = `Cột ${colName(i)} · độ rộng ${fmtW(w)} — bấm để chọn cả cột, bấm đúp để nhập độ rộng`;
+function colLabel(lab, i) {
+  lab.textContent = colName(i);
+  lab.title = `Cột ${colName(i)} · độ rộng ${fmtW(S.tpl.cols[i])} — bấm để chọn cả cột, bấm đúp để nhập độ rộng`;
 }
 function editColW(lab) {
   const i = +lab.dataset.ci, head = lab.parentElement; if (!head) return;
@@ -811,7 +831,7 @@ function drawGrips() {
   const head = document.createElement('div'); head.className = 'colhead'; pg.insertBefore(head, tbl);
   S.tpl.cols.forEach((w, i) => {
     const x0 = W * acc / sum; acc += (+w || 1); const x1 = W * acc / sum;
-    const lab = document.createElement('div'); lab.className = 'chl'; lab.dataset.ci = i; colLabel(lab, i, x1 - x0);
+    const lab = document.createElement('div'); lab.className = 'chl'; lab.dataset.ci = i; colLabel(lab, i);
     lab.onmouseenter = () => { if (!document.body.classList.contains('coldrag')) hlCols(i, 1, true); }; lab.onmouseleave = () => { if (!document.body.classList.contains('coldrag')) { hlCols(-1, 0, true); hlSel(); } };
     Object.assign(lab.style, { left: x0 + 'px', width: (x1 - x0) + 'px' }); head.appendChild(lab);
     if (i === S.tpl.cols.length - 1) return;
@@ -845,7 +865,7 @@ $('pages').addEventListener('pointerdown', (e) => {
     let d = (ev.clientX - x0) / z * perPx; d = Math.max(minW - a0, Math.min(b0 - minW, d));
     S.tpl.cols[i] = Math.round((a0 + d) * 10) / 10; S.tpl.cols[i + 1] = Math.round((a0 + b0 - S.tpl.cols[i]) * 10) / 10;
     document.querySelectorAll('#pages colgroup').forEach((cg) => cg.outerHTML = colGroup());
-    let acc = 0; for (let k = 0; k <= i; k++) acc += +S.tpl.cols[k] || 1; g.style.left = (tbl.offsetWidth * acc / sum) + 'px'; const labs = document.querySelectorAll('#pages .chl'); let x = 0; S.tpl.cols.forEach((w, k) => { const x1 = x + tbl.offsetWidth * (+w || 1) / sum; if (labs[k] && (k === i || k === i + 1)) { labs[k].style.left = x + 'px'; labs[k].style.width = (x1 - x) + 'px'; colLabel(labs[k], k, x1 - x); labs[k].classList.remove('narrow'); } x = x1; });
+    let acc = 0; for (let k = 0; k <= i; k++) acc += +S.tpl.cols[k] || 1; g.style.left = (tbl.offsetWidth * acc / sum) + 'px'; const labs = document.querySelectorAll('#pages .chl'); let x = 0; S.tpl.cols.forEach((w, k) => { const x1 = x + tbl.offsetWidth * (+w || 1) / sum; if (labs[k] && (k === i || k === i + 1)) { labs[k].style.left = x + 'px'; labs[k].style.width = (x1 - x) + 'px'; colLabel(labs[k], k); } x = x1; });
   };
   const up = () => { g.removeEventListener('pointermove', move); g.removeEventListener('pointerup', up); g.removeEventListener('pointercancel', up); document.body.classList.remove('coldrag'); hlSel(); render(); };
   g.addEventListener('pointermove', move); g.addEventListener('pointerup', up); g.addEventListener('pointercancel', up);
@@ -886,16 +906,19 @@ function renderChips() {
     b.onmousedown = (e) => e.preventDefault(); b.onclick = () => insertToken(token); box.appendChild(b);
   };
   head('sys', 'Biến hệ thống'); for (const [n, t] of SYS_VARS) add('sys', '★', n, t);
-  if (S.metas.length) { head('col', 'Cột của bảng · ' + ((S.tableMeta && S.tableMeta.name) || 'bảng đang chọn')); for (const m of S.metas) add('col', typeGlyph(m), m.name, `{{${m.name}}}`); }
-  const nums = S.metas.filter((m) => [FT('Number', 2), FT('Currency', 99003), FT('Formula', 20)].includes(m.type));
-  if (nums.length) { head('sum', 'Tổng theo cột (cộng mọi dòng lặp)'); for (const m of nums) add('sum', 'Σ', 'Tổng · ' + m.name, `{{SUM:${m.name}}}`); }
+  const link = S.mode === 'link' && S.dMetas, isNum = (m) => [FT('Number', 2), FT('Currency', 99003), FT('Formula', 20)].includes(m.type);
+  if (S.metas.length) { head('col', (link ? 'Cột của phiếu · ' : 'Cột của bảng · ') + ((S.tableMeta && S.tableMeta.name) || 'bảng đang chọn')); for (const m of S.metas) add('col', typeGlyph(m), m.name, `{{${m.name}}}`); }
+  const ds = link ? S.dMetas.filter((m) => !isLinkMeta(m) && m.type !== FT('Attachment', 17) && m.name !== PACK_NAME) : [];
+  if (ds.length) { head('dt', 'Cột chi tiết · ' + S.link.tableName + ' (đặt trong dòng lặp)'); for (const m of ds) add('dt', typeGlyph(m), m.name, `{{${ctName(m)}}}`); }
+  const nums = link ? ds.filter(isNum) : S.metas.filter(isNum);
+  if (nums.length) { head('sum', link ? 'Tổng theo cột chi tiết' : 'Tổng theo cột (cộng mọi dòng lặp)'); for (const m of nums) add('sum', 'Σ', 'Tổng · ' + m.name, `{{SUM:${link ? ctName(m) : m.name}}}`); }
   renderChipTabs(); markUsedChips(); filterChips();
 }
 function renderChipTabs() {
   const box = $('chips'), cnt = (g) => box.querySelectorAll(`.vrow[data-g="${g}"]`).length;
-  const tabs = [['all', 'Tất cả'], ['col', 'Cột'], ...(cnt('sum') ? [['sum', 'Tổng']] : []), ['sys', 'Hệ thống']];
+  const tabs = [['all', 'Tất cả'], ['col', cnt('dt') ? 'Phiếu' : 'Cột'], ...(cnt('dt') ? [['dt', 'Chi tiết']] : []), ...(cnt('sum') ? [['sum', 'Tổng']] : []), ['sys', 'Hệ thống']];
   if (!tabs.some((t) => t[0] === S.chipTab)) S.chipTab = 'all';
-  $('chipTabs').innerHTML = tabs.map(([k, t]) => `<button type="button" data-t="${k}" class="${k === S.chipTab ? 'on' : ''}">${t}${k !== 'all' ? ' <small>' + cnt(k) + '</small>' : ''}</button>`).join('');
+  $('chipTabs').innerHTML = tabs.map(([k, t]) => `<button type="button" data-t="${k}" class="${k === S.chipTab ? 'on' : ''}">${t}</button>`).join('');
 }
 $('chipTabs').onclick = (e) => { const b = e.target.closest('button[data-t]'); if (!b) return; S.chipTab = b.dataset.t; renderChipTabs(); filterChips(); };
 // Đánh dấu biến đã có trong mẫu (kể cả cột được tham chiếu trong công thức ƒx)
@@ -1018,8 +1041,12 @@ function toggleRep() {
   if (!needSel()) return; const { r0, r1 } = S.rect;
   for (let r = r0; r <= r1; r++) if (S.tpl.rows[r].cells.some((c) => !c.h && c.rs > 1)) { toast('Dòng lặp không được có ô gộp nhiều dòng.'); return; }
   const v = !S.tpl.rows[r0].rep; for (let r = r0; r <= r1; r++) S.tpl.rows[r].rep = v;
-  toast(v ? 'Dòng này sẽ lặp theo từng bản ghi khi chọn chế độ "Gộp 1 phiếu".' : 'Đã bỏ dòng lặp.'); render();
+  toast(v ? 'Dòng này sẽ lặp theo từng bản ghi khi in kiểu "Gộp 1 phiếu" hoặc theo từng dòng chi tiết khi in kiểu "Phiếu & chi tiết".' : 'Đã bỏ dòng lặp.', 5000); render();
 }
+$('tSkip').onclick = () => {
+  S.tpl.skipEmpty = !S.tpl.skipEmpty; if (!S.tpl.skipEmpty) delete S.tpl.skipEmpty;
+  toast(S.tpl.skipEmpty ? 'Đã bật: dòng lặp nào mọi biến dữ liệu đều trống sẽ không in (STT tự đánh lại). Lưu mẫu / Lưu khối để giữ.' : 'Đã tắt: in đủ mọi dòng lặp kể cả dòng trống.', 6000); render();
+};
 const fmtSel = (fn) => { if (!needSel()) return; selected().forEach((x) => fn(x.cell)); render(); };
 $('tMerge').onclick = () => {
   if (!needSel()) return; const sel = selected();
@@ -1046,9 +1073,9 @@ $('chkGuide').onchange = () => drawGuides();
 document.querySelectorAll('#bdMenu .bdk').forEach((b) => b.onclick = () => { $('tBorder').value = b.dataset.bd; $('tBorder').onchange(); });
 document.querySelectorAll('#bdMenu .bdw').forEach((b) => b.onclick = (e) => { e.stopPropagation(); $('tBw').value = b.dataset.w; document.querySelectorAll('#bdMenu .bdw').forEach((x) => x.classList.toggle('on', x === b)); });
 document.querySelectorAll('.tchk label').forEach((l) => l.addEventListener('click', (e) => e.stopPropagation()));
-function applyHeadToggles() { document.body.classList.toggle('nocolhead', !$('chkColHead').checked); document.body.classList.toggle('norowhead', !$('chkRowHead').checked); document.body.classList.toggle('nocolw', !$('chkColW').checked); }
-['chkColHead', 'chkRowHead', 'chkGuide', 'chkColW'].forEach((id) => $(id).addEventListener('change', () => { applyHeadToggles(); try { const u = uiLoad(); u.view = { ch: $('chkColHead').checked, rh: $('chkRowHead').checked, g: $('chkGuide').checked, cw: $('chkColW').checked }; uiSave(u); } catch (e) {} }));
-try { const v = uiLoad().view; if (v) { $('chkColHead').checked = v.ch !== false; $('chkRowHead').checked = v.rh !== false; $('chkGuide').checked = v.g !== false; $('chkColW').checked = v.cw !== false; } } catch (e) {}
+function applyHeadToggles() { document.body.classList.toggle('nocolhead', !$('chkColHead').checked); document.body.classList.toggle('norowhead', !$('chkRowHead').checked); }
+['chkColHead', 'chkRowHead', 'chkGuide'].forEach((id) => $(id).addEventListener('change', () => { applyHeadToggles(); try { const u = uiLoad(); u.view = { ch: $('chkColHead').checked, rh2: $('chkRowHead').checked, g: $('chkGuide').checked }; uiSave(u); } catch (e) {} }));
+try { const v = uiLoad().view; if (v) { $('chkColHead').checked = v.ch !== false; $('chkRowHead').checked = v.rh2 === true; $('chkGuide').checked = v.g !== false; } } catch (e) {}
 applyHeadToggles();
 $('tBold').onclick = () => { const v = !(selected()[0] || { cell: {} }).cell.b; fmtSel((c) => c.b = v); };
 $('tItalic').onclick = () => { const v = !(selected()[0] || { cell: {} }).cell.i; fmtSel((c) => c.i = v); };
@@ -1321,33 +1348,35 @@ $('recSearch').oninput = () => { S.shown = 300; renderRecList(); };
 function filteredIds() { const q = fold($('recSearch').value); return S.order.filter((id) => { const r = S.recMap.get(id); if (!recPass(r)) return false; if (!q) return true; if (!r) return false; let s = S.searchText.get(id); if (s === undefined) { s = fold(S.metas.map((m) => fmtCell(m, r.fields[m.id])).join(' ')); S.searchText.set(id, s); } return s.includes(q); }); }
 $('btnAll').onclick = () => { const ids = filteredIds(); S.desel = new Set(); S.sel = S.mode === 'one' ? ids.slice(0, 1) : [...new Set([...S.sel, ...ids])]; onSelChange(); };
 $('btnNone').onclick = () => { S.desel = new Set(S.order); S.sel = []; onSelChange(); };
-/* ---- Kiểu in được phép khi xem khối: người sửa khối bật/tắt từng kiểu, người xem chỉ thấy các kiểu đã bật ---- */
+/* ---- Kiểu in được phép khi xem khối: người sửa khối bấm 👁 trên từng kiểu để ẩn/hiện, người xem chỉ thấy các kiểu đã bật ---- */
 const isDashEdit = () => S.dash === 'Create' || S.dash === 'Config';
 const isDashView = () => S.dash === 'View' || S.dash === 'FullScreen';
-const cleanAllow = (a) => { const x = MODES.filter((m) => Array.isArray(a) && a.includes(m)); return x.length ? x : MODES.slice(); };
+const cleanAllow = (a) => {
+  const x = MODES.filter((m) => Array.isArray(a) && a.includes(m));
+  if (!x.length) return ['one', 'multi', 'each'];
+  return x.filter((m) => modeFam(m) === modeFam(x[0])); // 1 khối chỉ 1 nguồn dữ liệu: bảng này hoặc bảng chi tiết
+};
 function syncModeUI() {
   const edit = isDashEdit(), view = isDashView(), allow = S.allow = cleanAllow(S.allow);
   if (view && !allow.includes(S.mode)) S.mode = allow[0];
   document.querySelectorAll('#modeSeg label').forEach((l) => {
     const inp = l.querySelector('input'), on = allow.includes(inp.value);
     inp.checked = inp.value === S.mode; l.hidden = view && !on;
-    l.classList.toggle('off', edit && !on); l.title = edit && !on ? 'Kiểu này đang ẩn khi xem khối' : '';
+    l.classList.toggle('off', edit && !on);
+    l.querySelector('.eye').title = on ? 'Đang hiện khi xem khối — bấm để ẩn' : 'Đang ẩn khi xem khối — bấm để hiện';
   });
   $('modeSeg').hidden = view && allow.length < 2;
   $('modeHint').textContent = (view ? MODE_HINT_VIEW : MODE_HINT)[S.mode];
   $('modeHint').hidden = view && allow.length < 2;
+  $('allowHint').hidden = !edit;
+  $('linkRow').hidden = S.mode !== 'link' || view;
   // Xem khối chỉ có 1 kiểu (không phải Gộp 1 phiếu): ẩn hẳn mục Kiểu in
   $('secMode').style.display = view && allow.length < 2 && S.mode !== 'multi' ? 'none' : '';
-  const box = $('allowBox'); box.hidden = !edit;
-  if (edit) box.querySelectorAll('.achk label').forEach((l) => {
-    const inp = l.querySelector('input'); inp.checked = allow.includes(inp.value);
-    let em = l.querySelector('em'); if (inp.value === S.mode) { if (!em) { em = document.createElement('em'); em.textContent = 'Mặc định'; l.appendChild(em); } } else if (em) em.remove();
-  });
   syncGroupRow();
 }
 function setMode(m) {
   const prev = S.mode; S.mode = m;
-  if (isDashEdit() && !S.allow.includes(m)) S.allow = cleanAllow([...S.allow, m]);
+  if (isDashEdit()) { if (S.allow.some((x) => modeFam(x) !== modeFam(m))) S.allow = [m]; else if (!S.allow.includes(m)) S.allow = cleanAllow([...S.allow, m]); }
   if (m === 'one') { if (S.sel.length > 1) S.selMulti = S.sel.slice(); S.sel = S.sel.slice(0, 1); }
   else if (prev === 'one') {
     // Quay lại kiểu nhiều bản ghi: lấy lại toàn bộ (khi khối in toàn bộ) hoặc danh sách đã chọn trước đó
@@ -1355,15 +1384,98 @@ function setMode(m) {
     if (useAll) { const ds = S.desel || new Set(); S.sel = S.order.filter((id) => !ds.has(id) && recPass(S.recMap.get(id))); }
     else if (S.selMulti && (!S.sel.length || S.selMulti.includes(S.sel[0]))) S.sel = S.selMulti.filter((id) => S.recMap.has(id));
   }
-  syncModeUI(); onSelChange();
+  if (modeFam(m) !== modeFam(prev)) { rebuildIdx(); fillPackSelect(); if (m === 'link' && !isDashView()) autoLink(); renderChips(); }
+  syncModeUI(); onSelChange(); if (S.tab === 'design') render();
 }
 document.querySelectorAll('input[name=mode]').forEach((el) => el.onchange = () => setMode(el.value));
-$('allowBox').addEventListener('change', (e) => {
-  const cb = e.target; if (!cb.matches('input[type=checkbox]')) return;
-  const a = MODES.filter((m) => $('allowBox').querySelector(`input[value="${m}"]`).checked);
-  if (!a.length) { cb.checked = true; toast('Khối cần cho phép ít nhất 1 kiểu in.'); return; }
-  S.allow = a; if (!a.includes(S.mode)) { setMode(a[0]); toast('Kiểu mặc định khi mở khối đổi thành "' + ({ one: '1 bản ghi', multi: 'Gộp 1 phiếu', each: 'Mỗi dòng 1 phiếu' })[a[0]] + '".'); } else syncModeUI();
-});
+$('modeSeg').addEventListener('click', (e) => {
+  const eye = e.target.closest('.eye'); if (!eye) return; e.preventDefault(); e.stopPropagation();
+  const m = eye.closest('label').querySelector('input').value; let a = S.allow.slice();
+  if (a.includes(m)) { if (a.length === 1) { toast('Khối cần ít nhất 1 kiểu in hiển thị.'); return; } a = a.filter((x) => x !== m); }
+  else { if (a.some((x) => modeFam(x) !== modeFam(m))) { toast('"Phiếu & chi tiết" lấy dữ liệu từ bảng chi tiết nên không bật chung với 3 kiểu còn lại. Bấm vào tên kiểu để chuyển hẳn sang.', 6500); return; } a.push(m); }
+  S.allow = cleanAllow(a);
+  if (!S.allow.includes(S.mode)) { setMode(S.allow[0]); toast('Kiểu mặc định khi mở khối đổi thành "' + MODE_NAME[S.allow[0]] + '".'); } else syncModeUI();
+}, true);
+
+/* ---- Phiếu & chi tiết: bảng này là phiếu (thông tin chung), dòng hàng lấy từ bảng chi tiết qua cột liên kết 2 chiều ---- */
+// Biến cột chi tiết: {{Tên cột}}; trùng tên với cột của phiếu thì dùng {{CT.Tên cột}} (giống bản Record View v5.5.1)
+const isLinkMeta = (m) => !!m && [FT('SingleLink', 18), FT('DuplexLink', 21)].includes(m.type);
+const ctName = (d) => (S.metas.some((m) => fold(m.name) === fold(d.name)) ? 'CT.' + d.name : d.name);
+function rebuildIdx() {
+  const idx = new Map(S.metas.map((m) => [fold(m.name), m]));
+  if (S.mode === 'link' && S.dMetas) for (const d of S.dMetas) { idx.set(fold('CT.' + d.name), d); if (!idx.has(fold(d.name))) idx.set(fold(d.name), d); }
+  S.idx = idx;
+}
+function linkIds(v) {
+  if (!v) return [];
+  const one = (x) => (!x ? [] : Array.isArray(x.recordIds) ? x.recordIds : Array.isArray(x.record_ids) ? x.record_ids : x.recordId ? [x.recordId] : x.record_id ? [x.record_id] : typeof x === 'string' && /^rec/.test(x) ? [x] : []);
+  return [...new Set(Array.isArray(v) ? v.flatMap(one) : one(v))];
+}
+// Dòng chi tiết của 1 phiếu: khi xem khối đã gom sẵn (h._det), khi sửa khối đọc theo cột liên kết
+function detailsOf(h) {
+  if (!h) return []; if (h._det) return h._det;
+  if (!S.link || !S.link.fieldId) return [];
+  return linkIds(h.fields[S.link.fieldId]).map((id) => S.dRecMap.get(id)).filter(Boolean);
+}
+function linkInfo(t, type) { const el = $('linkInfo'); el.textContent = t || ''; el.style.color = type === 'err' ? 'var(--err)' : type === 'warn' ? 'var(--warn)' : type === 'ok' ? 'var(--ok)' : ''; }
+function fillLinkSelect() {
+  const links = S.metas.filter(isLinkMeta);
+  fillSelect($('selLink'), links, links.length ? '— Chọn cột liên kết —' : 'Bảng này chưa có cột liên kết');
+  $('selLink').value = S.link && links.some((m) => m.id === S.link.fieldId) ? S.link.fieldId : '';
+}
+// Tự chọn cột liên kết (ưu tiên liên kết 2 chiều) khi chuyển sang kiểu Phiếu & chi tiết
+function autoLink() {
+  fillLinkSelect();
+  if (S.link && S.metas.some((m) => m.id === S.link.fieldId)) { if (!S.dMetas) loadLink(); return; }
+  const l = S.metas.find((m) => m.type === FT('DuplexLink', 21)) || S.metas.find(isLinkMeta);
+  if (!l) { S.link = null; linkInfo('Bảng này chưa có cột liên kết tới bảng chi tiết.', 'warn'); return; }
+  S.link = { fieldId: l.id }; $('selLink').value = l.id; loadLink();
+}
+async function loadLink(packWant) {
+  const lm = S.link && S.metas.find((m) => m.id === S.link.fieldId); if (!lm || !S.base) return;
+  const seq = ++S.linkSeq, p = lm.property || {}, tid = p.tableId || p.table_id || '';
+  if (!tid) { linkInfo('Không xác định được bảng chi tiết của cột "' + lm.name + '".', 'err'); return; }
+  linkInfo('Đang đọc bảng chi tiết…');
+  try {
+    const dt = await withTimeout(S.base.getTableById(tid), 15000), dm = (await withTimeout(dt.getFieldMetaList(), 15000)) || [];
+    if (seq !== S.linkSeq) return;
+    const back = dm.find((x) => x.id === (p.backFieldId || p.back_field_id)) || dm.find((x) => isLinkMeta(x) && x.property && (x.property.tableId || x.property.table_id) === S.tableMeta.id);
+    S.dTable = dt; S.dMetas = dm; S.dRecMap = new Map();
+    S.link = { fieldId: lm.id, fieldName: lm.name, tableId: tid, tableName: ((S.tables.find((t) => t.id === tid) || {}).name) || 'bảng chi tiết', backId: back ? back.id : '', backName: back ? back.name : '' };
+    rebuildIdx(); renderChips(); fillPackSelect(packWant);
+    linkInfo(back ? `Bảng chi tiết: ${S.link.tableName} · ${dm.length} cột · liên kết ngược: ${back.name}` : `Bảng "${S.link.tableName}" chưa có cột liên kết ngược về bảng này — hãy dùng kiểu liên kết 2 chiều (two-way link) thì mới tạo được cột gói.`, back ? 'ok' : 'warn');
+    render();
+    // Đọc dòng chi tiết để xem trước khi sửa khối (khi xem khối dữ liệu đến từ cột gói)
+    const getPage = dt.getRecordsByPage ? (o) => dt.getRecordsByPage(o) : (o) => dt.getRecords(o);
+    let token, pages = 0;
+    while (pages < 200 && seq === S.linkSeq) {
+      const res = await withTimeout(getPage({ pageSize: 200, pageToken: token }), 20000); pages++;
+      for (const r of (res && res.records) || []) if (r && r.recordId) S.dRecMap.set(r.recordId, r);
+      const nx = res && res.pageToken; if (!res || !res.hasMore || nx === undefined || nx === null || nx === '' || nx === token) break; token = nx;
+    }
+    // Phân trang có thể sót dòng: đọc bổ sung các dòng đang được phiếu liên kết tới
+    const miss = [...new Set(S.order.flatMap((id) => linkIds((S.recMap.get(id) || { fields: {} }).fields[lm.id])))].filter((id) => !S.dRecMap.has(id)).slice(0, 2000);
+    for (let i = 0; i < miss.length && seq === S.linkSeq; i += 20) { const part = miss.slice(i, i + 20), got = await Promise.all(part.map((id) => withTimeout(dt.getRecordById(id), 15000).catch(() => null))); part.forEach((id, j) => { if (got[j]) S.dRecMap.set(id, { recordId: id, fields: got[j].fields || got[j] }); }); }
+    dlog('link.loaded', { table: S.link.tableName, cols: dm.length, rows: S.dRecMap.size, filled: miss.length, back: S.link.backName });
+    if (seq === S.linkSeq) render();
+  } catch (e) { dlog('link.error', String(e && e.message || e)); linkInfo('Không đọc được bảng chi tiết: ' + (e && e.message || e), 'err'); }
+}
+$('selLink').onchange = () => { const v = $('selLink').value; S.link = v ? { fieldId: v } : null; S.dMetas = null; S.dRecMap = new Map(); rebuildIdx(); renderChips(); if (v) loadLink(); else { linkInfo(''); render(); } };
+// Cột gói của kiểu Phiếu & chi tiết đặt ở BẢNG CHI TIẾT: mỗi dòng hàng 1 chuỗi, kèm mã phiếu + thông tin phiếu lấy qua cột liên kết ngược
+function linkPackCols() {
+  if (!S.link || !S.link.backName || !S.dMetas) return [];
+  const bad = BAD_GROUP(), dIds = new Set(S.dMetas.map((m) => m.id)), mUsed = [], dUsed = [];
+  const key = S.metas.find((m) => m.id === $('selKey').value) || S.metas.find((m) => m.isPrimary) || S.metas[0];
+  const addU = (arr, m) => { if (m && !arr.includes(m)) arr.push(m); };
+  for (const v of templateVars(S.tpl)) { const m = S.idx.get(fold(v)); if (m) addU(dIds.has(m.id) ? dUsed : mUsed, m); }
+  for (const f of activeFilters()) addU(mUsed, S.metas.find((x) => x.id === f.f));
+  addU(mUsed, S.metas.find((x) => x.id === S.labelId));
+  const mm = (m) => ({ id: 'm' + m.id, name: m.name, type: m.type, d: isDateMeta(m) ? 1 : 0, src: 'm', expr: `[${S.link.backName}].[${m.name}]` });
+  const dd = (m) => ({ id: m.id, name: m.name, type: m.type, d: isDateMeta(m) ? 1 : 0, src: 'd', expr: packExpr(m) });
+  return [mm(key), ...mUsed.filter((m) => m !== key && !bad.has(m.type) && m.id !== S.link.fieldId && m.name !== PACK_NAME).map(mm),
+    ...dUsed.filter((m) => !bad.has(m.type) && m.id !== S.link.backId && m.name !== PACK_NAME).map(dd)];
+}
+const stripCols = (cols) => cols.map(({ expr, ...g }) => g);
 syncModeUI();
 async function pickCurrent(quiet) {
   try {
@@ -1412,7 +1524,7 @@ async function loadTable(tableId, opts = {}) {
   S.table = await withTimeout(S.base.getTableById(tableId), 15000); S.tableMeta = S.tables.find((t) => t.id === tableId) || { id: tableId, name: '' };
   const [metas, views] = await Promise.all([withTimeout(S.table.getFieldMetaList(), 20000), withTimeout(S.table.getViewMetaList(), 8000).catch(() => [])]);
   if (seq !== S.loadSeq) return;
-  S.metas = metas || []; S.idx = new Map(S.metas.map((m) => [fold(m.name), m]));
+  S.metas = metas || []; S.dMetas = null; S.dRecMap = new Map(); rebuildIdx();
   const prim = S.metas.find((m) => m.isPrimary) || S.metas[0]; S.labelId = prim ? prim.id : '';
   fillSelect($('selLabel'), S.metas); $('selLabel').value = S.labelId; fillGroup();
   fillSelect($('selKey'), S.metas); { const k = S.metas.find((m) => m.type === FT('AutoNumber', 1005)) || prim; if (k) $('selKey').value = k.id; }
@@ -1420,6 +1532,7 @@ async function loadTable(tableId, opts = {}) {
   fillSelect($('selView'), views || [], 'Tất cả bản ghi'); if (opts.viewId) $('selView').value = opts.viewId;
   S.recMap = new Map(); S.order = []; S.sel = []; S.searchText = new Map(); S.shown = 300; $('recSearch').value = '';
   if (!opts.keepFilters) { S.filters = []; } renderFilters();
+  fillLinkSelect(); if (S.mode === 'link' && !opts.noLink) autoLink();
   renderChips(); renderRecList(); if (S.tab === 'design') render(); dlog('table.meta', Math.round(performance.now() - t0) + 'ms');
   boxMsg(`Đã kết nối: ${S.metas.length} cột. Đang tải bản ghi nền…`, 'ok');
   S.recP = loadRecordsBg(seq).then(() => { if (seq === S.loadSeq) boxMsg(`Đã kết nối: ${S.metas.length} cột · ${S.order.length} bản ghi.`, 'ok'); }).catch((e) => { S.loading = false; renderRecList(); boxMsg('Tải bản ghi lỗi: ' + e.message, 'err'); });
@@ -1897,7 +2010,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '4.1', modes: S.allow, mode: S.mode, ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '4.2', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -1957,7 +2070,7 @@ function buildSnap(useAll, nRows) {
   return { at: Date.now(), metas: metas.map((m) => ({ id: m.id, name: m.name, type: m.type, d: isDateMeta(m) ? 1 : 0 })), rows, total: recs.length };
 }
 function loadSnap(c) {
-  const sn = c.snap; S.metas = sn.metas.map((m) => ({ id: m.id, name: m.name, type: m.type || 1, d: m.d || 0 })); S.idx = new Map(S.metas.map((m) => [fold(m.name), m]));
+  const sn = c.snap; S.metas = sn.metas.map((m) => ({ id: m.id, name: m.name, type: m.type || 1, d: m.d || 0 })); rebuildIdx();
   S.recMap = new Map(); S.order = [];
   for (const row of sn.rows) { const f = {}; sn.metas.forEach((m, i) => { const v = row[i + 1]; if (v !== '' && v !== null && v !== undefined) f[m.id] = v; }); S.recMap.set(row[0], { recordId: row[0], fields: f }); S.order.push(row[0]); }
   S.sel = c.useAll ? S.order.filter((id) => recPass(S.recMap.get(id))) : (c.recordIds || []).filter((id) => S.recMap.has(id));
@@ -1975,10 +2088,13 @@ function groupCols(keyId) {
 }
 /* ---- Cột gói: 1 cột Công thức ghép mọi cột mẫu cần, dùng làm cột nhóm duy nhất của khối ---- */
 function fillPackSelect(want) {
-  const el = $('selPack'); if (!el) return;
-  fillSelect(el, S.metas, '— Chưa có (khối chỉ dùng bản chụp) —');
-  const hit = S.metas.find((m) => m.id === want) || S.metas.find((m) => m.name === PACK_NAME);
+  // Kiểu Phiếu & chi tiết: cột gói nằm ở bảng chi tiết
+  const el = $('selPack'); if (!el) return; const link = S.mode === 'link', list = link ? (S.dMetas || []) : S.metas;
+  if (want) S.packWant = want; want = want || el.value || S.packWant;
+  fillSelect(el, list, link ? (S.dMetas ? '— Chưa có (bấm Tạo cột gói) —' : '— Chọn cột liên kết trước —') : '— Chưa có (khối chỉ dùng bản chụp) —');
+  const hit = list.find((m) => m.id === want) || list.find((m) => m.name === PACK_NAME);
   el.value = hit ? hit.id : '';
+  const lb = el.closest('label'); if (lb && lb.firstChild && lb.firstChild.nodeType === 3) lb.firstChild.textContent = link ? `Cột gói dữ liệu ở bảng chi tiết${S.link && S.link.tableName ? ' "' + S.link.tableName + '"' : ''}` : 'Cột gói dữ liệu (công thức) — để khối tự lấy dữ liệu mới';
 }
 const NUM_TYPES = () => new Set([FT('Number', 2), FT('Currency', 99003), FT('Progress', 99002), FT('Rating', 99004)]);
 const DATE_TYPES = () => new Set([FT('DateTime', 5), FT('CreatedTime', 1001), FT('ModifiedTime', 1002)]);
@@ -1990,12 +2106,16 @@ function packExpr(m) {
 function isDateMeta(m) { if (!m) return false; if (m.d || DATE_TYPES().has(m.type)) return true; const p = m.property || {}; return /yyyy|dd\/|MM\/|HH:mm/i.test(String(p.dateFormat || p.formatter || '')); }
 // Mỗi phần trong cột gói mang mã cột (§fldxxx:giá trị) nên thứ tự cột trong công thức có đổi cũng không làm lệch dữ liệu
 const PACK_TAG = '§';
-function packFormula(cols) { return cols.map((m) => `"${PACK_TAG}${m.id}:" & ${packExpr(m)}`).join(` & "${PACK_SEP}" & `); }
+function packFormula(cols) { return cols.map((m) => `"${PACK_TAG}${m.id}:" & ${m.expr || packExpr(m)}`).join(` & "${PACK_SEP}" & `); }
+// Kiểu Phiếu & chi tiết: nguồn của khối là bảng chi tiết (toàn bộ dòng), cột gói ở bảng chi tiết
+const packTableId = () => (S.mode === 'link' && S.link && S.link.tableId ? S.link.tableId : S.tableMeta.id);
+const allRange = () => ({ type: (SDK.SourceType && SDK.SourceType.ALL) || 'ALL' });
+const packColsNow = () => (S.mode === 'link' ? linkPackCols() : groupCols($('selKey').value));
 function packCondition(packId, range) {
   const g = { fieldId: packId };
   if (SDK.GroupMode && SDK.GroupMode.INTEGRATED) g.mode = SDK.GroupMode.INTEGRATED;
   if (SDK.DATA_SOURCE_SORT_TYPE && SDK.DATA_SOURCE_SORT_TYPE.VIEW) g.sort = { order: (SDK.ORDER && SDK.ORDER.ASCENDING) || 'ASC', sortType: SDK.DATA_SOURCE_SORT_TYPE.VIEW };
-  const cond = { tableId: S.tableMeta.id, dataRange: range, groups: [g], series: 'COUNTA' };
+  const cond = { tableId: packTableId(), dataRange: range, groups: [g], series: 'COUNTA' };
   const tk = S.srcToken || S.selfToken; if (tk) cond.baseToken = tk;
   return cond;
 }
@@ -2023,10 +2143,10 @@ function unpackRows(data, cols) {
   return out;
 }
 async function previewPack(silent) {
-  const packId = $('selPack').value, cols = groupCols($('selKey').value);
+  const packId = $('selPack').value, cols = packColsNow(), link = S.mode === 'link';
   if (!packId) { if (!silent) toast('Chưa chọn cột gói dữ liệu.'); return null; }
   if (!dashboard || !dashboard.getPreviewData) { if (!silent) toast('Chỉ kiểm tra được khi đang sửa khối trong Dashboard / Base App.'); return null; }
-  const range = await currentRange();
+  const range = link ? allRange() : await currentRange();
   await baseTokenNow();
   let pv; try { pv = await dashCall((d) => withTimeout(d.getPreviewData(packCondition(packId, range)), 15000), 'pack.preview'); } catch (e) { dlog('pack.preview.error', String(e && e.message || e)); if (!silent) toast('Lark không cho nhóm theo cột này: ' + (e && e.message || e), 9000); return { ok: false, msg: 'Lark không cho nhóm theo cột gói: ' + (e && e.message || e) }; }
   const rows = unpackRows(pv, cols), parts = rows.parts || 0;
@@ -2037,6 +2157,12 @@ async function previewPack(silent) {
   else if (rows.tagged && rows.missing.length) msg = `Cột gói còn thiếu: ${rows.missing.map((g) => g.name).join(', ')}. Bấm "Tạo / cập nhật cột gói" và dán lại công thức mới.`;
   else if (parts !== cols.length) msg = `Cột gói có ${parts} phần nhưng mẫu cần ${cols.length} cột. Bấm "Tạo / cập nhật cột gói" để làm mới công thức.`;
   else msg = `Cột gói hoạt động: Lark trả ${rows.length} dòng${S.order.length ? ' / bảng có ' + S.order.length + ' bản ghi' : ''}, đủ ${cols.length} cột; chuỗi gói dài nhất ${maxLen} ký tự.`;
+  if (ok && link) {
+    // Thông tin phiếu đi qua cột liên kết ngược: kiểm tra mã phiếu có giá trị, đếm số phiếu
+    const keys = new Set(rows.map((v) => keyText(v[0])).filter(Boolean)), noKey = rows.filter((v) => !keyText(v[0])).length;
+    if (!keys.size) { ok = false; msg = `Lark trả ${rows.length} dòng chi tiết nhưng phần thông tin phiếu (qua cột "${S.link.backName}") trống hết. Kiểm tra các dòng chi tiết đã liên kết tới phiếu chưa, rồi bấm "Tạo / cập nhật cột gói".`; }
+    else msg = `Cột gói hoạt động: ${rows.length} dòng chi tiết thuộc ${keys.size} phiếu, đủ ${cols.length} cột; chuỗi gói dài nhất ${maxLen} ký tự.` + (noKey ? ` ${noKey} dòng chi tiết chưa liên kết tới phiếu nào sẽ bị bỏ qua.` : '');
+  }
   if (ok && !rows.tagged) { ok = false; msg = 'Cột gói đang dùng công thức kiểu cũ (dữ liệu xếp theo thứ tự nên dễ bị lệch vị trí khi thứ tự cột thay đổi). Bấm "Tạo / cập nhật cột gói" và dán công thức mới có gắn mã cột.'; }
   if (!silent) toast(msg, 9000);
   return { ok, msg, rows: rows.length };
@@ -2075,20 +2201,24 @@ async function currentRange() {
 }
 async function makePack() {
   if (!S.table) { toast('Chưa chọn bảng.'); return; }
-  const cols = groupCols($('selKey').value), formula = packFormula(cols);
+  const link = S.mode === 'link';
+  if (link && !(S.link && S.dTable)) { toast('Chọn "Cột liên kết tới bảng chi tiết" ở mục Chế độ in trước.', 6000); return; }
+  if (link && !S.link.backName) { toast(`Bảng "${S.link.tableName}" chưa có cột liên kết ngược về bảng này. Hãy đổi cột liên kết sang kiểu liên kết 2 chiều (two-way link).`, 8000); return; }
+  const tbl = link ? S.dTable : S.table, tblName = link ? S.link.tableName : (S.tableMeta.name || ''), list = () => (link ? S.dMetas : S.metas);
+  const cols = packColsNow(), formula = packFormula(cols);
   let done = false, err = '';
   try {
-    let fid = $('selPack').value || (S.metas.find((m) => m.name === PACK_NAME) || {}).id;
-    if (!fid) { const r = await withTimeout(S.table.addField({ type: FT('Formula', 20), name: PACK_NAME }), 15000); fid = typeof r === 'string' ? r : (r && (r.fieldId || r.id)); }
-    const f = await withTimeout(S.table.getFieldById(fid), 8000);
+    let fid = $('selPack').value || (list().find((m) => m.name === PACK_NAME) || {}).id;
+    if (!fid) { const r = await withTimeout(tbl.addField({ type: FT('Formula', 20), name: PACK_NAME }), 15000); fid = typeof r === 'string' ? r : (r && (r.fieldId || r.id)); }
+    const f = await withTimeout(tbl.getFieldById(fid), 8000);
     if (!f || !f.setFormula) throw new Error('SDK không hỗ trợ đặt công thức tự động');
     await withTimeout(f.setFormula(formula), 15000);
-    S.metas = (await withTimeout(S.table.getFieldMetaList(), 15000)) || S.metas; S.idx = new Map(S.metas.map((m) => [fold(m.name), m]));
-    fillPackSelect(fid); renderChips(); done = true;
+    if (link) S.dMetas = (await withTimeout(tbl.getFieldMetaList(), 15000)) || S.dMetas; else S.metas = (await withTimeout(tbl.getFieldMetaList(), 15000)) || S.metas;
+    rebuildIdx(); fillPackSelect(fid); renderChips(); done = true;
   } catch (e) { err = String(e && e.message || e); dlog('pack.create.error', err); }
   let check = null; if (done) { await sleep(1500); check = await previewPack(true); }
   openModal('Cột gói dữ liệu cho khối',
-    (done ? `<p>${check && check.ok ? '' : 'Lưu ý: '}Đã ${'tạo/cập nhật'} cột <b>${esc(PACK_NAME)}</b>. ${esc(check ? check.msg : '')}</p>` : `<p>Không tự tạo được cột (${esc(err)}). Hãy làm thủ công:</p><ol class="hint"><li>Trong bảng <b>${esc(S.tableMeta.name || '')}</b>, thêm cột mới kiểu <b>Công thức</b>, đặt tên <b>${esc(PACK_NAME)}</b>.</li><li>Dán công thức bên dưới, lưu cột.</li><li>Quay lại đây, chọn cột đó ở ô "Cột gói dữ liệu" rồi bấm Kiểm tra.</li></ol>`)
+    (done ? `<p>${check && check.ok ? '' : 'Lưu ý: '}Đã ${'tạo/cập nhật'} cột <b>${esc(PACK_NAME)}</b>. ${esc(check ? check.msg : '')}</p>` : `<p>Không tự tạo được cột (${esc(err)}). Hãy làm thủ công:</p><ol class="hint"><li>Trong bảng <b>${esc(tblName)}</b>, thêm cột mới kiểu <b>Công thức</b>, đặt tên <b>${esc(PACK_NAME)}</b>.</li><li>Dán công thức bên dưới, lưu cột.</li><li>Quay lại đây, chọn cột đó ở ô "Cột gói dữ liệu" rồi bấm Kiểm tra.</li></ol>`)
     + `<p class="hint">Công thức (${cols.length} cột: ${esc(cols.map((c) => c.name).join(', '))}):</p><pre id="packPre" style="white-space:pre-wrap">${esc(formula)}</pre><button id="btnCopyPack" class="fit">Sao chép công thức</button><p class="hint">Mỗi khi thêm biến mới vào mẫu, bấm lại nút này để cập nhật công thức.</p>`);
   $('btnCopyPack').onclick = async () => { try { await navigator.clipboard.writeText(formula); toast('Đã sao chép'); } catch (e) { const r = document.createRange(); r.selectNodeContents($('packPre')); getSelection().removeAllRanges(); getSelection().addRange(r); toast('Đã bôi đen, nhấn Ctrl+C'); } };
 }
@@ -2104,28 +2234,56 @@ function cellVal(cell) {
   return tx !== undefined && tx !== '' ? tx : (v === undefined || v === null ? '' : v);
 }
 // Đổ các dòng đã giải gói vào danh sách bản ghi của extension
+const liveMeta = (g) => ({ id: g.id, name: g.name, type: g.type, d: g.d || (DATE_TYPES().has(g.type) ? 1 : 0) });
 function applyLiveRows(rows, c) {
+  if (c.mode === 'link') return applyLiveLink(rows, c);
   const cols = c.packCols || [];
   if (!rows.length) throw new Error('Cột gói không trả về dòng nào.');
-  const metas = cols.map((g) => ({ id: g.id, name: g.name, type: g.type, d: g.d || (DATE_TYPES().has(g.type) ? 1 : 0) }));
-  const keep = new Set(S.sel); const recMap = new Map(), order = [], seen = new Map();
+  const metas = cols.map(liveMeta);
+  const recMap = new Map(), order = [], seen = new Map();
   for (const vals of rows) {
     const f = {}; cols.forEach((g, i) => { const v = vals[i]; if (v !== '' && v !== null && v !== undefined) f[g.id] = v; });
     let k = keyText(f[cols[0].id]); const n = (seen.get(k) || 0) + 1; seen.set(k, n); if (n > 1) k += '#' + n;
     const id = 'k:' + k; recMap.set(id, { recordId: id, fields: f }); order.push(id);
   }
-  S.metas = metas; S.idx = new Map(metas.map((m) => [fold(m.name), m])); S.recMap = recMap; S.order = order; S.searchText = new Map();
-  S.labelId = (c.labelId && metas.some((m) => m.id === c.labelId)) ? c.labelId : (metas[1] || metas[0]).id;
+  S.metas = metas; rebuildIdx();
+  liveSelect(recMap, order, c, 'k:', c.labelId);
+  dlog('live.data', { rows: order.length, cols: cols.length });
+}
+// Phiếu & chi tiết: mỗi dòng gói = 1 dòng chi tiết kèm mã phiếu (phần tử đầu) + thông tin phiếu → gom thành từng phiếu có danh sách dòng chi tiết
+function applyLiveLink(rows, c) {
+  const cols = c.packCols || [];
+  if (!rows.length) throw new Error('Cột gói không trả về dòng nào.');
+  S.link = c.link || S.link; S.metas = cols.filter((g) => g.src === 'm').map(liveMeta); S.dMetas = cols.filter((g) => g.src === 'd').map(liveMeta);
+  const groups = new Map(); let lost = 0;
+  rows.forEach((vals, n) => {
+    const key = keyText(vals[0]); if (!key) { lost++; return; } // dòng chi tiết chưa liên kết tới phiếu nào
+    let g = groups.get(key); if (!g) { g = { recordId: 'g:' + key, fields: {}, _det: [] }; groups.set(key, g); }
+    const df = {};
+    cols.forEach((col, i) => { const v = vals[i]; if (v === '' || v === null || v === undefined) return; if (col.src === 'm') { if (g.fields[col.id] === undefined) g.fields[col.id] = v; } else df[col.id] = v; });
+    g._det.push({ recordId: 'd' + n, fields: df });
+  });
+  if (!groups.size) throw new Error('Cột gói trả ' + rows.length + ' dòng chi tiết nhưng không dòng nào có mã phiếu (cột liên kết ngược trống).');
+  const recMap = new Map([...groups.values()].map((g) => [g.recordId, g])), order = [...recMap.keys()];
+  rebuildIdx();
+  // Bộ lọc lưu theo mã cột của phiếu; khi xem, cột phiếu mang tiền tố "m"
+  (S.filters || []).forEach((f) => { if (f.f && !S.metas.some((m) => m.id === f.f) && S.metas.some((m) => m.id === 'm' + f.f)) f.f = 'm' + f.f; });
+  liveSelect(recMap, order, c, 'g:', c.labelId ? 'm' + c.labelId : '');
+  dlog('live.link', { rows: rows.length, phieu: order.length, lost });
+}
+function liveSelect(recMap, order, c, pre, labelId) {
+  const keep = new Set(S.sel), metas = S.metas;
+  S.recMap = recMap; S.order = order; S.searchText = new Map();
+  S.labelId = (labelId && metas.some((m) => m.id === labelId)) ? labelId : (metas[1] || metas[0]).id;
   fillSelect($('selLabel'), metas); $('selLabel').value = S.labelId; fillGroup();
   let sel = [...keep].filter((id) => recMap.has(id));
-  if (!sel.length && !S.liveInit) sel = c.useAll ? [...order] : (c.selKeys || []).map((k) => 'k:' + k).filter((id) => recMap.has(id));
+  if (!sel.length && !S.liveInit) sel = c.useAll ? [...order] : (c.selKeys || []).map((k) => pre + k).filter((id) => recMap.has(id));
   if (!sel.length && !S.liveInit && !c.useAll && order.length) sel = [order[0]];
   if (c.useAll && S.liveInit) for (const id of order) if (!S.liveSeen.has(id)) sel.push(id); // bản ghi mới thêm cũng được in
   // In toàn bộ: luôn lấy lại theo dữ liệu mới nhất + bộ lọc (bản ghi vừa đổi trạng thái cho khớp lọc cũng vào), trừ các dòng người xem tự bỏ chọn
   if (c.useAll && S.liveInit) { const ds = S.desel || new Set(); sel = order.filter((id) => !ds.has(id)); }
   if (c.useAll && activeFilters().length) sel = sel.filter((id) => recPass(recMap.get(id)));
   S.liveSeen = new Set(order); S.liveInit = true; S.sel = S.mode === 'one' ? sel.slice(0, 1) : sel; renderFilters();
-  dlog('live.data', { rows: order.length, cols: cols.length });
 }
 const rows0 = (d) => (Array.isArray(d) ? d.length - 1 : 0);
 async function refreshLive(c, quiet) {
@@ -2178,7 +2336,8 @@ async function applyDash(c) {
   const viewOnly = S.dash === 'View' || S.dash === 'FullScreen';
   S.tpl = normalizeTpl(c.tpl); S.dashTpl = JSON.parse(JSON.stringify(S.tpl)); S.cur = null; $('tplName').value = S.tpl.name; try { renderTplSelect(S.tpl.id); } catch (e) {} S.overrides = {}; S.rect = null;
   // Khối lưu bằng bản cũ (chưa có danh sách kiểu in) thì giữ như trước: cho phép cả 3 kiểu
-  S.allow = cleanAllow(c.modes); S.mode = MODES.includes(c.mode) ? c.mode : 'one'; if (!S.allow.includes(S.mode)) S.mode = S.allow[0]; syncModeUI();
+  S.allow = cleanAllow(c.modes); S.mode = MODES.includes(c.mode) ? c.mode : 'one'; if (!S.allow.includes(S.mode)) S.mode = S.allow[0];
+  S.link = c.mode === 'link' && c.link ? { ...c.link } : null; S.packWant = c.packId || ''; syncModeUI();
   S.groupBy = c.groupBy || ''; S.filters = (c.filters || []).map((f) => ({ ...f })); S.fMatch = c.fMatch || 'and'; $('fMatch').value = S.fMatch;
   S.manual = c.manual || {}; $('chkAll').checked = !!c.useAll; $('chkSnap').checked = !!(c.snap && (c.snap.rows || []).length);
   const snapDate = (t) => new Date(t).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -2219,7 +2378,8 @@ async function applyDash(c) {
     if ($('selBase') && [...$('selBase').options].some((o) => o.value === S.srcToken)) $('selBase').value = S.srcToken;
   }
   $('selTable').value = c.tableId;
-  await loadTable(c.tableId, { viewId: c.viewId || '', packId: c.packId || '', keepFilters: true }); if (c.labelId && S.metas.some((m) => m.id === c.labelId)) { S.labelId = c.labelId; $('selLabel').value = c.labelId; }
+  await loadTable(c.tableId, { viewId: c.viewId || '', packId: c.packId || '', keepFilters: true, noLink: true }); if (c.labelId && S.metas.some((m) => m.id === c.labelId)) { S.labelId = c.labelId; $('selLabel').value = c.labelId; }
+  if (S.mode === 'link') { S.link = c.link ? { ...c.link } : null; fillLinkSelect(); if (S.link) await loadLink(c.packId || ''); else autoLink(); }
   if (c.useAll) await S.recP;
   if (c.useAll) { const ok = S.order.filter((id) => recPass(S.recMap.get(id))); S.sel = S.mode === 'one' ? ok.slice(0, 1) : ok.slice(0, 500); }
   else { S.sel = []; for (const id of c.recordIds || []) { try { await ensureRecord(id); S.sel.push(id); if (!S.order.includes(id)) S.order.push(id); } catch (e) {} } }
@@ -2258,14 +2418,18 @@ async function savePackVerified(cfg, cond, packId, size) {
 }
 async function saveDash() {
   if (!S.tableMeta) { toast('Chưa chọn bảng.'); return; }
+  const link = S.mode === 'link';
+  // Phiếu & chi tiết bắt buộc có cột gói ở bảng chi tiết (không dùng bản chụp)
+  if (link && !(S.link && S.link.tableId && $('selPack').value)) { toast('Kiểu "Phiếu & chi tiết" cần chọn cột liên kết và tạo cột gói ở bảng chi tiết (nút "Tạo / cập nhật cột gói") trước khi Lưu khối.', 8000); return; }
   const btn = $('btnDashSave'); btn.disabled = true;
   const tpl = JSON.parse(JSON.stringify(S.tpl)); let note = '', lastErr = '', previewInfo = '';
   try {
-    let nRows = $('chkSnap').checked || !$('selPack').value ? 500 : 0;
+    let nRows = !link && ($('chkSnap').checked || !$('selPack').value) ? 500 : 0;
     const packId = $('selPack').value; await baseTokenNow(); const stamp = Date.now();
-    const gcols = groupCols($('selKey').value), keyMeta = S.metas.find((m) => m.id === (gcols[0] && gcols[0].id));
+    const gcols = stripCols(packColsNow()), keyMeta = S.metas.find((m) => m.id === (gcols[0] && gcols[0].id.replace(link ? /^m/ : /^$/, '')));
     const selKeys = keyMeta ? selRecords().map((r) => keyText(r.fields[keyMeta.id])).slice(0, 60) : [];
-    const mk = async () => { const snap = buildSnap($('chkAll').checked, nRows); const raw = { v: 2, baseToken: S.srcToken, dataToken: S.srcToken || S.selfToken || '', tableId: S.tableMeta.id, viewId: $('selView').value, labelId: S.labelId, mode: S.mode, modes: cleanAllow(S.allow), useAll: $('chkAll').checked, recordIds: S.sel.slice(0, 60), manual: S.manual, tpl: compactTpl(tpl), snap, packId: packId || '', packCols: packId ? gcols : null, selKeys, filters: activeFilters(), fMatch: S.fMatch || 'and', groupBy: S.groupBy || '' }; const p = await packCfg(raw); return { v: 3, ts: stamp, z: p.z, d: p.d, tableId: raw.tableId, mode: raw.mode, name: tpl.name || '', rows: snap.rows.length, total: snap.total }; };
+    const linkCfg = link ? { fieldId: S.link.fieldId, fieldName: S.link.fieldName, tableId: S.link.tableId, tableName: S.link.tableName, backId: S.link.backId, backName: S.link.backName } : null;
+    const mk = async () => { const snap = buildSnap($('chkAll').checked, nRows); const raw = { v: 2, baseToken: S.srcToken, dataToken: S.srcToken || S.selfToken || '', tableId: S.tableMeta.id, viewId: $('selView').value, labelId: S.labelId, mode: S.mode, modes: cleanAllow(S.allow), link: linkCfg, useAll: $('chkAll').checked, recordIds: S.sel.slice(0, 60), manual: S.manual, tpl: compactTpl(tpl), snap, packId: packId || '', packCols: packId ? gcols : null, selKeys, filters: activeFilters(), fMatch: S.fMatch || 'and', groupBy: S.groupBy || '' }; const p = await packCfg(raw); return { v: 3, ts: stamp, z: p.z, d: p.d, tableId: raw.tableId, mode: raw.mode, name: tpl.name || '', rows: snap.rows.length, total: snap.total }; };
     let cfg = await mk(), size = JSON.stringify(cfg).length;
     if (/^https?:/.test(tpl.logo || '')) { tpl.logo = ''; cfg = await mk(); size = JSON.stringify(cfg).length; note = ' (logo từ cột Logo không nhúng được vào khối)'; }
     if (size > 36000 && tpl.logo) { tpl.logo = ''; cfg = await mk(); size = JSON.stringify(cfg).length; note = ' (đã bỏ logo vì khối giới hạn dung lượng)'; }
@@ -2283,7 +2447,7 @@ async function saveDash() {
       const chk = await previewPack(true);
       previewInfo = chk ? ' ' + chk.msg : '';
       if (chk && !chk.ok) { toast(chk.msg + ' Vẫn lưu khối, nhưng khối sẽ chỉ dùng bản chụp cho tới khi sửa xong.', 10000); }
-      const cond = packCondition(packId, await currentRange()); dlog('save.conditions', cond);
+      const cond = packCondition(packId, link ? allRange() : await currentRange()); dlog('save.conditions', cond);
       ok = (await savePackVerified(cfg, cond, packId, size)) === 'ok';
       if (!ok) previewInfo += ' Lark không nhận nhóm theo cột gói (' + lastErr + '), khối sẽ dùng bản chụp.';
     } else {
@@ -2313,7 +2477,7 @@ async function bootLink() {
   const fields = {}, metas = [];
   for (const [k, v] of Q.entries()) if (k.startsWith('v.')) { const id = 'p' + metas.length; metas.push({ id, name: k.slice(2), type: 1 }); fields[id] = v; }
   for (const [k, v] of Q.entries()) if (k.startsWith('m.')) S.manual[k.slice(2)] = v;
-  S.metas = metas; S.idx = new Map(metas.map((m) => [fold(m.name), m]));
+  S.metas = metas; rebuildIdx();
   S.recMap.set('link', { recordId: 'link', fields }); S.order = ['link']; S.sel = ['link'];
   setStatus('ok', 'Chế độ link preview'); render(); dlog('link.ready', { vars: metas.length, tpl: tpl ? 'loaded' : 'default' });
   if (!metas.length) toast('Link chưa có dữ liệu: thiếu tham số v.<Tên cột>=…', 8000);
@@ -2352,7 +2516,7 @@ async function boot() {
     setStatus('wait', 'Đang đọc Base…');
     const dm = await detectDashboard(); S.dash = dm; dlog('dashMode', dm);
     const viewOnly = dm === 'View' || dm === 'FullScreen';
-    if (dm === 'Create' || dm === 'Config') { $('btnDashSave').style.display = ''; $('secDash').style.display = ''; }
+    if (dm === 'Create' || dm === 'Config') { $('btnDashSave').style.display = ''; $('secDash').style.display = ''; document.body.classList.add('dashedit'); }
     if (viewOnly) {
       document.body.classList.add('dashview'); S.tab = 'print'; applyUi();
       const h3 = (id, t) => { const n = $(id) && $(id).querySelector('h3'); if (n && n.firstChild) n.firstChild.textContent = t; };
