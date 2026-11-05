@@ -2696,7 +2696,6 @@ async function boot() {
       if (!dm) pickCurrent(true);
     }
     if (dc && dm === 'Config') reloadTemplates();
-    if (!viewOnly) { let seen = false; try { seen = !!localStorage.getItem('ps-tour-seen'); } catch (e) {} if (!seen) setTimeout(tourStart, 1200); }
     if (dm === 'Create' || dm === 'Config') baseTokenNow().then((t) => dashFor(t)).then((d) => dlog('dash.prewarm', d === dashboard ? 'chung' : 'base')).catch(() => {}); // mở sẵn đường base để Lưu khối không phải chờ
     if (dm) { try { dashboard.setRendered(); } catch (e) {} try { dashboard.onConfigChange(async (e) => { if (S.dash === 'Create' || S.saving) return; try { const c = await unpackCfg(e && e.data && e.data.customConfig); if (c && c.v === 2) await applyDash(c); } catch (err) { dlog('onConfigChange.error', String(err && err.message || err)); } }); } catch (e) {} }
     if (!dm) try { bitable.base.onSelectionChange(async () => { if (S.dash || S.mode !== 'one' || !$('chkFollow').checked || S.srcToken) return; await pickCurrent(true); }); } catch (e) {}
