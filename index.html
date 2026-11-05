@@ -30,7 +30,11 @@ body.sidehid .side{display:none!important}body.sidehid .layout{grid-template-col
 .lbl{font-size:12px;font-weight:600;color:#4b5563;display:flex;flex-direction:column;gap:4px}
 .row{display:flex;gap:6px;align-items:center}.row>*{flex:1}.row>.fit{flex:0 0 auto}
 .rtools{flex-wrap:nowrap;gap:4px}.rtools #btnAll{margin-left:auto}.rtools button{padding:5px 8px;font-size:12px}.rtools .ico{display:inline-flex;align-items:center;gap:3px;color:#646a73}.rtools .ico.on{background:var(--blue-soft);border-color:#b9cbe6;color:#1f56a0}.badge{font-size:10px;font-weight:700;color:#fff;background:#1f56a0;border-radius:8px;padding:0 5px;line-height:15px}.badge:empty{display:none}
-#qBar{margin-top:6px}.fbar:not([hidden]){display:flex;flex-direction:column;gap:6px;margin-top:6px;padding:8px;border:1px solid var(--line);border-radius:8px;background:#fafbfc}.frow{display:flex;flex-wrap:wrap;gap:4px}.frow select,.frow input{flex:1 1 28%;min-width:0;padding:5px 6px;font-size:12px}.frow .fx{padding:4px 7px}
+#qBar{margin-top:6px}.fbar:not([hidden]){display:flex;flex-direction:column;gap:6px;margin-top:6px;padding:8px;border:1px solid var(--line);border-radius:8px;background:#fafbfc}.frow{display:flex;flex-wrap:wrap;gap:4px}.frow select,.frow input{flex:1 1 28%;min-width:0;padding:5px 6px;font-size:12px}.frow .fx{padding:4px 7px}.frow .flk.on{background:var(--blue-soft);border-color:#b9cbe6}
+.frow.flock{font-size:12px;padding:5px 8px;background:#f1f4f9;border:1px dashed #b9cbe6;border-radius:6px;color:#373c43}
+.fms{position:relative;flex:1 1 40%;min-width:0}.fmsb{width:100%;text-align:left;padding:5px 22px 5px 6px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative}.fmsb::after{content:'▾';position:absolute;right:7px;color:#8f959e}
+.fmsp{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 3px);min-width:190px;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px #0002;padding:6px;display:flex;flex-direction:column;gap:4px}.fmsp[hidden]{display:none}.fmsp input[type=search]{padding:4px 6px;font-size:12px}
+.fmsl{max-height:190px;overflow:auto;display:flex;flex-direction:column}.fmsl label{display:flex;align-items:center;gap:6px;padding:4px 4px;border-radius:5px;font-size:12px;cursor:pointer}.fmsl label:hover{background:var(--soft)}.fmsl label[hidden]{display:none}.fmsl input{flex:0 0 auto;width:auto;margin:0}
 .hint{font-size:11.5px;color:var(--muted);margin:0}
 .msg{padding:8px 10px;border-radius:8px;background:#f6f8fc;color:#526074;font-size:12px}.msg.ok{background:#ecfdf3;color:#067647}.msg.err{background:#fff1f0;color:var(--err)}.msg.warn{background:var(--warn-soft);color:var(--warn)}
 .seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}.seg label{flex:1;text-align:center;padding:6px 4px;cursor:pointer;font-size:12px;font-weight:600;background:#fff;border-right:1px solid var(--line)}.seg label:last-child{border-right:0}.seg input{display:none}.seg input:checked+span{color:#fff}.seg label:has(input:checked){background:var(--blue);color:#fff}
@@ -152,12 +156,13 @@ body.dashedit .seg .eye{display:inline-block}.seg label.off .eye{background-imag
 #tourCard .tbtns{display:flex;align-items:center;gap:6px;margin-top:2px}#tourCard .tbtns .sp{flex:1}
 #tourCard .tx{position:absolute;top:8px;right:8px;border:0;background:none;font-size:16px;color:#8f959e;padding:2px 6px;cursor:pointer}
 @media (prefers-reduced-motion:reduce){#tourHole,#tourCard{transition:none}}
+body.dashview:not(.editor) #btnDiag{display:none!important}
 </style>
 </head>
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v4.6</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v4.7</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sec" id="secData"><h3>1 · Dữ liệu</h3>
@@ -1260,7 +1265,10 @@ const F_OPS = {
   num: [['eq', '='], ['ne', '≠'], ['gt', '>'], ['gte', '≥'], ['lt', '<'], ['lte', '≤'], ['between', 'trong khoảng'], ['empty', 'trống'], ['nempty', 'không trống']],
   date: [['eq', 'là ngày'], ['lt', 'trước ngày'], ['gt', 'sau ngày'], ['between', 'từ ngày … đến ngày'], ['today', 'hôm nay'], ['month', 'tháng này'], ['last7', '7 ngày qua'], ['empty', 'trống'], ['nempty', 'không trống']],
   check: [['yes', 'đã tích'], ['no', 'chưa tích']],
+  opt: [['has', 'chứa một trong'], ['hasall', 'chứa tất cả'], ['nhas', 'không chứa'], ['eq', 'là một trong'], ['ne', 'không là'], ['empty', 'trống'], ['nempty', 'không trống']],
 };
+const OPT_TYPES = () => new Set([FT('SingleSelect', 3), FT('MultiSelect', 4)]);
+const fVals = (f) => (Array.isArray(f.vs) && f.vs.length ? f.vs : f.v ? [f.v] : []);
 const NOVAL = new Set(['empty', 'nempty', 'today', 'month', 'last7', 'yes', 'no']);
 function fKind(m) {
   if (!m) return 'text';
@@ -1268,6 +1276,7 @@ function fKind(m) {
   if ([FT('Formula', 20), FT('Lookup', 19)].includes(m.type) && /(^|\s)(ngay|date|thoi gian|han|deadline|sinh)(\s|$)/.test(fold(m.name))) return 'date';
   if (NUM_TYPES().has(m.type) || m.type === FT('AutoNumber', 1005)) return 'num';
   if (m.type === FT('Checkbox', 7)) return 'check';
+  if (OPT_TYPES().has(m.type)) return 'opt';
   return 'text';
 }
 const dayKey = (d) => d ? d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate() : null;
@@ -1290,27 +1299,58 @@ function condPass(r, f) {
     const a = inputDay(f.v), b = inputDay(f.v2); if (a === null && f.op !== 'between') return true;
     return { eq: k === a, lt: k < a, gt: k > a, between: (a === null || k >= a) && (b === null || k <= b) }[f.op] ?? true;
   }
+  if (kind === 'opt') {
+    // Chọn nhiều option: so theo từng option của ô (ô nhiều lựa chọn tách bằng dấu phẩy)
+    const want = fVals(f).map(fold), have = new Set(String(txt || '').split(/\s*,\s*/).map(fold).filter(Boolean)); if (!want.length) return true;
+    const any = want.some((w) => have.has(w));
+    return { has: any, hasall: want.every((w) => have.has(w)), nhas: !any, eq: have.size > 0 && [...have].every((x) => want.includes(x)), ne: !any }[f.op] ?? true;
+  }
   const v = fold(f.v || ''), t = fold(txt); if (!v && f.op !== 'eq' && f.op !== 'ne') return true;
   const parts = t.split(/\s*,\s*/);
   return { has: t.includes(v), nhas: !t.includes(v), eq: t === v || parts.includes(v), ne: t !== v && !parts.includes(v) }[f.op] ?? true;
 }
-const activeFilters = () => (S.filters || []).filter((f) => f.f && (NOVAL.has(f.op) || f.v !== '' && f.v !== undefined || f.v2));
-function recPass(r) { const fs = activeFilters(); if (!fs.length || !r) return true; return S.fMatch === 'or' ? fs.some((f) => condPass(r, f)) : fs.every((f) => condPass(r, f)); }
+const activeFilters = () => (S.filters || []).filter((f) => f.f && (NOVAL.has(f.op) || f.v !== '' && f.v !== undefined || f.v2 || (Array.isArray(f.vs) && f.vs.length)));
+// v4.7: điều kiện 🔒 (khóa) luôn áp dụng và người xem khối không tắt được; điều kiện thường người xem tự bật / tắt
+function recPass(r) {
+  const fs = activeFilters(); if (!fs.length || !r) return true;
+  const lk = fs.filter((f) => f.lk), soft = fs.filter((f) => !f.lk);
+  if (lk.length && !lk.every((f) => condPass(r, f))) return false;
+  if (!soft.length) return true; return S.fMatch === 'or' ? soft.some((f) => condPass(r, f)) : soft.every((f) => condPass(r, f));
+}
+const lockedFilter = (f) => !!(f && f.lk && isDashView());
+function optValues(m) {
+  const p = (m && m.property) || {}, fromProp = (p.options || []).map((o) => o && (o.name || o.text)).filter(Boolean);
+  const fromData = S.order.slice(0, 2000).map((id) => S.recMap.get(id)).filter(Boolean).flatMap((r) => String(fmtCell(m, r.fields[m.id]) || '').split(/\s*,\s*/)).filter(Boolean);
+  return [...new Set([...fromProp, ...fromData])].slice(0, 300);
+}
+const msLabel = (f) => { const vs = fVals(f); return vs.length ? (vs.length > 2 ? vs.slice(0, 2).join(', ') + ' +' + (vs.length - 2) : vs.join(', ')) : 'Chọn giá trị…'; };
 function renderFilters() {
   const box = $('fRows'); if (!box) return; S.filters = S.filters || [];
   const opts = (sel) => S.metas.map((m) => `<option value="${esc(m.id)}"${m.id === sel ? ' selected' : ''}>${esc(m.name)}</option>`).join('');
+  const view = isDashView();
   box.innerHTML = S.filters.map((f, i) => {
     const m = S.metas.find((x) => x.id === f.f) || S.metas[0]; if (m && !f.f) f.f = m.id;
     const kind = fKind(m), ops = F_OPS[kind]; if (!ops.some(([k]) => k === f.op)) f.op = ops[0][0];
+    if (lockedFilter(f)) { const opName = (ops.find(([k]) => k === f.op) || [])[1] || f.op, val = kind === 'opt' ? fVals(f).join(', ') : [f.v, f.v2].filter(Boolean).join(' → ');
+      return `<div class="frow flock" data-i="${i}" title="Bộ lọc cố định do người quản trị khối đặt"><span>🔒 <b>${esc(m ? m.name : '')}</b> ${esc(opName)}${NOVAL.has(f.op) ? '' : ' <b>' + esc(val) + '</b>'}</span></div>`; }
+    const lockBtn = view ? '' : `<button class="fit fx flk${f.lk ? ' on' : ''}" data-k="lk" title="${f.lk ? 'Đang khóa: người xem khối không tắt được điều kiện này. Bấm để mở khóa' : 'Khóa điều kiện: khi xem khối luôn lọc, người xem không tắt được'}">${f.lk ? '🔒' : '🔓'}</button>`;
+    if (kind === 'opt') {
+      const need = !NOVAL.has(f.op), set = new Set(fVals(f)), all = need ? optValues(m) : [];
+      if (f.v && !Array.isArray(f.vs)) { f.vs = [f.v]; f.v = ''; }
+      return `<div class="frow" data-i="${i}"><select data-k="f">${opts(f.f)}</select><select data-k="op">${ops.map(([k, l]) => `<option value="${k}"${k === f.op ? ' selected' : ''}>${l}</option>`).join('')}</select>`
+        + (need ? `<div class="fms"><button type="button" class="fmsb" data-k="msb">${esc(msLabel(f))}</button><div class="fmsp" hidden><input type="search" data-k="msq" placeholder="Tìm giá trị…"><div class="fmsl">${all.map((v) => `<label><input type="checkbox" data-k="vs" value="${esc(v)}"${set.has(v) ? ' checked' : ''}><span>${esc(v)}</span></label>`).join('') || '<span class="hint">Chưa có giá trị.</span>'}</div></div></div>` : '<span></span>')
+        + lockBtn + `<button class="fit fx" data-k="del" title="Bỏ điều kiện">✕</button></div>`;
+    }
     const type = kind === 'date' ? 'date' : kind === 'num' ? 'number' : 'text', need = !NOVAL.has(f.op);
     const dl = kind === 'text' ? `list="fdl${i}"` : '';
     const vals = kind === 'text' ? [...new Set(S.order.slice(0, 800).map((id) => S.recMap.get(id)).filter(Boolean).flatMap((r) => String(fmtCell(m, r.fields[m.id]) || '').split(/\s*,\s*/)).filter(Boolean))].slice(0, 200) : [];
     return `<div class="frow" data-i="${i}"><select data-k="f">${opts(f.f)}</select><select data-k="op">${ops.map(([k, l]) => `<option value="${k}"${k === f.op ? ' selected' : ''}>${l}</option>`).join('')}</select>`
       + (need ? `<input data-k="v" type="${type}" ${dl} value="${esc(f.v || '')}" placeholder="Giá trị">` : '<span></span>')
       + (need && f.op === 'between' ? `<input data-k="v2" type="${type}" value="${esc(f.v2 || '')}" placeholder="đến">` : '')
-      + `<button class="fit fx" data-k="del" title="Bỏ điều kiện">✕</button>${vals.length ? `<datalist id="fdl${i}">${vals.map((v) => `<option value="${esc(v)}">`).join('')}</datalist>` : ''}</div>`;
+      + lockBtn + `<button class="fit fx" data-k="del" title="Bỏ điều kiện">✕</button>${vals.length ? `<datalist id="fdl${i}">${vals.map((v) => `<option value="${esc(v)}">`).join('')}</datalist>` : ''}</div>`;
   }).join('') || '<div class="hint">Chưa có điều kiện lọc.</div>';
   box.querySelectorAll('select[data-k="f"]').forEach(enhanceSelect);
+  const nLk = S.filters.filter(lockedFilter).length; $('fClear').hidden = view && nLk > 0 && nLk === S.filters.length;
   updFHint();
 }
 function updFHint() {
@@ -1319,7 +1359,7 @@ function updFHint() {
     const inDash = S.dash === 'Create' || S.dash === 'Config', live = S.dash === 'View' || S.dash === 'FullScreen';
     const names = activeFilters().map((f) => (S.metas.find((m) => m.id === f.f) || {}).name).filter(Boolean);
     fh.hidden = !(inDash && names.length) && !live;
-    fh.innerHTML = live ? 'Lọc trên dữ liệu đang có trong khối. Bộ lọc mặc định do người sửa khối đặt.' : `Bộ lọc được lưu cùng khối và tự áp dụng cả với dữ liệu mới. Cột dùng để lọc (<b>${names.map(esc).join(', ')}</b>) sẽ được đưa vào cột gói: bấm <b>Tạo / cập nhật cột gói</b>, dán lại công thức rồi <b>Kiểm tra</b> trước khi Lưu khối.`;
+    fh.innerHTML = live ? (S.filters.some(lockedFilter) ? '🔒 = lọc cố định, chỉ hiện bản ghi khớp. Điều kiện khác bạn tự bật / tắt.' : 'Bạn có thể bật / tắt các điều kiện lọc.') : `Lưu cùng khối. 🔒 = người xem không tắt được. Đã đổi cột lọc (<b>${names.map(esc).join(', ')}</b>) → bấm <b>Tạo / cập nhật cột gói</b> trước khi Lưu khối.`;
   }
   const n = activeFilters().length; $('fBadge').textContent = n ? String(n) : ''; $('btnF').classList.toggle('on', !!n || !$('fBar').hidden);
 }
@@ -1327,11 +1367,21 @@ function onFilterChange() { clearTimeout(onFilterChange.t); onFilterChange.t = s
 $('btnQ').onclick = () => { const b = $('qBar'); b.hidden = !b.hidden; $('btnQ').classList.toggle('on', !b.hidden || !!$('recSearch').value); if (!b.hidden) $('recSearch').focus(); };
 $('btnF').onclick = () => { const b = $('fBar'); b.hidden = !b.hidden; if (!b.hidden && !(S.filters || []).length) S.filters = [{ f: '', op: '', v: '' }]; renderFilters(); };
 $('fAdd').onclick = () => { (S.filters = S.filters || []).push({ f: '', op: '', v: '' }); renderFilters(); };
-$('fClear').onclick = () => { S.filters = []; renderFilters(); onFilterChange(); };
+$('fClear').onclick = () => { S.filters = (S.filters || []).filter(lockedFilter); renderFilters(); onFilterChange(); };
 $('fMatch').onchange = () => { S.fMatch = $('fMatch').value; onFilterChange(); };
-$('fRows').addEventListener('input', (e) => { const row = e.target.closest('.frow'); if (!row) return; const f = S.filters[+row.dataset.i], k = e.target.dataset.k; if (k === 'v' || k === 'v2') { f[k] = e.target.value; onFilterChange(); } });
-$('fRows').addEventListener('change', (e) => { const row = e.target.closest('.frow'); if (!row) return; const f = S.filters[+row.dataset.i], k = e.target.dataset.k; if (k === 'f') { f.f = e.target.value; f.op = ''; f.v = ''; f.v2 = ''; } else if (k === 'op') f.op = e.target.value; else return; renderFilters(); onFilterChange(); });
-$('fRows').addEventListener('click', (e) => { const b = e.target.closest('[data-k="del"]'); if (!b) return; S.filters.splice(+b.closest('.frow').dataset.i, 1); renderFilters(); onFilterChange(); });
+$('fRows').addEventListener('input', (e) => { const row = e.target.closest('.frow'); if (!row) return; const f = S.filters[+row.dataset.i], k = e.target.dataset.k; if (lockedFilter(f)) return;
+  if (k === 'v' || k === 'v2') { f[k] = e.target.value; onFilterChange(); }
+  if (k === 'msq') { const q = fold(e.target.value); row.querySelectorAll('.fmsl label').forEach((l) => { l.hidden = !!q && !fold(l.textContent).includes(q); }); }
+  if (k === 'vs') { f.vs = [...row.querySelectorAll('input[data-k="vs"]:checked')].map((x) => x.value); f.v = ''; row.querySelector('.fmsb').textContent = msLabel(f); onFilterChange(); } });
+$('fRows').addEventListener('change', (e) => { const row = e.target.closest('.frow'); if (!row) return; const f = S.filters[+row.dataset.i], k = e.target.dataset.k; if (lockedFilter(f) || k === 'vs') return; if (k === 'f') { f.f = e.target.value; f.op = ''; f.v = ''; f.v2 = ''; f.vs = []; } else if (k === 'op') f.op = e.target.value; else return; renderFilters(); onFilterChange(); });
+$('fRows').addEventListener('click', (e) => {
+  const row = e.target.closest('.frow'); if (!row) return; const i = +row.dataset.i, f = S.filters[i]; if (lockedFilter(f)) return;
+  if (e.target.closest('[data-k="msb"]')) { const pop = row.querySelector('.fmsp'), open = pop.hidden; $('fRows').querySelectorAll('.fmsp').forEach((x) => { x.hidden = true; }); pop.hidden = !open; if (open) pop.querySelector('input[type=search]').focus(); return; }
+  if (e.target.closest('[data-k="lk"]')) { f.lk = !f.lk; renderFilters(); onFilterChange(); return; }
+  if (e.target.closest('[data-k="del"]')) { S.filters.splice(i, 1); renderFilters(); onFilterChange(); }
+});
+// Đóng danh sách chọn nhiều khi bấm ra ngoài
+document.addEventListener('mousedown', (e) => { if (!e.target.closest('.fms')) document.querySelectorAll('#fRows .fmsp').forEach((x) => { x.hidden = true; }); });
 /* ---- Gom bản ghi theo 1 cột (ví dụ Mã phiếu) ---- */
 function fillGroup() { const el = $('selGroup'); if (!el) return; fillSelect(el, S.metas, '— Không gom —'); el.value = S.metas.some((m) => m.id === S.groupBy) ? S.groupBy : ''; if (!el.value) S.groupBy = ''; syncGroupRow(); }
 function syncGroupRow() { const on = S.mode === 'multi'; $('grpRow').hidden = !on; $('grpRow').style.display = on ? '' : 'none'; }
@@ -2045,7 +2095,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '4.6', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '4.7', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -2591,7 +2641,7 @@ function tourStart() {
   if (!TOUR.el) {
     const w = document.createElement('div'); w.id = 'tourWrap'; w.innerHTML = '<div id="tourBlock"></div><div id="tourHole"></div><div id="tourCard" role="dialog" aria-modal="true" aria-labelledby="tourT"><button class="tx" id="tourX" title="Tắt hướng dẫn" aria-label="Tắt hướng dẫn">✕</button><div class="tstep" id="tourN"></div><h4 id="tourT"></h4><p id="tourP"></p><div class="tdots" id="tourD"></div><div class="tbtns"><button class="fit" id="tourSkip">Bỏ qua</button><span class="sp"></span><button class="fit" id="tourPrev">Quay lại</button><button class="primary fit" id="tourNext">Tiếp</button></div></div>';
     document.body.appendChild(w); TOUR.el = w;
-    $('tourX').onclick = tourEnd; $('tourSkip').onclick = tourEnd; $('tourBlock').onclick = () => {};
+    $('tourX').onclick = tourEnd; $('tourSkip').onclick = tourEnd; $('tourBlock').onclick = () => $('tourNext').click(); // bấm vào khoảng trống để sang bước tiếp
     $('tourPrev').onclick = () => tourGo(TOUR.i - 1); $('tourNext').onclick = () => (TOUR.i >= TOUR.steps.length - 1 ? tourEnd() : tourGo(TOUR.i + 1));
     addEventListener('resize', () => { if (TOUR.el && TOUR.el.style.display !== 'none') tourPlace(); });
     addEventListener('keydown', (e) => { if (!TOUR.el || TOUR.el.style.display === 'none') return; if (e.key === 'Escape') tourEnd(); else if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); $('tourNext').click(); } else if (e.key === 'ArrowLeft' && TOUR.i > 0) tourGo(TOUR.i - 1); });
@@ -2683,9 +2733,10 @@ async function boot() {
     const dc = dm === 'Config' || viewOnly ? await getDashCfg() : null;
     if (dc) {
       const cc = { ...dc.customConfig }; const dcond = [].concat(dc.dataConditions || [])[0]; cc.__dc = dcond || null; if (!cc.baseToken && !cc.dataToken && dcond && dcond.baseToken && dcond.tableId === cc.tableId) cc.baseToken = dcond.baseToken;
-      if (viewOnly) S.isEditor = await detectEditor(cc);
+      if (viewOnly) { S.isEditor = await detectEditor(cc); document.body.classList.toggle('editor', !!S.isEditor); }
       await applyDash(cc); setStatus(S.liveErr ? 'err' : 'ok', S.liveErr ? 'Chưa đọc được dữ liệu' : 'Đã kết nối Lark Base'); dlog('boot.ready', Math.round(performance.now() - t0) + 'ms');
     } else if (viewOnly) {
+      detectEditor(null).then((v) => { S.isEditor = v; document.body.classList.toggle('editor', !!v); }).catch(() => {});
       setStatus('wait', 'Khối chưa cấu hình'); snapNote('Khối chưa được cấu hình. Hãy sửa khối và bấm Lưu khối.');
     } else {
       let tid = null; try { const s = await withTimeout(bitable.base.getSelection(), 3000); if (s && shown.some((t) => t.id === s.tableId)) tid = s.tableId; } catch (e) {}
@@ -2709,7 +2760,7 @@ async function boot() {
       if ([...$('selBase').options].some((o) => o.value === keep)) $('selBase').value = keep;
       $('rowBase').style.display = ''; dlog('bases', { n: bases.length, cur: me ? me.name : '(không rõ)' });
     });
-  } catch (e) { dlog('boot.error', String(e && e.message || e)); if ([...Q.keys()].some((k) => k.startsWith('v.'))) return bootLink(); setStatus('err', 'Chưa kết nối'); boxMsg('Không kết nối được: ' + (e && e.message || e), 'err'); if (S.dash === 'View' || S.dash === 'FullScreen') { S.viewErr = String(e && e.message || e); S.sel = []; S.tab = 'print'; snapNote(''); try { render(); } catch (x) {} } }
+  } catch (e) { dlog('boot.error', String(e && e.message || e)); if ([...Q.keys()].some((k) => k.startsWith('v.'))) return bootLink(); setStatus('err', 'Chưa kết nối'); boxMsg('Không kết nối được: ' + (e && e.message || e), 'err'); if (S.dash === 'View' || S.dash === 'FullScreen') { if (S.isEditor === undefined) detectEditor(null).then((v) => { S.isEditor = v; document.body.classList.toggle('editor', !!v); try { render(); } catch (x) {} }).catch(() => {}); S.viewErr = String(e && e.message || e); S.sel = []; S.tab = 'print'; snapNote(''); try { render(); } catch (x) {} } }
 }
 /* ============ Ai được xem thông báo lỗi chi tiết: người đã lưu khối (theo mã người dùng) hoặc máy từng Lưu khối ============ */
 async function detectEditor(c) {
