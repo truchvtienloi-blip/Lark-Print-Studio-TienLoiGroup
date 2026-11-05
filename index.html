@@ -2012,7 +2012,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '4.5.1', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '4.5.2', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -2356,9 +2356,33 @@ function startLive(c) {
   window.addEventListener('focus', () => { if (Date.now() - (S.liveAt || 0) > 5000) go('focus'); });
   setInterval(() => { if (document.visibilityState !== 'hidden') go('timer'); }, 30000);
 }
+/* ---- v4.5.2: logo đặt trên GitHub Pages (cùng nguồn với extension) thay vì nhúng vào khối ----
+   Mặc định: logo.png ở thư mục gốc repo. Mẫu nào cần logo riêng: đặt trường "logoFile" trong mẫu (vd. "logos/cong-ty-b.png"). */
+const SITE_PREFIX = 'site:', SITE_LOGO = 'logo.png';
+const logoPathFor = (t) => String((t && t.logoFile) || SITE_LOGO).replace(/^\.?\/+/, '');
+const SITE_LOGO_CACHE = new Map();
+function siteLogoData(path) {
+  if (!SITE_LOGO_CACHE.has(path)) {
+    const p = (async () => {
+      const r = await withTimeout(fetch(new URL(path, location.href).href, { cache: 'no-cache' }), 10000);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const b = await r.blob(); if (!/^image\//.test(b.type)) throw new Error('không phải file ảnh (' + (b.type || '?') + ')');
+      return shrinkImageSrc(URL.createObjectURL(b));
+    })();
+    p.catch(() => SITE_LOGO_CACHE.delete(path)); SITE_LOGO_CACHE.set(path, p);
+  }
+  return SITE_LOGO_CACHE.get(path);
+}
+// Khối lưu "site:logo.png" → tải ảnh về dạng data URL để hiển thị và xuất PDF / Excel / Word như logo nhúng
+function resolveSiteLogo() {
+  const v = S.tpl && S.tpl.logo; if (!/^site:/.test(v || '')) return;
+  const path = v.slice(SITE_PREFIX.length), t = S.tpl, dt = S.dashTpl; t.logo = ''; if (dt) dt.logo = '';
+  siteLogoData(path).then((d) => { if (!t.logo) t.logo = d; if (dt && !dt.logo) dt.logo = d; if (S.tpl === t) { try { render(); } catch (e) {} } dlog('logo.site', path); })
+    .catch((e) => dlog('logo.site.error', path + ': ' + String(e && e.message || e)));
+}
 async function applyDash(c) {
   const viewOnly = S.dash === 'View' || S.dash === 'FullScreen';
-  S.tpl = normalizeTpl(c.tpl); S.dashTpl = JSON.parse(JSON.stringify(S.tpl)); S.cur = null; $('tplName').value = S.tpl.name; try { renderTplSelect(S.tpl.id); } catch (e) {} S.overrides = {}; S.rect = null;
+  S.tpl = normalizeTpl(c.tpl); S.dashTpl = JSON.parse(JSON.stringify(S.tpl)); resolveSiteLogo(); S.cur = null; $('tplName').value = S.tpl.name; try { renderTplSelect(S.tpl.id); } catch (e) {} S.overrides = {}; S.rect = null;
   // Khối lưu bằng bản cũ (chưa có danh sách kiểu in) thì giữ như trước: cho phép cả 3 kiểu
   S.allow = cleanAllow(c.modes); S.mode = MODES.includes(c.mode) ? c.mode : 'one'; if (!S.allow.includes(S.mode)) S.mode = S.allow[0];
   S.link = c.mode === 'link' && c.link ? { ...c.link } : null; S.packWant = c.packId || ''; S.bid = c.bid || ''; syncModeUI();
@@ -2459,10 +2483,16 @@ async function saveDash() {
     // v4.5.1: logo lấy tự động từ cột Logo của _PrintTemplates bị nhúng vào khối dù mẫu không dùng {{LOGO}} → bỏ
     const usesLogo = (tpl.rows || []).some((r) => (r.cells || []).some((c) => /\{\{\s*LOGO\s*\}\}/i.test(String(c.t || ''))));
     if (tpl.logo && !usesLogo) { tpl.logo = ''; note = ' (mẫu không dùng {{LOGO}} nên không nhúng logo)'; }
+    // v4.5.2: mẫu có {{LOGO}} → khối chỉ lưu đường dẫn tới file logo trên GitHub Pages (vài chục ký tự), khi mở khối mới tải ảnh
+    if (usesLogo) {
+      const lp = logoPathFor(tpl);
+      try { await siteLogoData(lp); tpl.logo = SITE_PREFIX + lp; note = ' (logo lấy từ file ' + lp + ' trên trang)'; dlog('save.logo.site', lp); }
+      catch (e) { dlog('save.logo.site.error', lp + ': ' + String(e && e.message || e)); if (/^data:/.test(tpl.logo || '')) note = ' (chưa thấy file ' + lp + ' trên GitHub Pages nên phải nhúng logo — có thể vượt giới hạn khối)'; }
+    }
     let cfg = await mk(), size = JSON.stringify(cfg).length;
     if (/^https?:/.test(tpl.logo || '')) { tpl.logo = ''; cfg = await mk(); size = JSON.stringify(cfg).length; note = ' (logo từ cột Logo không nhúng được vào khối)'; }
     // Thực tế: Lark giữ bản ~5,5 KB nhưng bỏ qua (không báo lỗi) mọi bản ~25 KB → giới hạn an toàn 12.000 ký tự
-    if (size > BLOCK_MAX && tpl.logo) { tpl.logo = ''; cfg = await mk(); size = JSON.stringify(cfg).length; note = ' (đã bỏ logo vì khối giới hạn dung lượng)'; }
+    if (size > BLOCK_MAX && /^data:/.test(tpl.logo || '')) { tpl.logo = ''; cfg = await mk(); size = JSON.stringify(cfg).length; note = ' (đã bỏ logo vì khối giới hạn dung lượng — hãy đưa file ' + logoPathFor(tpl) + ' lên GitHub Pages rồi Lưu khối lại)'; }
     dlog('save.size', { bytes: size, compressed: cfg.z, ts: stamp, bid: S.bid, table: S.tableMeta.name, tpl: tpl.name || '', mode: S.mode, packCols: gcols.length });
     try { localStorage.setItem('ps-lastblock', JSON.stringify({ ts: stamp, bid: S.bid, tableId: S.tableMeta.id, table: S.tableMeta.name || '', tpl: tpl.name || '', mode: S.mode, pack: true })); } catch (e) {}
     if (size > BLOCK_MAX) { early = 'Mẫu quá lớn để lưu vào khối (' + size + ' / tối đa ' + BLOCK_MAX + ' ký tự) — Lark sẽ bỏ qua bản lưu này mà không báo lỗi. Hãy bớt dòng/cột trống hoặc ô định dạng phức tạp.'; return; }
