@@ -123,6 +123,7 @@ body.dashedit .seg .eye{display:inline-block}.seg label.off .eye{background-imag
 .chl{display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap}.chl b{font-weight:700}
 .chl.hl{background:#e9f0fa}
 .chlin{position:absolute;top:0;height:18px;z-index:8;padding:0 2px!important;border:1.5px solid var(--blue)!important;border-radius:3px!important;font:600 10.5px Arial,sans-serif!important;text-align:center;background:#fff}
+.bak{display:flex;flex-direction:column;gap:6px;padding:8px 10px;border:1px solid #f6e2c2;background:#fff8ee;border-radius:10px}.bak[hidden]{display:none}.bak b{font-size:12px;color:#7a4b00}.bak.warn{border-color:#f0b35c;background:#fff3e0}
 #printRoot{display:none}
 @media print{
   /* Chỉ in vùng #printRoot: mọi thứ khác bị ẩn hẳn (display:none) nên không còn chiếm chỗ sinh trang trắng */
@@ -139,7 +140,7 @@ body.dashedit .seg .eye{display:inline-block}.seg label.off .eye{background-imag
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v4.2</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v4.3</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sec" id="secData"><h3>1 · Dữ liệu</h3>
@@ -167,7 +168,7 @@ body.dashedit .seg .eye{display:inline-block}.seg label.off .eye{background-imag
   <div id="recList" class="reclist"><div class="empty">Chưa có dữ liệu</div></div>
   <label class="row" style="gap:6px"><input type="checkbox" id="chkFollow" class="fit" checked><span class="hint">Tự lấy bản ghi khi bấm vào một dòng trong Base (chế độ 1 bản ghi)</span></label>
  </div>
- <div class="sec" id="secDash" style="display:none"><h3>Khối trong Base App</h3><label class="row" style="gap:6px"><input type="checkbox" id="chkAll" class="fit"><span class="hint">Khi xem khối: lấy <b>toàn bộ bản ghi</b> của bảng/view (tự cập nhật). Bỏ chọn = chỉ in các bản ghi đã chọn bên dưới.</span></label><label class="row" style="gap:6px"><input type="checkbox" id="chkSnap" class="fit"><span class="hint">Lưu kèm <b>bản chụp dữ liệu</b> vào khối (dự phòng khi Lark không trả dữ liệu). Lưu ý: bản chụp lấy theo quyền của <b>người lưu khối</b> và <b>ai xem khối cũng thấy</b> — không nên bật nếu dữ liệu có phân quyền theo dòng.</span></label><label class="lbl">Cột định danh dòng (không trùng nhau)<select id="selKey"></select></label><p class="hint">Nên chọn cột Tự động đánh số hoặc cột mã duy nhất.</p><label class="lbl">Cột gói dữ liệu (công thức) — để khối tự lấy dữ liệu mới<select id="selPack"></select></label><div class="row" style="gap:6px;flex-wrap:wrap"><button id="btnPack" class="fit">Tạo / cập nhật cột gói</button><button id="btnPackTest" class="fit">Kiểm tra</button></div><p class="hint" id="packHint">Khi xem khối, Lark chỉ cho đọc dữ liệu qua <b>1 cột nhóm</b>. Cột gói là cột Công thức ghép tất cả cột mẫu cần dùng thành 1 chuỗi, nhờ vậy khối tự cập nhật mà không cần mở lại cấu hình.</p><p class="hint">Chọn bảng, chế độ, thiết kế mẫu xong thì bấm <b>Lưu khối</b> ở góc trên bên phải.</p></div>
+ <div class="sec" id="secDash" style="display:none"><h3>Khối trong Base App</h3><div class="bak" id="bakBox" hidden><b>Sao lưu cấu hình khối</b><span class="hint" id="bakMsg"></span><select id="selBak"></select><div class="row" style="justify-content:flex-start"><button id="btnBak" class="fit">Khôi phục vào khối này</button></div></div><label class="row" style="gap:6px"><input type="checkbox" id="chkAll" class="fit"><span class="hint">Khi xem khối: lấy <b>toàn bộ bản ghi</b> của bảng/view (tự cập nhật). Bỏ chọn = chỉ in các bản ghi đã chọn bên dưới.</span></label><label class="row" style="gap:6px"><input type="checkbox" id="chkSnap" class="fit"><span class="hint">Lưu kèm <b>bản chụp dữ liệu</b> vào khối (dự phòng khi Lark không trả dữ liệu). Lưu ý: bản chụp lấy theo quyền của <b>người lưu khối</b> và <b>ai xem khối cũng thấy</b> — không nên bật nếu dữ liệu có phân quyền theo dòng.</span></label><label class="lbl">Cột định danh dòng (không trùng nhau)<select id="selKey"></select></label><p class="hint">Nên chọn cột Tự động đánh số hoặc cột mã duy nhất.</p><label class="lbl">Cột gói dữ liệu (công thức) — để khối tự lấy dữ liệu mới<select id="selPack"></select></label><div class="row" style="gap:6px;flex-wrap:wrap"><button id="btnPack" class="fit">Tạo / cập nhật cột gói</button><button id="btnPackTest" class="fit">Kiểm tra</button></div><p class="hint" id="packHint">Khi xem khối, Lark chỉ cho đọc dữ liệu qua <b>1 cột nhóm</b>. Cột gói là cột Công thức ghép tất cả cột mẫu cần dùng thành 1 chuỗi, nhờ vậy khối tự cập nhật mà không cần mở lại cấu hình.</p><p class="hint">Chọn bảng, chế độ, thiết kế mẫu xong thì bấm <b>Lưu khối</b> ở góc trên bên phải.</p></div>
  <div class="sec" id="secTpl"><h3>4 · Mẫu in</h3>
   <label class="lbl">Mẫu đã lưu<select id="selTpl"></select></label>
   <label class="lbl">Tên mẫu<input type="text" id="tplName" placeholder="VD: Biên bản giao nhận hàng"></label>
@@ -653,7 +654,7 @@ function enhanceSelect(sel) {
   });
 }
 
-['selBase', 'selTable', 'selView', 'selLabel', 'selKey', 'selPack', 'selTpl', 'selGroup'].forEach((id) => enhanceSelect($(id)));
+['selBase', 'selTable', 'selView', 'selLabel', 'selKey', 'selPack', 'selTpl', 'selGroup', 'selLink', 'selBak'].forEach((id) => enhanceSelect($(id)));
 
 /* ============ Vẽ mẫu ============ */
 const paperDims = () => PAPER[S.tpl.paper] || PAPER.A4;
@@ -692,7 +693,7 @@ function getPages() {
 }
 function printHTML(missing) {
   const pages = getPages();
-  if (!pages.length) return '<div class="empty" style="background:#fff;border-radius:10px">Chọn ít nhất 1 bản ghi ở cột bên trái để xem phiếu.</div>';
+  if (!pages.length) return S.viewErr ? `<div class="empty" style="background:#fff;border-radius:10px;color:var(--err);max-width:640px;line-height:1.55"><b>Khối chưa hiển thị được dữ liệu</b><br>${esc(S.viewErr)}</div>` :'<div class="empty" style="background:#fff;border-radius:10px">Chọn ít nhất 1 bản ghi ở cột bên trái để xem phiếu.</div>';
   const now = new Date();
   return pages.map((recs) => {
     const ctx = { recs, idx: S.idx, manual: S.manual, now, fmtCell, missing, rec: null, i: 0 };
@@ -1562,7 +1563,7 @@ async function loadShared() {
     const st = await sharedTable(false); if (!st) return [];
     const ids = (await withTimeout(st.table.getRecordIdList(), 15000)) || [], out = [];
     for (let i = 0; i < ids.length; i += 10) {
-      const part = await Promise.all(ids.slice(i, i + 10).map(async (id) => { try { const j = await st.table.getCellString(st.f['Dữ liệu mẫu'], id); if (!j) return null; const tj = await tplFromText(j); let lv = null; if (st.f.logo) { try { lv = await st.table.getCellValue(st.f.logo, id); } catch (e) {} } const has = Array.isArray(lv) && lv.length > 0; return { scope: 'shared', recordId: id, tpl: normalizeTpl(tj), hasLogo: has, logoTok: has ? (lv[0].token || lv[0].name || '') : '' }; } catch (e) { return null; } }));
+      const part = await Promise.all(ids.slice(i, i + 10).map(async (id) => { try { const j = await st.table.getCellString(st.f['Dữ liệu mẫu'], id); if (!j || String(j).startsWith(BAK_PREFIX)) return null; const tj = await tplFromText(j); let lv = null; if (st.f.logo) { try { lv = await st.table.getCellValue(st.f.logo, id); } catch (e) {} } const has = Array.isArray(lv) && lv.length > 0; return { scope: 'shared', recordId: id, tpl: normalizeTpl(tj), hasLogo: has, logoTok: has ? (lv[0].token || lv[0].name || '') : '' }; } catch (e) { return null; } }));
       out.push(...part.filter(Boolean));
     }
     dlog('shared.loaded', out.length); return out;
@@ -2010,7 +2011,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '4.2', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '4.3', bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -2022,6 +2023,8 @@ $('btnDiag').onclick = async () => {
     await tryGet('savedAt', async () => { const c = await dashboard.getConfig(); const t = c && c.customConfig && c.customConfig.ts; return t ? new Date(t).toLocaleString('vi-VN') : '(khối lưu bằng bản cũ, chưa có dấu thời gian)'; });
   }
   if (bitable && bitable.base) await tryGet('tables', async () => ((await bitable.base.getTableMetaList()) || []).slice(0, 12).map((t) => ({ id: t.id, name: t.name })));
+  if (dashboard) await tryGet('blockCfg', async () => { const c = await getDashCfg(); const x = c && c.customConfig; if (!x) return '(khối chưa có cấu hình của Print Studio)'; return { savedAt: x.ts ? new Date(x.ts).toLocaleString('vi-VN') : '(không rõ)', tableId: x.tableId, tpl: (x.tpl && x.tpl.name) || '(mẫu chưa đặt tên)', mode: x.mode, modes: x.modes || '(bản cũ: cả 3 kiểu)', packId: x.packId || '(không có)', packCols: (x.packCols || []).length, link: x.link ? x.link.tableName + ' qua ' + x.link.fieldName : null, useAll: !!x.useAll, snapRows: x.snap && x.snap.rows ? x.snap.rows.length : 0, hint: staleHint(x) }; });
+  try { info.lastLocalSave = JSON.parse(localStorage.getItem('ps-lastblock') || 'null'); if (info.lastLocalSave && info.lastLocalSave.ts) info.lastLocalSave.at = new Date(info.lastLocalSave.ts).toLocaleString('vi-VN'); } catch (e) {}
   try { info.lastSave = JSON.parse(localStorage.getItem('ps-savelog') || '[]'); } catch (e) {}
   info.log = diagLog;
   const text = JSON.stringify(info, null, 2);
@@ -2051,7 +2054,83 @@ async function unpackCfg(cc) {
   const bin = atob(cc.d), buf = Uint8Array.from(bin, (c) => c.charCodeAt(0));
   return JSON.parse(await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).text());
 }
-async function getDashCfg() { try { const c = await withTimeout(dashboard.getConfig(), 6000); dlog('dash.getConfig', { keys: c && Object.keys(c.customConfig || {}) }); if (!c || !c.customConfig || !(c.customConfig.v === 2 || c.customConfig.v === 3)) return null; return { ...c, customConfig: await unpackCfg(c.customConfig) }; } catch (e) { dlog('dash.getConfig.error', String(e && e.message || e)); return null; } }
+// So cấu hình khối Lark đang trả với lần "Lưu khối" gần nhất trên máy này: phát hiện đang mở khối khác / bản cấu hình cũ
+function staleHint(c) {
+  const at = (t) => new Date(t).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+  let lb = null; try { lb = JSON.parse(localStorage.getItem('ps-lastblock') || 'null'); } catch (e) {}
+  const cur = `Khối đang mở dùng cấu hình lưu lúc ${c && c.ts ? at(c.ts) : '(không rõ)'}${c && c.tpl && c.tpl.name ? ', mẫu "' + c.tpl.name + '"' : ', mẫu chưa đặt tên'}`;
+  if (!lb || !lb.ts || !c || !c.ts || lb.ts <= c.ts) return cur + '.';
+  if (lb.tableId !== c.tableId) return `${cur} — khác bảng với lần Lưu khối gần nhất của bạn (${at(lb.ts)}, bảng "${lb.table}", mẫu "${lb.tpl || 'chưa đặt tên'}"). Có thể bạn đang mở một khối khác, hoặc một bản sao / bản phát hành cũ của Base App.`;
+  return `${cur} — cũ hơn lần Lưu khối gần nhất của bạn (${at(lb.ts)}, mẫu "${lb.tpl || 'chưa đặt tên'}"). Lark chưa trả cấu hình mới: nếu Base App có thay đổi chưa phát hành, hãy Phát hành (Publish) lại rồi mở lại khối.`;
+}
+/* ---- Sao lưu cấu hình khối: Lark có lúc trả lại cấu hình cũ (hoặc mở nhầm khối) → giữ bản sao để khôi phục 1 chạm ----
+   Mỗi khối có mã riêng (bid, lưu trong cấu hình khối). Mỗi lần Lưu khối: 1 bản trong trình duyệt (8 bản gần nhất)
+   + 1 dòng trong bảng _PrintTemplates cho mỗi khối (ai sửa khối cũng khôi phục được). Bản sao lưu KHÔNG chứa dữ liệu bản chụp. */
+const BAK_KEY = 'ps-blockbak', BAK_PREFIX = 'blk:';
+const bakTime = (t) => new Date(t).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+const bakLabel = (b, curBid) => `${b.bid && b.bid === curBid ? '★ Khối này · ' : ''}${bakTime(b.ts)} · ${b.table || '?'} · ${b.tpl || 'mẫu chưa đặt tên'} · ${MODE_NAME[b.mode] || b.mode || ''}${b.src === 'base' ? ' · trong Base' : ''}`;
+function bakLocal() { try { const a = JSON.parse(localStorage.getItem(BAK_KEY) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+// Trả về { base: true } khi đã ghi vào _PrintTemplates, hoặc { base: false, why } để báo cho người lưu biết
+async function backupBlock(cfg) {
+  const b = { ts: cfg.ts, bid: S.bid || '', table: (S.tableMeta && S.tableMeta.name) || '', tableId: S.tableMeta && S.tableMeta.id, tpl: (S.tpl && S.tpl.name) || '', mode: S.mode, cfg };
+  try { const arr = bakLocal().filter((x) => x.ts !== b.ts); arr.unshift(b); localStorage.setItem(BAK_KEY, JSON.stringify(arr.slice(0, 8))); } catch (e) { dlog('save.bak.local.error', String(e && e.message || e)); }
+  try {
+    const st = await withTimeout(sharedTable(false), 8000);
+    if (!st) { dlog('save.bak.base', 'chưa có bảng ' + TPL_TABLE); return { base: false, why: 'Base chưa có bảng ' + TPL_TABLE + ' (tạo bằng cách Lưu mẫu "Trong Base" một lần)' }; }
+    const name = `[Khối] ${b.tpl || 'Mẫu chưa đặt tên'} · ${b.table}${b.bid ? ' · #' + b.bid.slice(-6) : ''}`, data = BAK_PREFIX + JSON.stringify(b);
+    const ids = (await withTimeout(st.table.getRecordIdList(), 8000)) || []; let rid = null;
+    for (let i = 0; i < ids.length && !rid; i += 10) {
+      const part = ids.slice(i, i + 10), vals = await Promise.all(part.map((id) => st.table.getCellString(st.f['Dữ liệu mẫu'], id).catch(() => '')));
+      // cùng khối (cùng mã) thì ghi đè dòng cũ của khối đó
+      vals.forEach((j, k) => { if (rid || !b.bid || !String(j).startsWith(BAK_PREFIX)) return; try { if (JSON.parse(String(j).slice(BAK_PREFIX.length)).bid === b.bid) rid = part[k]; } catch (e) {} });
+    }
+    const fields = { [st.f['Tên mẫu']]: seg(name), [st.f['Dữ liệu mẫu']]: seg(data), [st.f['Bảng áp dụng']]: seg(b.table), [st.f['Cập nhật']]: seg(new Date(b.ts).toLocaleString('vi-VN')) };
+    if (rid) { for (const [fid, v] of Object.entries(fields)) await withTimeout(st.table.setCellValue(fid, rid, v), 8000); } else await withTimeout(st.table.addRecord({ fields }), 8000);
+    dlog('save.bak.base', { name, size: data.length, update: !!rid });
+    return { base: true };
+  } catch (e) { const why = String(e && e.message || e); dlog('save.bak.base.error', why); return { base: false, why: /permission|denied|forbidden|quyền/i.test(why) ? 'bạn chưa có quyền sửa bảng ' + TPL_TABLE : why }; }
+}
+async function loadBackups() {
+  const out = bakLocal().filter((b) => b && b.ts && b.cfg).map((b) => ({ ...b, src: 'local' }));
+  try {
+    const st = await sharedTable(false);
+    if (st) {
+      const ids = (await withTimeout(st.table.getRecordIdList(), 10000)) || [];
+      for (let i = 0; i < ids.length; i += 10) {
+        const vals = await Promise.all(ids.slice(i, i + 10).map((id) => st.table.getCellString(st.f['Dữ liệu mẫu'], id).catch(() => '')));
+        for (const j of vals) { if (!j || !String(j).startsWith(BAK_PREFIX)) continue; try { const b = JSON.parse(String(j).slice(BAK_PREFIX.length)); if (b && b.ts && b.cfg && !out.some((x) => x.ts === b.ts)) out.push({ ...b, src: 'base' }); } catch (e) {} }
+      }
+    }
+  } catch (e) { dlog('bak.load.error', String(e && e.message || e)); }
+  return out.sort((a, b) => b.ts - a.ts);
+}
+// Khi mở Sửa khối: liệt kê bản sao lưu (bản của chính khối này lên đầu); cấu hình Lark trả cũ hơn bản lưu của khối này → cảnh báo + chọn sẵn
+async function renderBackups(curTs, curBid) {
+  const all = await loadBackups(), box = $('bakBox');
+  const mine = all.filter((b) => curBid && b.bid === curBid), list = [...mine, ...all.filter((b) => !mine.includes(b))]; S.baks = list;
+  if (!list.length) { box.hidden = true; return; }
+  $('selBak').innerHTML = list.map((b, i) => `<option value="${i}">${esc(bakLabel(b, curBid))}</option>`).join(''); $('selBak').value = '0';
+  const cur = curTs || 0, mineNewer = mine.length && mine[0].ts > cur + 1000, anyNewer = all[0].ts > cur + 1000;
+  box.classList.toggle('warn', !!(mineNewer || (!curBid && anyNewer))); box.hidden = false;
+  $('bakMsg').textContent = mineNewer
+    ? `Lark đang trả cấu hình ${cur ? 'lưu lúc ' + bakTime(cur) : 'trống'} — cũ hơn lần lưu gần nhất của CHÍNH KHỐI NÀY (${bakTime(mine[0].ts)}). Bấm "Khôi phục vào khối này" (đã chọn sẵn), kiểm tra lại rồi Lưu khối.`
+    : !curBid && anyNewer
+      ? `Khối đang dùng cấu hình ${cur ? 'lưu lúc ' + bakTime(cur) : 'trống'} — cũ hơn bản sao lưu mới nhất (${bakTime(all[0].ts)}). Nếu setup bị mất: chọn bản sao lưu đúng bảng/mẫu, bấm Khôi phục, kiểm tra lại rồi Lưu khối.`
+      : `${list.length} bản sao lưu (mỗi lần Lưu khối tự sao lưu). Dùng để lấy lại setup cũ hoặc chép setup sang khối khác.`;
+  if (box.classList.contains('warn')) setSec($('secDash'), false, false);
+  dlog('bak.list', { n: list.length, mine: mine.length, newest: bakTime(all[0].ts), cur: cur ? bakTime(cur) : null });
+}
+$('btnBak').onclick = async () => {
+  const b = (S.baks || [])[+$('selBak').value]; if (!b) return; const btn = $('btnBak'); btn.disabled = true;
+  try {
+    const raw = await unpackCfg(b.cfg); if (!raw || !raw.tableId) throw new Error('bản sao lưu hỏng');
+    const keepBid = S.bid; await applyDash(raw); if (keepBid) S.bid = keepBid; // chép setup sang khối khác vẫn giữ mã của khối đang sửa
+    toast('Đã nạp bản sao lưu ' + bakTime(b.ts) + '. Kiểm tra lại (cột gói, kiểu in) rồi bấm "Lưu khối" để ghi vào khối.', 10000);
+    $('bakMsg').textContent = 'Đã nạp bản sao lưu ' + bakTime(b.ts) + ' — bấm "Lưu khối" để ghi vào khối.';
+  } catch (e) { toast('Không khôi phục được: ' + (e && e.message || e), 7000); dlog('bak.restore.error', String(e && e.message || e)); }
+  finally { btn.disabled = false; }
+};
+async function getDashCfg() { try { const c = await withTimeout(dashboard.getConfig(), 6000); dlog('dash.getConfig', { keys: c && Object.keys(c.customConfig || {}) }); if (!c || !c.customConfig || !(c.customConfig.v === 2 || c.customConfig.v === 3)) return null; const inner = await unpackCfg(c.customConfig); if (inner && c.customConfig.ts && !inner.ts) inner.ts = c.customConfig.ts; return { ...c, customConfig: inner }; } catch (e) { dlog('dash.getConfig.error', String(e && e.message || e)); return null; } }
 const SPECIAL = new Set(['STT', 'TODAY', 'NGAY', 'THANG', 'NAM', 'COUNT', 'LOGO']);
 function templateVars(tpl) {
   const seen = new Map();
@@ -2317,7 +2396,7 @@ async function refreshLive(c, quiet) {
     if (rows.tagged && rows.missing.length) throw new Error('Cột gói thiếu dữ liệu của: ' + rows.missing.map((g) => g.name).join(', ') + '. Mở sửa khối → Tạo / cập nhật cột gói → dán lại công thức → Lưu khối.');
     if (rows.parts !== need) throw new Error(`Lark trả ${rows.length} dòng nhưng mỗi dòng có ${rows.parts || 0}/${need} phần — cột gói chưa khớp mẫu hoặc khối chưa lưu nhóm theo cột gói. Hãy sửa khối, bấm "Tạo / cập nhật cột gói" rồi Lưu khối.`);
     applyLiveRows(rows, c); renderRecList(); render(); S.liveAt = Date.now();
-    if (S.liveErr) { S.liveErr = false; setStatus('ok', 'Đã kết nối Lark Base'); }
+    if (S.liveErr) { S.liveErr = false; setStatus('ok', 'Đã kết nối Lark Base'); } S.viewErr = '';
     const lostF = activeFilters().filter((f) => !(c.packCols || []).some((g) => g.id === f.f));
     snapNote(lostF.length ? 'Bộ lọc của khối đang bị bỏ qua vì cột gói chưa có cột dùng để lọc. Mở sửa khối → Tạo / cập nhật cột gói → dán lại công thức → Lưu khối.' : '');
   } finally { S.liveBusy = false; }
@@ -2337,7 +2416,7 @@ async function applyDash(c) {
   S.tpl = normalizeTpl(c.tpl); S.dashTpl = JSON.parse(JSON.stringify(S.tpl)); S.cur = null; $('tplName').value = S.tpl.name; try { renderTplSelect(S.tpl.id); } catch (e) {} S.overrides = {}; S.rect = null;
   // Khối lưu bằng bản cũ (chưa có danh sách kiểu in) thì giữ như trước: cho phép cả 3 kiểu
   S.allow = cleanAllow(c.modes); S.mode = MODES.includes(c.mode) ? c.mode : 'one'; if (!S.allow.includes(S.mode)) S.mode = S.allow[0];
-  S.link = c.mode === 'link' && c.link ? { ...c.link } : null; S.packWant = c.packId || ''; syncModeUI();
+  S.link = c.mode === 'link' && c.link ? { ...c.link } : null; S.packWant = c.packId || ''; S.bid = c.bid || ''; syncModeUI();
   S.groupBy = c.groupBy || ''; S.filters = (c.filters || []).map((f) => ({ ...f })); S.fMatch = c.fMatch || 'and'; $('fMatch').value = S.fMatch;
   S.manual = c.manual || {}; $('chkAll').checked = !!c.useAll; $('chkSnap').checked = !!(c.snap && (c.snap.rows || []).length);
   const snapDate = (t) => new Date(t).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -2349,7 +2428,7 @@ async function applyDash(c) {
     const dg = c.__dc && c.__dc.groups && c.__dc.groups[0] && c.__dc.groups[0].fieldId;
     if (c.packId && c.__dc && dg !== c.packId) {
       dlog('view.cond', { savedGroup: dg || '(không có)', packId: c.packId, table: c.__dc.tableId });
-      snapNote((c.snap && c.snap.rows ? 'Dữ liệu chụp lúc ' + snapDate(c.snap.at) + '. ' : '') + 'Lark chưa lưu điều kiện nhóm theo cột gói cho khối này nên chưa tự cập nhật. Mở sửa khối → Kiểm tra → Lưu khối; nếu vẫn vậy hãy bấm Chẩn đoán và gửi chẩn đoán (mục lastSave).');
+      snapNote((c.snap && c.snap.rows ? 'Dữ liệu chụp lúc ' + snapDate(c.snap.at) + '. ' : '') + 'Lark chưa lưu điều kiện nhóm theo cột gói cho khối này nên chưa tự cập nhật. ' + staleHint(c) + ' Mở sửa khối → Kiểm tra → Lưu khối; nếu vẫn vậy hãy bấm ⚙ và gửi chẩn đoán.');
       renderRecList(); return;
     }
     if (c.packId && c.packCols && dashboard.getData) {
@@ -2363,7 +2442,7 @@ async function applyDash(c) {
       }
     } else if (c.snap && c.snap.rows) {
       snapNote('Dữ liệu chụp lúc ' + snapDate(c.snap.at) + '. Khối chưa có cột gói nên không tự cập nhật: sửa khối → "Tạo / cập nhật cột gói" → Lưu khối.');
-    } else throw new Error('Khối chưa có dữ liệu: hãy sửa khối, chọn cột gói và Lưu lại.');
+    } else throw new Error('Khối này chưa được cài dữ liệu (chưa có cột gói, chưa có bản chụp). ' + staleHint(c) + ' Cách xử lý: mở Sửa khối → chọn bảng → Tạo / cập nhật cột gói → Lưu khối.');
     renderRecList();
     return;
   }
@@ -2393,7 +2472,7 @@ async function readBack() {
   try { const c = await withTimeout(dashboard.getConfig(), 5000); const dc = [].concat((c && c.dataConditions) || [])[0]; return { ts: c && c.customConfig && c.customConfig.ts, group: dc && dc.groups && dc.groups[0] && dc.groups[0].fieldId }; }
   catch (e) { return { ts: null, group: null, err: String(e && e.message || e) }; }
 }
-async function savePackVerified(cfg, cond, packId, size) {
+async function savePackVerified(cfg, cond, packId, size, step) {
   const token = cond.baseToken || await baseTokenNow(), g = { fieldId: packId }, extra = token ? { baseToken: token } : {};
   const variants = [
     ['full', cond],
@@ -2401,69 +2480,96 @@ async function savePackVerified(cfg, cond, packId, size) {
     ['counta', Object.assign({ tableId: cond.tableId, dataRange: cond.dataRange, groups: [g], series: 'COUNTA' }, extra)],
   ];
   const tryOne = async (dn, d, vn, v) => {
-    try { const r = await withTimeout(d.saveConfig({ customConfig: cfg, dataConditions: [v] }), 15000); await sleep(600); const back = await readBack(); dlog('save.pack.' + dn + '.' + vn, { result: r, tplOk: back.ts === cfg.ts, group: back.group, want: packId, size }); return back; }
-    catch (e) { dlog('save.pack.' + dn + '.' + vn + '.error', String(e && e.message || e)); return null; }
+    if (step) step(`2/3 · Gắn cột gói vào khối (${dn === 'chung' ? 'khối' : 'qua base'} · ${vn})…`);
+    try { const r = await withTimeout(d.saveConfig({ customConfig: cfg, dataConditions: [v] }), 20000); await sleep(800); const back = await readBack(); dlog('save.pack.' + dn + '.' + vn, { result: r, tplOk: back.ts === cfg.ts, group: back.group, want: packId, size }); return back; }
+    catch (e) { const m = String(e && e.message || e); dlog('save.pack.' + dn + '.' + vn + '.error', m); return m === 'timeout' ? 'timeout' : null; }
   };
-  for (const [vn, v] of variants) { const b = await tryOne('chung', dashboard, vn, v); if (b && b.ts === cfg.ts && b.group === packId) return 'ok'; }
+  // Lark không trả lời (quá 20 giây) thì các kiểu điều kiện khác qua cùng đường cũng sẽ treo: chuyển sang đường base luôn
+  for (const [vn, v] of variants) { const b = await tryOne('chung', dashboard, vn, v); if (b === 'timeout') break; if (b && b.ts === cfg.ts && b.group === packId) return 'ok'; }
   const baseDash = await dashFor(token);
   if (baseDash !== dashboard) for (const [vn, v] of variants) {
-    const b = await tryOne('base', baseDash, vn, v); if (!b || b.group !== packId) continue;
+    const b = await tryOne('base', baseDash, vn, v); if (!b || b === 'timeout' || b.group !== packId) continue;
     if (b.ts === cfg.ts) return 'ok';
     // Điều kiện đã đúng nhưng mẫu chưa vào khối: ghi lại mẫu qua dashboard chung, giữ nguyên điều kiện
-    try { await withTimeout(dashboard.saveConfig({ customConfig: cfg, dataConditions: [v] }), 15000); await sleep(600); } catch (e) { dlog('save.tpl.fix.error', String(e && e.message || e)); }
+    try { await withTimeout(dashboard.saveConfig({ customConfig: cfg, dataConditions: [v] }), 20000); await sleep(800); } catch (e) { dlog('save.tpl.fix.error', String(e && e.message || e)); }
     const b2 = await readBack(); dlog('save.tpl.fix', { tplOk: b2.ts === cfg.ts, group: b2.group });
     if (b2.ts === cfg.ts && b2.group === packId) return 'ok';
   }
   return 'nogroup';
 }
+/* Lưu khối 3 bước, có hộp tiến trình (không để người dùng đóng khung sửa khi Lark chưa xác nhận):
+   1) Lưu mẫu + thiết lập với điều kiện dữ liệu không nhóm — kiểu lưu Lark luôn xác nhận được → khối giữ đúng mẫu dù bước 2 không xong
+   2) Gắn cột gói (điều kiện nhóm theo cột gói) để khối tự cập nhật dữ liệu
+   3) Đọc lại cấu hình từ Lark và báo rõ kết quả */
 async function saveDash() {
   if (!S.tableMeta) { toast('Chưa chọn bảng.'); return; }
   const link = S.mode === 'link';
   // Phiếu & chi tiết bắt buộc có cột gói ở bảng chi tiết (không dùng bản chụp)
   if (link && !(S.link && S.link.tableId && $('selPack').value)) { toast('Kiểu "Phiếu & chi tiết" cần chọn cột liên kết và tạo cột gói ở bảng chi tiết (nút "Tạo / cập nhật cột gói") trước khi Lưu khối.', 8000); return; }
   const btn = $('btnDashSave'); btn.disabled = true;
-  const tpl = JSON.parse(JSON.stringify(S.tpl)); let note = '', lastErr = '', previewInfo = '';
+  const tpl = JSON.parse(JSON.stringify(S.tpl)); let note = '', lastErr = '', previewInfo = '', bak = null, result = 'fail', back = null, early = '';
+  const step = (t) => { const el = $('saveStep'); if (el) el.textContent = t; dlog('save.step', t); };
+  openModal('Đang lưu khối', '<p id="saveStep" style="font-weight:600;margin:0">Đang chuẩn bị…</p><p class="hint">Đừng đóng khung sửa khối cho tới khi có kết quả — Lark có thể mất 10–30 giây để xác nhận. Đóng sớm có thể làm Lark không giữ cấu hình mới.</p>');
+  $('mClose').style.display = 'none';
+  const packId = $('selPack').value;
   try {
-    let nRows = !link && ($('chkSnap').checked || !$('selPack').value) ? 500 : 0;
-    const packId = $('selPack').value; await baseTokenNow(); const stamp = Date.now();
+    let nRows = !link && ($('chkSnap').checked || !packId) ? 500 : 0;
+    await baseTokenNow(); const stamp = Date.now();
+    if (!S.bid) S.bid = uid(); // mã riêng của khối, đi theo cấu hình khối (dùng để nhận đúng bản sao lưu)
     const gcols = stripCols(packColsNow()), keyMeta = S.metas.find((m) => m.id === (gcols[0] && gcols[0].id.replace(link ? /^m/ : /^$/, '')));
     const selKeys = keyMeta ? selRecords().map((r) => keyText(r.fields[keyMeta.id])).slice(0, 60) : [];
     const linkCfg = link ? { fieldId: S.link.fieldId, fieldName: S.link.fieldName, tableId: S.link.tableId, tableName: S.link.tableName, backId: S.link.backId, backName: S.link.backName } : null;
-    const mk = async () => { const snap = buildSnap($('chkAll').checked, nRows); const raw = { v: 2, baseToken: S.srcToken, dataToken: S.srcToken || S.selfToken || '', tableId: S.tableMeta.id, viewId: $('selView').value, labelId: S.labelId, mode: S.mode, modes: cleanAllow(S.allow), link: linkCfg, useAll: $('chkAll').checked, recordIds: S.sel.slice(0, 60), manual: S.manual, tpl: compactTpl(tpl), snap, packId: packId || '', packCols: packId ? gcols : null, selKeys, filters: activeFilters(), fMatch: S.fMatch || 'and', groupBy: S.groupBy || '' }; const p = await packCfg(raw); return { v: 3, ts: stamp, z: p.z, d: p.d, tableId: raw.tableId, mode: raw.mode, name: tpl.name || '', rows: snap.rows.length, total: snap.total }; };
+    const mk = async () => { const snap = buildSnap($('chkAll').checked, nRows); const raw = { v: 2, bid: S.bid, baseToken: S.srcToken, dataToken: S.srcToken || S.selfToken || '', tableId: S.tableMeta.id, viewId: $('selView').value, labelId: S.labelId, mode: S.mode, modes: cleanAllow(S.allow), link: linkCfg, useAll: $('chkAll').checked, recordIds: S.sel.slice(0, 60), manual: S.manual, tpl: compactTpl(tpl), snap, packId: packId || '', packCols: packId ? gcols : null, selKeys, filters: activeFilters(), fMatch: S.fMatch || 'and', groupBy: S.groupBy || '' }; const p = await packCfg(raw); return { v: 3, ts: stamp, bid: S.bid, z: p.z, d: p.d, tableId: raw.tableId, mode: raw.mode, name: tpl.name || '', rows: snap.rows.length, total: snap.total }; };
     let cfg = await mk(), size = JSON.stringify(cfg).length;
     if (/^https?:/.test(tpl.logo || '')) { tpl.logo = ''; cfg = await mk(); size = JSON.stringify(cfg).length; note = ' (logo từ cột Logo không nhúng được vào khối)'; }
     if (size > 36000 && tpl.logo) { tpl.logo = ''; cfg = await mk(); size = JSON.stringify(cfg).length; note = ' (đã bỏ logo vì khối giới hạn dung lượng)'; }
     while (size > 36000 && nRows > 0) { nRows = Math.floor((cfg.rows || 0) * 0.7); cfg = await mk(); size = JSON.stringify(cfg).length; note = ` (chỉ lưu ${cfg.rows}/${cfg.total} bản ghi vào bản chụp vì khối giới hạn dung lượng)`; if (nRows === 0) break; }
-    dlog('save.size', { bytes: size, compressed: cfg.z, rows: cfg.rows, total: cfg.total });
-    if (size > 40000) { toast('Mẫu quá lớn để lưu vào khối (' + size + ' ký tự).', 6000); return; }
+    dlog('save.size', { bytes: size, compressed: cfg.z, rows: cfg.rows, total: cfg.total, ts: stamp, bid: S.bid, table: S.tableMeta.name, tpl: tpl.name || '', mode: S.mode });
+    try { localStorage.setItem('ps-lastblock', JSON.stringify({ ts: stamp, bid: S.bid, tableId: S.tableMeta.id, table: S.tableMeta.name || '', tpl: tpl.name || '', mode: S.mode, pack: !!packId })); } catch (e) {}
+    if (size > 40000) { early = 'Mẫu quá lớn để lưu vào khối (' + size + ' ký tự). Hãy thu nhỏ logo hoặc bớt dòng/cột trống.'; return; }
     const trySave = async (label, dataConditions) => {
       const payload = { customConfig: cfg }; if (dataConditions) payload.dataConditions = dataConditions;
-      try { const r = await dashboard.saveConfig(payload); dlog('save.' + label + '.ok', { result: r, size }); return r !== false; } catch (e) { lastErr = String(e && e.message || e); dlog('save.' + label + '.error', lastErr); return false; }
+      try { const r = await withTimeout(dashboard.saveConfig(payload), 20000); dlog('save.' + label + '.ok', { result: r, size }); return r !== false; } catch (e) { lastErr = String(e && e.message || e); dlog('save.' + label + '.error', lastErr); return false; }
     };
+    // Sao lưu trước khi gửi cho Lark; bản sao lưu bỏ dữ liệu bản chụp (không lộ dữ liệu bản ghi trong bảng _PrintTemplates)
+    step('Sao lưu cấu hình khối…');
+    let bakCfg = cfg; if (cfg.rows) { const keep = nRows; nRows = 0; bakCfg = await mk(); nRows = keep; }
+    bak = await backupBlock(bakCfg);
     S.saving = true;
-    // Nguồn dữ liệu của khối: đúng 1 điều kiện, nhóm theo đúng 1 cột (cột gói). getData() khi xem sẽ trả mọi dòng mới nhất.
-    let ok = false;
+    const range = link ? allRange() : await currentRange(), tk0 = await baseTokenNow();
+    const plain = { tableId: packId ? packTableId() : S.tableMeta.id, dataRange: range, groups: [], series: 'COUNTA' }; if (tk0) plain.baseToken = tk0;
+    // Bước 1: mẫu + thiết lập (không nhóm) — Lark xác nhận được kiểu lưu này
+    step('1/3 · Lưu mẫu và thiết lập vào khối…');
+    let ok = await trySave('table', [plain]);
+    if (ok) { const b1 = await readBack(); dlog('save.phase1', { tplOk: b1.ts === cfg.ts }); }
+    // Bước 2: gắn cột gói để khối tự lấy dữ liệu mới
     if (packId) {
-      const chk = await previewPack(true);
-      previewInfo = chk ? ' ' + chk.msg : '';
-      if (chk && !chk.ok) { toast(chk.msg + ' Vẫn lưu khối, nhưng khối sẽ chỉ dùng bản chụp cho tới khi sửa xong.', 10000); }
-      const cond = packCondition(packId, link ? allRange() : await currentRange()); dlog('save.conditions', cond);
-      ok = (await savePackVerified(cfg, cond, packId, size)) === 'ok';
-      if (!ok) previewInfo += ' Lark không nhận nhóm theo cột gói (' + lastErr + '), khối sẽ dùng bản chụp.';
-    } else {
-      // Không có cột gói: vẫn khai báo đúng bảng nguồn (để Lark ánh xạ khi tạo bản sao), dữ liệu in lấy từ bản chụp
-      const cond = { tableId: S.tableMeta.id, dataRange: await currentRange(), groups: [], series: 'COUNTA' }; const tk0 = await baseTokenNow(); if (tk0) cond.baseToken = tk0;
-      ok = await trySave('table', [cond]);
-      previewInfo = ' Chưa có cột gói: khối sẽ hiển thị bản chụp, không tự cập nhật.';
+      step('2/3 · Kiểm tra cột gói…');
+      const chk = await previewPack(true); previewInfo = chk ? chk.msg : '';
+      const cond = packCondition(packId, range); dlog('save.conditions', cond);
+      ok = (await savePackVerified(cfg, cond, packId, size, step)) === 'ok' || ok;
     }
-    if (!ok && packId) { note += ' — LƯU Ý: Lark chưa nhận nhóm theo cột gói, khối sẽ chỉ hiện bản chụp'; }
     if (!ok) ok = await trySave('default');
     if (!ok && S.dash !== 'Create') ok = await trySave('empty', []);
     if (!ok) { let own = []; try { own = (await withTimeout(bitable.base.getTableMetaList(), 5000)) || []; } catch (e) {} const SourceType = SDK.SourceType || { ALL: 'ALL' }; for (const t of own.filter((x) => x.name !== TPL_TABLE).slice(0, 3)) { ok = await trySave('anchor', [{ tableId: t.id, dataRange: { type: SourceType.ALL }, groups: [], series: 'COUNTA' }]); if (ok) break; } }
-    if (ok) { const back = await readBack(); dlog('save.final', { tplOk: back.ts === cfg.ts, group: back.group || '(không có)' }); if (back.ts !== undefined && back.ts !== null && back.ts !== cfg.ts) { ok = await trySave('tpl-retry', back.group && packId && back.group === packId ? undefined : undefined); const b2 = await readBack(); if (b2.ts !== cfg.ts) { toast('Lark chưa ghi mẫu mới vào khối. Bấm ⚙ và gửi chẩn đoán (mục lastSave).', 10000); return; } } }
-    if (ok) toast('Đã gửi cấu hình cho Lark' + note + '.' + previewInfo + ' Thoát chế độ chỉnh sửa để kiểm tra; nếu lỗi hãy bấm ⚙ và gửi chẩn đoán.', 12000);
-    else toast('Lark không nhận cấu hình' + (lastErr ? ': ' + lastErr : '') + '. Bấm ⚙ và gửi chẩn đoán.', 9000);
-  } finally { btn.disabled = false; setTimeout(() => { S.saving = false; }, 3000); }
+    // Bước 3: đọc lại từ Lark — chỉ báo "đã lưu" khi Lark trả đúng cấu hình vừa lưu
+    step('3/3 · Đọc lại cấu hình từ Lark để xác nhận…');
+    back = await readBack();
+    const tplOk = back.ts === cfg.ts, grpOk = !packId || back.group === packId;
+    result = tplOk && grpOk ? 'ok' : tplOk ? 'nogroup' : 'fail';
+    dlog('save.final', { result, tplOk, group: back.group || '(không có)', want: packId || '(không)' });
+  } catch (e) { lastErr = String(e && e.message || e); dlog('save.exception', lastErr); }
+  finally {
+    btn.disabled = false; setTimeout(() => { S.saving = false; }, 3000); $('mClose').style.display = '';
+    const nm = esc(tpl.name || 'mẫu chưa đặt tên'), tb = esc((S.tableMeta && S.tableMeta.name) || '');
+    const bakLine = !bak ? '' : bak.base ? '<p class="hint">Sao lưu: đã ghi vào bảng ' + TPL_TABLE + ' — ai sửa khối cũng khôi phục được.</p>' : '<p class="hint" style="color:var(--warn)">Sao lưu: chỉ có trên máy này (' + esc(bak.why || '') + '). Người khác sẽ không khôi phục được bản này.</p>';
+    const pv = previewInfo ? '<p class="hint">' + esc(previewInfo) + '</p>' : '';
+    const html = early ? `<p class="msg err">${esc(early)}</p>`
+      : result === 'ok' ? `<p class="msg ok"><b>Đã lưu xong — Lark đã xác nhận.</b><br>Khối dùng mẫu "${nm}" · bảng "${tb}"${packId ? ' · đã gắn cột gói (khối tự cập nhật dữ liệu)' : ' · chưa có cột gói (khối hiện bản chụp)'}${esc(note)}. Mọi người mở khối sẽ thấy đúng cấu hình này. Bạn có thể đóng khung sửa khối.</p>${pv}${bakLine}`
+        : result === 'nogroup' ? `<p class="msg warn"><b>Đã lưu mẫu và thiết lập (Lark đã xác nhận), nhưng Lark chưa nhận cột gói.</b><br>Khối giữ đúng mẫu "${nm}" nhưng chưa tự lấy dữ liệu mới${lastErr ? ' (' + esc(lastErr) + ')' : ''}. Bấm "Lưu khối" lần nữa; nếu vẫn vậy, bấm ⚙ và gửi chẩn đoán.</p>${pv}${bakLine}`
+          : `<p class="msg err"><b>Lark chưa xác nhận lưu khối${lastErr ? ' (' + esc(lastErr) + ')' : ''}.</b><br>Đừng đóng khung sửa khối: bấm "Lưu khối" lần nữa. Nếu vẫn lỗi, bấm ⚙ và gửi chẩn đoán.${bak ? ' Cấu hình đã được sao lưu, có thể khôi phục ở mục "Sao lưu cấu hình khối".' : ''}</p>${pv}${bakLine}`;
+    openModal(result === 'ok' && !early ? 'Đã lưu khối' : 'Kết quả lưu khối', html);
+  }
 }
 $('btnDashSave').onclick = () => saveDash();
 
@@ -2539,11 +2645,12 @@ async function boot() {
       if (!dm) pickCurrent(true);
     }
     if (dc && dm === 'Config') reloadTemplates();
+    if (dm === 'Create' || dm === 'Config') renderBackups(dc && dc.customConfig && dc.customConfig.ts, dc && dc.customConfig && dc.customConfig.bid).catch((e) => dlog('bak.error', String(e && e.message || e)));
     if (dm) { try { dashboard.setRendered(); } catch (e) {} try { dashboard.onConfigChange(async (e) => { if (S.dash === 'Create' || S.saving) return; try { const c = await unpackCfg(e && e.data && e.data.customConfig); if (c && c.v === 2) await applyDash(c); } catch (err) { dlog('onConfigChange.error', String(err && err.message || err)); } }); } catch (e) {} }
     if (!dm) try { bitable.base.onSelectionChange(async () => { if (S.dash || S.mode !== 'one' || !$('chkFollow').checked || S.srcToken) return; await pickCurrent(true); }); } catch (e) {}
     // Base App / Dashboard: nhận diện khối và liệt kê các base trong Base App (chạy nền, không chặn giao diện)
     if (workspace && dm !== 'View' && dm !== 'FullScreen') listBases().then((bases) => { if (!bases.length) return; $('selBase').innerHTML = '<option value="">Base hiện tại</option>' + bases.map((b) => `<option value="${esc(b.token)}">${esc(b.name || b.token)}</option>`).join(''); $('rowBase').style.display = ''; dlog('bases', bases.length); });
-  } catch (e) { dlog('boot.error', String(e && e.message || e)); if ([...Q.keys()].some((k) => k.startsWith('v.'))) return bootLink(); setStatus('err', 'Chưa kết nối'); boxMsg('Không kết nối được: ' + (e && e.message || e), 'err'); if (S.dash === 'View' || S.dash === 'FullScreen') snapNote('Không kết nối được: ' + (e && e.message || e)); }
+  } catch (e) { dlog('boot.error', String(e && e.message || e)); if ([...Q.keys()].some((k) => k.startsWith('v.'))) return bootLink(); setStatus('err', 'Chưa kết nối'); boxMsg('Không kết nối được: ' + (e && e.message || e), 'err'); if (S.dash === 'View' || S.dash === 'FullScreen') { S.viewErr = String(e && e.message || e); S.sel = []; S.tab = 'print'; snapNote(''); try { render(); } catch (x) {} } }
 }
 S.tpl = defaultTpl(); render(); renderChips(); boot();
 
