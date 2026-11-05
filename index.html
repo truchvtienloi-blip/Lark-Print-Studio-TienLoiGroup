@@ -2012,7 +2012,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '4.5', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '4.5.1', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -2435,6 +2435,7 @@ async function savePackVerified(cfg, cond, packId, size, step) {
    1) gửi mẫu + điều kiện nhóm theo cột gói ngay (không chạy bước kiểm tra chậm trước khi lưu)
    2) Lark không nhận nhóm: vẫn ghi mẫu mới nhưng GIỮ điều kiện đang có của khối (không ghi đè bằng điều kiện không nhóm)
    3) đọc lại từ Lark, chỉ báo "đã lưu" khi đúng cả mẫu lẫn cột gói */
+const BLOCK_MAX = 12000; // giới hạn dung lượng cấu hình khối (đo thực tế, Lark không công bố)
 async function saveDash() {
   if (!S.tableMeta) { toast('Chưa chọn bảng.'); return; }
   const link = S.mode === 'link', packId = $('selPack').value;
@@ -2453,12 +2454,18 @@ async function saveDash() {
     const selKeys = keyMeta ? selRecords().map((r) => keyText(r.fields[keyMeta.id])).slice(0, 60) : [];
     const linkCfg = link ? { fieldId: S.link.fieldId, fieldName: S.link.fieldName, tableId: S.link.tableId, tableName: S.link.tableName, backId: S.link.backId, backName: S.link.backName } : null;
     const mk = async () => { const raw = { v: 2, bid: S.bid, baseToken: S.srcToken, dataToken: S.srcToken || S.selfToken || '', tableId: S.tableMeta.id, viewId: $('selView').value, labelId: S.labelId, mode: S.mode, modes: cleanAllow(S.allow), link: linkCfg, useAll: true, by: S.me || '', manual: S.manual, tpl: compactTpl(tpl), packId, packCols: gcols, selKeys, filters: activeFilters(), fMatch: S.fMatch || 'and', groupBy: S.groupBy || '' }; const p = await packCfg(raw); return { v: 3, ts: stamp, bid: S.bid, z: p.z, d: p.d, tableId: raw.tableId, mode: raw.mode, name: tpl.name || '', rows: 0, total: S.order.length }; };
+    // v4.5.1: chặn lưu mẫu trống — khung sửa mới mở chưa chọn mẫu sẽ ghi đè mẫu mặc định lên khối
+    if (!tpl.name && gcols.length <= 1) { early = 'Chưa chọn mẫu in (mẫu đang là mẫu mặc định, chưa đặt tên, cột gói chỉ có ' + gcols.length + ' cột). Hãy chọn mẫu ở ô Mẫu in, bấm "Tạo / cập nhật cột gói" rồi mới Lưu khối.'; dlog('save.blocked', 'blank template'); return; }
+    // v4.5.1: logo lấy tự động từ cột Logo của _PrintTemplates bị nhúng vào khối dù mẫu không dùng {{LOGO}} → bỏ
+    const usesLogo = (tpl.rows || []).some((r) => (r.cells || []).some((c) => /\{\{\s*LOGO\s*\}\}/i.test(String(c.t || ''))));
+    if (tpl.logo && !usesLogo) { tpl.logo = ''; note = ' (mẫu không dùng {{LOGO}} nên không nhúng logo)'; }
     let cfg = await mk(), size = JSON.stringify(cfg).length;
     if (/^https?:/.test(tpl.logo || '')) { tpl.logo = ''; cfg = await mk(); size = JSON.stringify(cfg).length; note = ' (logo từ cột Logo không nhúng được vào khối)'; }
-    if (size > 36000 && tpl.logo) { tpl.logo = ''; cfg = await mk(); size = JSON.stringify(cfg).length; note = ' (đã bỏ logo vì khối giới hạn dung lượng)'; }
+    // Thực tế: Lark giữ bản ~5,5 KB nhưng bỏ qua (không báo lỗi) mọi bản ~25 KB → giới hạn an toàn 12.000 ký tự
+    if (size > BLOCK_MAX && tpl.logo) { tpl.logo = ''; cfg = await mk(); size = JSON.stringify(cfg).length; note = ' (đã bỏ logo vì khối giới hạn dung lượng)'; }
     dlog('save.size', { bytes: size, compressed: cfg.z, ts: stamp, bid: S.bid, table: S.tableMeta.name, tpl: tpl.name || '', mode: S.mode, packCols: gcols.length });
     try { localStorage.setItem('ps-lastblock', JSON.stringify({ ts: stamp, bid: S.bid, tableId: S.tableMeta.id, table: S.tableMeta.name || '', tpl: tpl.name || '', mode: S.mode, pack: true })); } catch (e) {}
-    if (size > 40000) { early = 'Mẫu quá lớn để lưu vào khối (' + size + ' ký tự). Hãy thu nhỏ logo hoặc bớt dòng/cột trống.'; return; }
+    if (size > BLOCK_MAX) { early = 'Mẫu quá lớn để lưu vào khối (' + size + ' / tối đa ' + BLOCK_MAX + ' ký tự) — Lark sẽ bỏ qua bản lưu này mà không báo lỗi. Hãy bớt dòng/cột trống hoặc ô định dạng phức tạp.'; return; }
     S.saving = true;
     const range = link ? allRange() : await currentRange(), cond = packCondition(packId, range); dlog('save.conditions', cond);
     let ok = (await savePackVerified(cfg, cond, packId, size, step)) === 'ok';
