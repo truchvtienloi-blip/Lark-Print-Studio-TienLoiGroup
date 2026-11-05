@@ -135,12 +135,29 @@ body.dashedit .seg .eye{display:inline-block}.seg label.off .eye{background-imag
   #printRoot tr{break-inside:avoid;page-break-inside:avoid}
   #printRoot td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* ===== v4.6 · ô (i) giải thích + tour hướng dẫn ===== */
+.tip{display:inline-grid;place-items:center;width:14px;height:14px;border-radius:50%;background:#e4e8ef;color:#5b6270;font:700 9.5px/1 Georgia,serif;font-style:italic;cursor:help;position:relative;vertical-align:1px;margin-left:3px;text-transform:none;letter-spacing:0}
+.tip:hover,.tip:focus{background:var(--blue);color:#fff;outline:none}
+.tip:hover::after,.tip:focus::after{content:attr(data-tip);position:absolute;left:-10px;top:calc(100% + 6px);width:220px;background:#1f2329;color:#fff;font:400 11.5px/1.45 system-ui,Arial,sans-serif;font-style:normal;padding:8px 10px;border-radius:8px;z-index:60;box-shadow:0 6px 20px #0003;white-space:normal;text-align:left}
+.lbl>span:first-child{display:inline-flex;align-items:center}
+.tourbtn{display:inline-flex;align-items:center;gap:5px;padding:5px 10px}.tourbtn .tq{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;font-size:11px}
+@media (max-width:720px){.tourbtn .tl{display:none}}
+#tourHole{position:fixed;z-index:9000;border-radius:10px;box-shadow:0 0 0 9999px rgba(15,20,35,.62);transition:all .25s ease;pointer-events:none;outline:2px solid #fff;outline-offset:2px}
+#tourBlock{position:fixed;inset:0;z-index:8999}
+#tourCard{position:fixed;z-index:9001;width:min(330px,calc(100vw - 32px));background:#fff;border-radius:12px;padding:14px 16px 12px;box-shadow:0 12px 40px #0004;display:flex;flex-direction:column;gap:8px;transition:top .25s ease,left .25s ease}
+#tourCard .tstep{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.04em}
+#tourCard h4{margin:0;font-size:15px;color:var(--navy)}#tourCard p{margin:0;font-size:13px;line-height:1.5;color:#373c43}
+#tourCard .tdots{display:flex;gap:4px;flex-wrap:wrap}#tourCard .tdots i{width:6px;height:6px;border-radius:50%;background:#d5dae2}#tourCard .tdots i.on{background:var(--blue);width:16px;border-radius:3px}
+#tourCard .tbtns{display:flex;align-items:center;gap:6px;margin-top:2px}#tourCard .tbtns .sp{flex:1}
+#tourCard .tx{position:absolute;top:8px;right:8px;border:0;background:none;font-size:16px;color:#8f959e;padding:2px 6px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){#tourHole,#tourCard{transition:none}}
 </style>
 </head>
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v4.5</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v4.6</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sec" id="secData"><h3>1 · Dữ liệu</h3>
@@ -157,18 +174,18 @@ body.dashedit .seg .eye{display:inline-block}.seg label.off .eye{background-imag
    <label><input type="radio" name="mode" value="link"><span>Phiếu &amp; chi tiết</span><i class="eye"></i></label>
   </div>
   <p class="hint" id="modeHint"></p>
-  <p class="hint" id="allowHint" hidden>Bấm <b>👁</b> để ẩn / hiện từng kiểu khi xem khối · kiểu đang chọn là mặc định.</p>
+  <p class="hint" id="allowHint" hidden>👁 ẩn / hiện kiểu khi xem khối.</p>
   <div class="lbl" id="linkRow" hidden>Cột liên kết tới bảng chi tiết<select id="selLink"></select><span class="hint" id="linkInfo" style="font-weight:400"></span></div>
-  <label class="lbl" id="grpRow" hidden style="display:none">Gom bản ghi theo cột (ví dụ Mã phiếu)<select id="selGroup"></select><span class="hint" style="font-weight:400">Mỗi nhóm in thành 1 phiếu riêng. Bấm 1 nhóm để chọn cả nhóm (bấm lại để bỏ chọn và thu gọn), bấm ▸ để mở và bỏ bớt dòng.</span></label>
+  <label class="lbl" id="grpRow" hidden style="display:none"><span>Gom theo cột <span class="tip" tabindex="0" data-tip="Mỗi nhóm in thành 1 phiếu. Bấm tên nhóm để chọn / bỏ cả nhóm, bấm ▸ để mở và bỏ bớt dòng.">i</span></span><select id="selGroup"></select></label>
  </div>
  <div class="sec" id="secRec"><h3>3 · Chọn bản ghi <span id="recCount" style="text-transform:none;font-weight:500"></span></h3>
   <div class="row rtools"><button id="btnSel" class="fit" title="Lấy bản ghi đang chọn trong Base">Đang chọn</button><button id="btnQ" class="fit ico" title="Tìm kiếm bản ghi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button id="btnF" class="fit ico" title="Lọc bản ghi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5z"/></svg><span id="fBadge" class="badge"></span></button><button id="btnAll" class="fit" title="Chọn tất cả bản ghi đang hiện (theo tìm kiếm và lọc)">Chọn hết</button><button id="btnNone" class="fit" title="Bỏ chọn tất cả">Bỏ</button></div>
   <div id="qBar" hidden><input type="search" id="recSearch" placeholder="Tìm bản ghi…"></div>
   <div id="fBar" class="fbar" hidden><div class="hint" style="display:flex;align-items:center;gap:6px">Hiện bản ghi khớp <select id="fMatch" style="width:auto;padding:3px 6px"><option value="and">tất cả điều kiện</option><option value="or">bất kỳ điều kiện nào</option></select></div><div id="fRows"></div><div class="hint" id="fHint" hidden></div><div class="row" style="justify-content:flex-start"><button id="fAdd" class="fit">+ Thêm điều kiện</button><button id="fClear" class="fit">Xóa lọc</button></div></div>
   <div id="recList" class="reclist"><div class="empty">Chưa có dữ liệu</div></div>
-  <label class="row" style="gap:6px"><input type="checkbox" id="chkFollow" class="fit" checked><span class="hint">Tự lấy bản ghi khi bấm vào một dòng trong Base (chế độ 1 bản ghi)</span></label>
+  <label class="row" style="gap:6px" id="rowFollow"><input type="checkbox" id="chkFollow" class="fit" checked><span class="hint">Theo dòng đang chọn trong Base</span></label>
  </div>
- <div class="sec" id="secDash" style="display:none"><h3>Khối trong Base App</h3><label class="lbl">Cột định danh dòng (không trùng nhau)<select id="selKey"></select></label><p class="hint">Nên chọn cột Tự động đánh số hoặc cột mã duy nhất.</p><label class="lbl">Cột gói dữ liệu (công thức) — để khối tự lấy dữ liệu mới<select id="selPack"></select></label><div class="row" style="gap:6px;flex-wrap:wrap"><button id="btnPack" class="fit">Tạo / cập nhật cột gói</button><button id="btnPackTest" class="fit">Kiểm tra</button></div><p class="hint" id="packHint">Khi xem khối, Lark chỉ cho đọc dữ liệu qua <b>1 cột nhóm</b>. Cột gói là cột Công thức ghép tất cả cột mẫu cần dùng thành 1 chuỗi, nhờ vậy khối tự cập nhật mà không cần mở lại cấu hình.</p><p class="hint">Chọn bảng, chế độ, thiết kế mẫu xong thì bấm <b>Lưu khối</b> ở góc trên bên phải.</p></div>
+ <div class="sec" id="secDash" style="display:none"><h3>Khối trong Base App</h3><label class="lbl"><span>Cột định danh <span class="tip" tabindex="0" data-tip="Cột không trùng giữa các dòng: nên dùng cột Tự động đánh số hoặc cột mã.">i</span></span><select id="selKey"></select></label><label class="lbl"><span>Cột gói dữ liệu <span class="tip" tabindex="0" data-tip="Khi xem khối, Lark chỉ cho đọc dữ liệu qua 1 cột nhóm. Cột gói là cột Công thức ghép mọi cột mẫu cần thành 1 chuỗi, nhờ vậy khối tự cập nhật dữ liệu mới.">i</span></span><select id="selPack"></select></label><div class="row" style="gap:6px;flex-wrap:wrap"><button id="btnPack" class="fit">Tạo / cập nhật cột gói</button><button id="btnPackTest" class="fit">Kiểm tra</button></div><p class="hint" id="packHint">Thêm biến vào mẫu → bấm lại <b>Tạo / cập nhật cột gói</b>.</p></div>
  <div class="sec" id="secTpl"><h3>4 · Mẫu in</h3>
   <label class="lbl">Mẫu đã lưu<select id="selTpl"></select></label>
   <label class="lbl">Tên mẫu<input type="text" id="tplName" placeholder="VD: Biên bản giao nhận hàng"></label>
@@ -177,9 +194,9 @@ body.dashedit .seg .eye{display:inline-block}.seg label.off .eye{background-imag
   <div class="row"><button id="btnImpOff" title="Tạo mẫu từ tệp Word (.docx) hoặc Excel (.xlsx) có sẵn">Nhập từ Word / Excel</button><input type="file" id="fileOff" accept=".docx,.xlsx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none"></div>
   <details class="hint"><summary style="cursor:pointer">Sao lưu mẫu (JSON)</summary><div class="row" style="margin-top:6px"><button id="btnExp">Xuất JSON</button><button id="btnImp">Nhập JSON</button><input type="file" id="fileImp" accept=".json,application/json" style="display:none"></div></details>
  </div>
- <div class="sec" id="secManual" style="display:none"><h3>5 · Điền nhanh (không lấy từ bản ghi)</h3><div id="manualBox" style="display:flex;flex-direction:column;gap:6px"></div><p class="hint">Các biến dạng {{@Tên}} trong mẫu. Nội dung chỉ dùng cho lần in này.</p></div>
+ <div class="sec" id="secManual" style="display:none"><h3>5 · Điền nhanh <span class="tip" tabindex="0" data-tip="Các biến dạng {{@Tên}} trong mẫu: nội dung gõ tay, không lấy từ bản ghi.">i</span></h3><div id="manualBox" style="display:flex;flex-direction:column;gap:6px"></div><p class="hint">Chỉ dùng cho lần in này.</p></div>
  <div class="sec" id="secChips"><h3>Biến trong mẫu</h3><div class="row"><button id="tMap" class="fit" title="Đổi các biến của mẫu sang cột của bảng đang chọn">Khớp cột với bảng</button><span class="hint" id="mapHint" style="flex:1"></span></div><input type="search" id="chipSearch" class="chipSearch" placeholder="Tìm biến theo tên cột…"><div id="chipTabs" class="ctabs"></div><div id="chips" class="vlist"></div>
-  <p class="hint"><b>Kéo thả</b> biến vào ô của mẫu, hoặc bấm để chèn vào ô đang sửa. Nhãn <b>đang dùng</b> = biến đã có trong mẫu. Công thức tính toán: nút <b>ƒx</b>.</p></div>
+  <p class="hint">Kéo thả hoặc bấm để chèn vào ô. Công thức: nút <b>ƒx</b>.</p></div>
 </aside>
 <main class="main">
  <div class="bar">
@@ -202,7 +219,7 @@ body.dashedit .seg .eye{display:inline-block}.seg label.off .eye{background-imag
    <select id="tSize" title="Cỡ chữ của ô đang chọn (chọn nhiều ô: hiện cỡ lớn nhất)"></select>
    <select id="tFont" title="Phông cả mẫu"><option>Arial</option><option>Times New Roman</option><option>Calibri</option><option>Tahoma</option><option>Verdana</option><option>Georgia</option></select>
    <div class="tm" id="numMenu"><button class="tmb ib" id="numBtn" title="Định dạng số của cả mẫu: dấu phân cách và số chữ số thập phân"><b style="font-weight:700">#</b><span id="numLbl">12.000,5</span><span class="car">▾</span></button><div class="tmm nmm"><div class="nmh">Dấu phân cách</div><button type="button" data-nf="vi"><span>12.000,5</span><small>Việt Nam</small></button><button type="button" data-nf="en"><span>12,000.5</span><small>Quốc tế</small></button><hr><div class="nmh">Số chữ số thập phân</div><div class="nmdp"><button type="button" data-dp="" title="Giữ số lẻ như dữ liệu (tối đa 4)">Tự động</button><button type="button" data-dp="0">0</button><button type="button" data-dp="1">1</button><button type="button" data-dp="2">2</button><button type="button" data-dp="3">3</button><button type="button" data-dp="4">4</button></div><div class="nmpv">Ví dụ: <b id="numPv"></b></div></div></div><select id="tNum" hidden><option value="vi">12.000,5</option><option value="en">12,000.5</option></select><select id="tDp" hidden><option value="">auto</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select><select id="tPaper" title="Khổ giấy"><option value="A4">A4 dọc</option><option value="A4L">A4 ngang</option><option value="A5">A5</option><option value="Letter">Letter</option></select>
-   <div class="tm"><button class="tmb ib" title="Logo của mẫu"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-9 9"/></svg><span class="car">▾</span></button><div class="tmm"><button id="tLogo">Chọn ảnh logo…</button><button id="tLogoDel">Bỏ logo</button></div></div><input type="file" id="fileLogo" accept="image/*" style="display:none">
+   <div class="tm" id="tLogoMenu"><button class="tmb ib" title="Logo của mẫu"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-9 9"/></svg><span class="car">▾</span></button><div class="tmm"><button id="tLogo">Chèn logo vào ô đang chọn</button><button id="tLogoDel">Bỏ logo khỏi mẫu</button></div></div><input type="file" id="fileLogo" accept="image/*" style="display:none">
   </div>
  </div>
  <div class="stage" id="stage"><div id="snapNote" class="hint" style="display:none;text-align:center;margin-bottom:8px"></div><div class="pages" id="pages"></div></div>
@@ -535,7 +552,7 @@ const PACK_SEP = '‖', PACK_NAME = 'Gói dữ liệu in';
 const LOGO_COL = 'Logo';
 const TPL_TABLE = '_PrintTemplates', LOCAL_KEY = 'print-studio-v2-templates', SH_FIELDS = ['Tên mẫu', 'Dữ liệu mẫu', 'Bảng áp dụng', 'Cập nhật'];
 const PAPER = { A4: [210, 297, 'A4 portrait'], A4L: [297, 210, 'A4 landscape'], A5: [148, 210, 'A5 portrait'], Letter: [215.9, 279.4, 'letter portrait'] };
-const MODE_HINT = { one: 'In 1 phiếu từ 1 bản ghi. Bấm 1 dòng trong Base là có ngay.', multi: 'Gộp nhiều bản ghi vào 1 phiếu: dòng "lặp" của mẫu sinh ra 1 dòng cho mỗi bản ghi; thông tin chung lấy từ bản ghi đầu tiên.', each: 'Mỗi bản ghi được chọn in thành 1 phiếu riêng.', link: 'Mỗi phiếu (bản ghi bảng này) in 1 trang; dòng lặp của mẫu lấy từ bảng chi tiết qua cột liên kết.' };
+const MODE_HINT = { one: '1 bản ghi → 1 phiếu.', multi: 'Nhiều bản ghi → 1 phiếu (mỗi bản ghi 1 dòng lặp).', each: 'Mỗi bản ghi → 1 phiếu riêng.', link: 'Mỗi phiếu 1 trang, dòng lặp lấy từ bảng chi tiết.' };
 const MODE_HINT_VIEW = { one: 'In 1 phiếu cho bản ghi đang chọn.', multi: 'Gộp các bản ghi đã chọn vào 1 phiếu.', each: 'Mỗi bản ghi đã chọn in thành 1 phiếu riêng.', link: 'Mỗi phiếu đã chọn in 1 trang kèm các dòng chi tiết.' };
 const MODES = ['one', 'multi', 'each', 'link']; // kiểu in; S.allow = các kiểu người xem khối được dùng
 const MODE_NAME = { one: '1 bản ghi', multi: 'Gộp 1 phiếu', each: 'Mỗi dòng 1 phiếu', link: 'Phiếu & chi tiết' };
@@ -716,7 +733,16 @@ function printHTML(missing) {
     return h + '</tbody></table></div>';
   }).join('');
 }
+const usesLogoTpl = (t) => !!t && (t.rows || []).some((r) => (r.cells || []).some((c) => /\{\{\s*LOGO\s*\}\}/i.test(String(c.t || ''))));
+const LOGO_DONE = new WeakMap(); let logoWarned = false;
+// Mẫu có {{LOGO}} → luôn hiển thị file logo cố định (tải 1 lần, có cache)
+function ensureLogo() {
+  const t = S.tpl; if (!usesLogoTpl(t)) return; const p = logoPathFor(t); if (LOGO_DONE.get(t) === p) return; LOGO_DONE.set(t, p);
+  siteLogoData(p).then((d) => { if (LOGO_DONE.get(t) === p) { t.logo = d; if (S.tpl === t) render(); } })
+    .catch((e) => { dlog('logo.site.error', p + ': ' + String(e && e.message || e)); if (!logoWarned) { logoWarned = true; toast('Chưa thấy file ' + p + ' trên GitHub Pages nên mẫu chưa có logo.', 7000); } });
+}
 function render() {
+  try { ensureLogo(); } catch (e) {}
   NUMLOC = S.tpl && S.tpl.nf === 'en' ? 'en-US' : 'vi-VN'; NUMDP = S.tpl && S.tpl.dp !== undefined && S.tpl.dp !== null && S.tpl.dp !== '' ? +S.tpl.dp : null;
   const st = $('stage'), top = st.scrollTop;
   const missing = new Set();
@@ -1119,7 +1145,9 @@ $('tFont').onchange = () => { S.tpl.font = $('tFont').value; render(); };
 $('tDp').onchange = () => { const v = $('tDp').value; if (v === '') delete S.tpl.dp; else S.tpl.dp = +v; render(); };
 $('tNum').onchange = () => { S.tpl.nf = $('tNum').value === 'en' ? 'en' : ''; render(); };
 $('tPaper').onchange = () => { S.tpl.paper = $('tPaper').value; render(); };
-$('tLogo').onclick = () => $('fileLogo').click(); $('tLogoDel').onclick = () => { S.tpl.logo = ''; S.logoDirty = true; render(); };
+// v4.6: logo cố định (file logo.png trên GitHub Pages) — chỉ chọn vị trí đặt logo hoặc bỏ logo khỏi mẫu
+$('tLogo').onclick = () => insertToken('{{LOGO}}');
+$('tLogoDel').onclick = () => { let n = 0; for (const r of S.tpl.rows) for (const c of r.cells) { const t = String(c.t || ''), u = t.replace(/\{\{\s*LOGO\s*\}\}/gi, ''); if (u !== t) { c.t = u; n++; } } S.tpl.logo = ''; render(); toast(n ? 'Đã bỏ logo khỏi ' + n + ' ô.' : 'Mẫu này chưa có logo.'); };
 // Thu nhỏ ảnh logo thành PNG nhẹ (dùng cho cả ảnh tải lên lẫn ảnh lấy từ cột Logo)
 async function shrinkImageSrc(src, cors) {
   const img = await new Promise((ok, no) => { const i = new Image(); if (cors) i.crossOrigin = 'anonymous'; i.onload = () => ok(i); i.onerror = () => no(new Error('Không đọc được ảnh')); i.src = src; });
@@ -1190,12 +1218,17 @@ function openFx(initial) {
   const ins = (t) => { const a = ta.selectionStart ?? ta.value.length, b = ta.selectionEnd ?? a; ta.value = ta.value.slice(0, a) + t + ta.value.slice(b); ta.focus(); ta.selectionStart = ta.selectionEnd = a + t.length; preview(); };
   const preview = () => {
     const src = ta.value.trim(); if (!src) { $('fxOut').textContent = '—'; return; }
-    const recs = selRecords(), missing = new Set();
+    // Phiếu & chi tiết: thử trên các dòng chi tiết của phiếu đầu tiên (mỗi dòng mang kèm thông tin phiếu), giống lúc in
+    const recs = S.mode === 'link' ? (getPages()[0] || []) : selRecords(), missing = new Set();
     const ctx = { recs, idx: S.idx, manual: S.manual, now: new Date(), fmtCell, missing, rec: recs[0] || null, i: 0 };
     let v = evalFormula(src, ctx); if (missing.size) v += `  (⚠ không có cột: ${[...missing].join(', ')})`; if (!recs.length) v += '  (chưa chọn bản ghi nên dữ liệu trống)';
     $('fxOut').textContent = v;
   };
-  const cols = () => { const q = fold($('fxColQ').value); $('fxCols').innerHTML = (S.metas.filter((m) => !q || fold(m.name).includes(q)).map((m) => `<button class="chip" data-col="${esc(m.name)}">${esc(m.name)}</button>`).join('') + listManual(S.tpl).filter((n) => !q || fold(n).includes(q)).map((n) => `<button class="chip fx" data-col="@${esc(n)}" title="Ô điền tay">@${esc(n)}</button>`).join('')) || '<span class="hint">Không có cột.</span>'; };
+  const cols = () => { const q = fold($('fxColQ').value), hit = (n) => !q || fold(n).includes(q), link = S.mode === 'link' && S.dMetas;
+    const dCols = link ? S.dMetas.filter((m) => !isLinkMeta(m) && m.name !== PACK_NAME && hit(m.name)) : [];
+    const sub = (t) => `<div class="hint" style="flex-basis:100%;font-weight:700;margin-top:2px">${t}</div>`;
+    $('fxCols').innerHTML = ((link ? sub('Cột của phiếu') : '') + S.metas.filter((m) => hit(m.name)).map((m) => `<button class="chip" data-col="${esc(m.name)}">${esc(m.name)}</button>`).join('')
+      + (dCols.length ? sub('Cột chi tiết · ' + esc(S.link.tableName || '')) + dCols.map((m) => `<button class="chip" data-col="${esc(ctName(m))}" title="Cột của bảng chi tiết — dùng trong dòng lặp hoặc với SUM/AVG/COUNT">${esc(m.name)}</button>`).join('') : '') + listManual(S.tpl).filter((n) => !q || fold(n).includes(q)).map((n) => `<button class="chip fx" data-col="@${esc(n)}" title="Ô điền tay">@${esc(n)}</button>`).join('')) || '<span class="hint">Không có cột.</span>'; };
   $('fxCols').onclick = (e) => { const b = e.target.closest('[data-col]'); if (b) ins('[' + b.dataset.col + ']'); };
   $('fxFns').onclick = (e) => { const b = e.target.closest('[data-fx]'); if (b) ins(FX_HELP[+b.dataset.fx][0]); };
   $('fxColQ').oninput = cols; ta.oninput = preview; cols(); preview(); ta.focus();
@@ -1483,7 +1516,7 @@ async function pickCurrent(quiet) {
   try {
     const s = await withTimeout(bitable.base.getSelection(), 4000);
     if (!s || !s.recordId) { if (!quiet) toast('Chưa có dòng nào đang chọn trong Base. Hãy bấm vào một dòng trước.'); return; }
-    if (S.srcToken) { if (!quiet) toast('Base nguồn khác Base hiện tại: hãy chọn bản ghi trong danh sách.'); return; }
+    if (S.srcToken) { if (!quiet) toast('Đang lấy dữ liệu từ base khác: hãy chọn bản ghi trong danh sách.'); return; }
     if (s.tableId !== (S.tableMeta && S.tableMeta.id) && S.tables.some((t) => t.id === s.tableId)) { $('selTable').value = s.tableId; await loadTable(s.tableId); }
     await ensureRecord(s.recordId);
     S.sel = S.mode === 'one' ? [s.recordId] : (S.sel.includes(s.recordId) ? S.sel : [...S.sel, s.recordId]);
@@ -1607,7 +1640,7 @@ async function applyColLogo(e) {
 $('selTpl').onchange = () => {
   const v = $('selTpl').value; S.cur = v === '' || v === '__dash' ? null : S.templates[+v]; S.tpl = normalizeTpl(v === '__dash' ? S.dashTpl : S.cur ? S.cur.tpl : defaultTpl());
   $('tplName').value = S.cur ? S.tpl.name : ''; S.overrides = {}; S.rect = null; S.logoDirty = false; if (S.cur) $('saveWhere').value = S.cur.scope; render();
-  if (S.cur && S.cur.scope === 'shared' && S.cur.hasLogo) applyColLogo(S.cur);
+
 };
 $('btnNew').onclick = () => { S.cur = null; S.tpl = defaultTpl(); $('tplName').value = ''; $('selTpl').value = ''; S.overrides = {}; S.rect = null; render(); };
 $('btnSave').onclick = async () => {
@@ -1618,13 +1651,13 @@ $('btnSave').onclick = async () => {
   if (same) S.tpl.id = same.tpl.id;
   if (where === 'shared') {
     try {
-      const st = await sharedTable(true), useCol = !!st.f.logo, isData = /^data:image\//.test(S.tpl.logo || '');
+      const st = await sharedTable(true), useCol = true, isData = false; // v4.6: logo cố định trên GitHub Pages, không lưu vào mẫu
       const json = await tplToText(useCol ? { ...S.tpl, logo: '' } : { ...S.tpl, logo: /^https?:/.test(S.tpl.logo || '') ? '' : S.tpl.logo }); dlog('save.shared.size', json.length); if (json.length > 95000) throw new Error('Mẫu quá lớn (' + json.length + ' ký tự sau khi nén)' + (S.tpl.logo && !useCol ? ', hãy thu nhỏ logo' : ', hãy bớt dòng/cột trống') + '.');
       const data = { [st.f['Tên mẫu']]: seg(name), [st.f['Dữ liệu mẫu']]: seg(json), [st.f['Bảng áp dụng']]: seg(S.tpl.tableName), [st.f['Cập nhật']]: seg(new Date().toLocaleString('vi-VN')) };
       let rid = same && same.recordId;
       if (rid) { for (const [fid, v] of Object.entries(data)) await st.table.setCellValue(fid, rid, v); } else { const r = await st.table.addRecord({ fields: data }); rid = typeof r === 'string' ? r : (r && (r.recordId || r.id)); }
       note = 'Đã lưu vào Base — mọi người có quyền xem Base đều dùng được mẫu này.';
-      if (useCol && rid && (S.logoDirty || (isData && !(same && same.hasLogo)))) {
+      if (false) {
         try {
           if (isData) { const bin = atob(S.tpl.logo.split(',')[1]); const file = new File([Uint8Array.from(bin, (ch) => ch.charCodeAt(0))], 'logo.png', { type: 'image/png' }); await withTimeout(st.table.setCellValue(st.f.logo, rid, [file]), 30000); }
           else if (!S.tpl.logo) await st.table.setCellValue(st.f.logo, rid, null);
@@ -2012,7 +2045,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '4.5.2', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '4.6', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -2481,7 +2514,7 @@ async function saveDash() {
     // v4.5.1: chặn lưu mẫu trống — khung sửa mới mở chưa chọn mẫu sẽ ghi đè mẫu mặc định lên khối
     if (!tpl.name && gcols.length <= 1) { early = 'Chưa chọn mẫu in (mẫu đang là mẫu mặc định, chưa đặt tên, cột gói chỉ có ' + gcols.length + ' cột). Hãy chọn mẫu ở ô Mẫu in, bấm "Tạo / cập nhật cột gói" rồi mới Lưu khối.'; dlog('save.blocked', 'blank template'); return; }
     // v4.5.1: logo lấy tự động từ cột Logo của _PrintTemplates bị nhúng vào khối dù mẫu không dùng {{LOGO}} → bỏ
-    const usesLogo = (tpl.rows || []).some((r) => (r.cells || []).some((c) => /\{\{\s*LOGO\s*\}\}/i.test(String(c.t || ''))));
+    const usesLogo = usesLogoTpl(tpl);
     if (tpl.logo && !usesLogo) { tpl.logo = ''; note = ' (mẫu không dùng {{LOGO}} nên không nhúng logo)'; }
     // v4.5.2: mẫu có {{LOGO}} → khối chỉ lưu đường dẫn tới file logo trên GitHub Pages (vài chục ký tự), khi mở khối mới tải ảnh
     if (usesLogo) {
@@ -2521,6 +2554,74 @@ async function saveDash() {
   }
 }
 $('btnDashSave').onclick = () => saveDash();
+
+/* ============ v4.6 · Tour hướng dẫn: làm tối nền, sáng vùng đang giới thiệu, Tiếp / Quay lại / Bỏ qua ============ */
+const TOUR_EDIT = [
+  [null, 'Chào mừng tới Print Studio', 'Công cụ in phiếu từ dữ liệu Lark Base theo mẫu bạn thiết kế. Bấm Tiếp để xem nhanh các bước, hoặc Bỏ qua để tắt.'],
+  ['#secData', 'Bước 1 · Chọn dữ liệu', 'Chọn base, bảng và view (nếu cần lọc). Ô Base nguồn hiện đúng tên base đang lấy dữ liệu.'],
+  ['#secMode', 'Bước 2 · Chọn kiểu in', '1 bản ghi, gộp nhiều bản ghi vào 1 phiếu, mỗi bản ghi 1 phiếu, hoặc Phiếu & chi tiết (lấy dòng lặp từ bảng chi tiết qua cột liên kết).'],
+  ['#secRec', 'Bước 3 · Chọn bản ghi', 'Tick bản ghi cần in. Dùng 🔍 để tìm, phễu để lọc theo điều kiện.'],
+  ['#secTpl', 'Bước 4 · Mẫu in', 'Chọn mẫu đã lưu, tạo mẫu mới hoặc nhập từ Word / Excel. Lưu "Trong Base" để mọi người dùng chung.'],
+  ['#secChips', 'Biến dữ liệu', 'Kéo thả biến vào ô của mẫu. Tab Chi tiết (kiểu Phiếu & chi tiết) chứa cột bảng chi tiết, đặt trong dòng lặp.'],
+  ['#barDesign', 'Thanh công cụ thiết kế', 'Gộp ô, thêm / xóa dòng cột, dòng lặp ⟳, ngắt trang, viền, màu, cỡ chữ, định dạng số.'],
+  ['#tFx', 'Công thức ƒx', 'Tính toán trong ô: SUM, IF, DOCTIEN… Bấm tên cột để chèn. Kết quả thử hiện ngay bên dưới ô công thức.'],
+  ['#tLogoMenu', 'Logo', 'Logo là file cố định trên trang. Chọn 1 ô rồi bấm "Chèn logo vào ô đang chọn"; muốn bỏ thì bấm "Bỏ logo khỏi mẫu".'],
+  ['#secDash', 'Khối trong Base App', 'Tạo / cập nhật cột gói để khối tự lấy dữ liệu mới. Thêm biến vào mẫu thì bấm lại nút này.'],
+  ['#btnDashSave', 'Lưu khối', 'Lưu mẫu và nguồn dữ liệu vào khối. Sau đó bấm Phát hành (Publish) Base App để người khác thấy bản mới.'],
+  ['#tabPrint', 'Xem & in', 'Xem phiếu với dữ liệu thật. Có thể sửa nhanh chữ trên phiếu trước khi in (không đổi dữ liệu gốc).'],
+  ['#dlWrap', 'Tải về', 'Xuất PDF, Excel hoặc Word.'],
+  ['#btnPrint', 'In', 'In trực tiếp các phiếu đang xem.'],
+  ['#btnDiag', 'Chẩn đoán', 'Khi khối lỗi, bấm ⚙ → Sao chép và gửi nội dung cho người hỗ trợ.'],
+];
+const TOUR_VIEW = [
+  [null, 'Xem & in phiếu', 'Khối này in phiếu từ dữ liệu Lark Base theo mẫu đã thiết lập sẵn. Bấm Tiếp để xem nhanh.'],
+  ['#secMode', 'Kiểu in', 'Chọn cách in nếu khối cho phép nhiều kiểu.'],
+  ['#secRec', 'Chọn bản ghi', 'Tick bản ghi cần in. Dùng 🔍 để tìm, phễu để lọc.'],
+  ['#stage', 'Xem trước', 'Phiếu hiện với dữ liệu mới nhất. Có thể sửa nhanh chữ trên phiếu trước khi in.'],
+  ['#dlWrap', 'Tải về', 'Xuất PDF, Excel hoặc Word.'],
+  ['#btnPrint', 'In', 'In trực tiếp các phiếu đang xem.'],
+];
+const TOUR = { i: 0, steps: [], el: null };
+function tourVisible(sel) { if (!sel) return true; const el = document.querySelector(sel); if (!el) return false; const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden'; }
+function tourStart() {
+  const view = document.body.classList.contains('dashview');
+  if (view && document.body.classList.contains('noside')) { try { $('btnSide').click(); } catch (e) {} }
+  if (!view && S.tab !== 'design') { S.tab = 'design'; render(); }
+  TOUR.steps = (view ? TOUR_VIEW : TOUR_EDIT).filter(([sel]) => tourVisible(sel)); TOUR.i = 0;
+  if (!TOUR.el) {
+    const w = document.createElement('div'); w.id = 'tourWrap'; w.innerHTML = '<div id="tourBlock"></div><div id="tourHole"></div><div id="tourCard" role="dialog" aria-modal="true" aria-labelledby="tourT"><button class="tx" id="tourX" title="Tắt hướng dẫn" aria-label="Tắt hướng dẫn">✕</button><div class="tstep" id="tourN"></div><h4 id="tourT"></h4><p id="tourP"></p><div class="tdots" id="tourD"></div><div class="tbtns"><button class="fit" id="tourSkip">Bỏ qua</button><span class="sp"></span><button class="fit" id="tourPrev">Quay lại</button><button class="primary fit" id="tourNext">Tiếp</button></div></div>';
+    document.body.appendChild(w); TOUR.el = w;
+    $('tourX').onclick = tourEnd; $('tourSkip').onclick = tourEnd; $('tourBlock').onclick = () => {};
+    $('tourPrev').onclick = () => tourGo(TOUR.i - 1); $('tourNext').onclick = () => (TOUR.i >= TOUR.steps.length - 1 ? tourEnd() : tourGo(TOUR.i + 1));
+    addEventListener('resize', () => { if (TOUR.el && TOUR.el.style.display !== 'none') tourPlace(); });
+    addEventListener('keydown', (e) => { if (!TOUR.el || TOUR.el.style.display === 'none') return; if (e.key === 'Escape') tourEnd(); else if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); $('tourNext').click(); } else if (e.key === 'ArrowLeft' && TOUR.i > 0) tourGo(TOUR.i - 1); });
+  }
+  TOUR.el.style.display = ''; tourGo(0);
+  try { localStorage.setItem('ps-tour-seen', '1'); } catch (e) {}
+}
+function tourGo(i) {
+  TOUR.i = Math.max(0, Math.min(i, TOUR.steps.length - 1));
+  const [sel, t, p] = TOUR.steps[TOUR.i], el = sel && document.querySelector(sel);
+  if (el) { const sec = el.closest && el.closest('.sec'); if (sec && sec.classList.contains('collapsed') && el === sec) setSec(sec, false, false); el.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+  $('tourN').textContent = (TOUR.i + 1) + ' / ' + TOUR.steps.length; $('tourT').textContent = t; $('tourP').textContent = p;
+  $('tourD').innerHTML = TOUR.steps.map((_, k) => `<i class="${k === TOUR.i ? 'on' : ''}"></i>`).join('');
+  $('tourPrev').style.visibility = TOUR.i ? '' : 'hidden'; $('tourNext').textContent = TOUR.i >= TOUR.steps.length - 1 ? 'Xong' : 'Tiếp';
+  requestAnimationFrame(tourPlace); setTimeout(() => $('tourNext').focus(), 30);
+}
+function tourPlace() {
+  const [sel] = TOUR.steps[TOUR.i] || [], el = sel && document.querySelector(sel), hole = $('tourHole'), card = $('tourCard');
+  const vw = innerWidth, vh = innerHeight, cw = card.offsetWidth, ch = card.offsetHeight, pad = 6, gap = 12;
+  if (!el) { Object.assign(hole.style, { left: vw / 2 + 'px', top: vh / 2 + 'px', width: '0px', height: '0px' }); Object.assign(card.style, { left: Math.max(16, (vw - cw) / 2) + 'px', top: Math.max(16, (vh - ch) / 2) + 'px' }); return; }
+  const r = el.getBoundingClientRect(), x = Math.max(4, r.left - pad), y = Math.max(4, r.top - pad), w = Math.min(vw - 8, r.width + pad * 2), h = Math.min(vh - 8, r.height + pad * 2);
+  Object.assign(hole.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
+  // Đặt thẻ hướng dẫn: bên phải → bên dưới → bên trên → bên trái → giữa màn hình
+  const fits = [[x + w + gap, y], [x, y + h + gap], [x, y - ch - gap], [x - cw - gap, y]].find(([l, t]) => l >= 8 && t >= 8 && l + cw <= vw - 8 && t + ch <= vh - 8);
+  let [l, t] = fits || [(vw - cw) / 2, vh - ch - 16]; l = Math.max(8, Math.min(l, vw - cw - 8)); t = Math.max(8, Math.min(t, vh - ch - 8));
+  Object.assign(card.style, { left: l + 'px', top: t + 'px' });
+}
+function tourEnd() { if (TOUR.el) TOUR.el.style.display = 'none'; }
+$('btnTour').onclick = tourStart;
+
 
 /* ============ Chế độ link preview (không cần SDK) ============ */
 async function bootLink() {
@@ -2595,11 +2696,20 @@ async function boot() {
       if (!dm) pickCurrent(true);
     }
     if (dc && dm === 'Config') reloadTemplates();
+    if (!viewOnly) { let seen = false; try { seen = !!localStorage.getItem('ps-tour-seen'); } catch (e) {} if (!seen) setTimeout(tourStart, 1200); }
     if (dm === 'Create' || dm === 'Config') baseTokenNow().then((t) => dashFor(t)).then((d) => dlog('dash.prewarm', d === dashboard ? 'chung' : 'base')).catch(() => {}); // mở sẵn đường base để Lưu khối không phải chờ
     if (dm) { try { dashboard.setRendered(); } catch (e) {} try { dashboard.onConfigChange(async (e) => { if (S.dash === 'Create' || S.saving) return; try { const c = await unpackCfg(e && e.data && e.data.customConfig); if (c && c.v === 2) await applyDash(c); } catch (err) { dlog('onConfigChange.error', String(err && err.message || err)); } }); } catch (e) {} }
     if (!dm) try { bitable.base.onSelectionChange(async () => { if (S.dash || S.mode !== 'one' || !$('chkFollow').checked || S.srcToken) return; await pickCurrent(true); }); } catch (e) {}
     // Base App / Dashboard: nhận diện khối và liệt kê các base trong Base App (chạy nền, không chặn giao diện)
-    if (workspace && dm !== 'View' && dm !== 'FullScreen') listBases().then((bases) => { if (!bases.length) return; $('selBase').innerHTML = '<option value="">Base hiện tại</option>' + bases.map((b) => `<option value="${esc(b.token)}">${esc(b.name || b.token)}</option>`).join(''); $('rowBase').style.display = ''; dlog('bases', bases.length); });
+    if (workspace && dm !== 'View' && dm !== 'FullScreen') listBases().then(async (bases) => {
+      if (!bases.length) return;
+      // v4.6: hiện tên thật của base đang mở thay cho "Base hiện tại"
+      let cur = ''; try { const s = await withTimeout(bitable.base.getSelection(), 3000); cur = (s && (s.baseId || s.baseToken)) || ''; } catch (e) {}
+      const me = bases.find((b) => b.token === cur), keep = $('selBase').value;
+      $('selBase').innerHTML = `<option value="">${esc((me && me.name) || 'Base đang mở')}</option>` + bases.filter((b) => b.token !== cur).map((b) => `<option value="${esc(b.token)}">${esc(b.name || b.token)}</option>`).join('');
+      if ([...$('selBase').options].some((o) => o.value === keep)) $('selBase').value = keep;
+      $('rowBase').style.display = ''; dlog('bases', { n: bases.length, cur: me ? me.name : '(không rõ)' });
+    });
   } catch (e) { dlog('boot.error', String(e && e.message || e)); if ([...Q.keys()].some((k) => k.startsWith('v.'))) return bootLink(); setStatus('err', 'Chưa kết nối'); boxMsg('Không kết nối được: ' + (e && e.message || e), 'err'); if (S.dash === 'View' || S.dash === 'FullScreen') { S.viewErr = String(e && e.message || e); S.sel = []; S.tab = 'print'; snapNote(''); try { render(); } catch (x) {} } }
 }
 /* ============ Ai được xem thông báo lỗi chi tiết: người đã lưu khối (theo mã người dùng) hoặc máy từng Lưu khối ============ */
