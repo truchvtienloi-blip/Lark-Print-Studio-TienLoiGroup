@@ -199,12 +199,32 @@ body[data-motion=on] #pages .page{animation:uiFade .22s ease-out}
 @keyframes uiPop{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:none}}
 @keyframes uiDrop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){body[data-motion=on] *{animation:none!important;transition:none!important}}
+
+/* v5.1 · hộp ƒx: ô nhập chỉ kéo dọc trong khung, danh sách cột kéo cao được, bảng hàm bên cạnh */
+.card.fxwide{max-width:1080px}
+.fxwrap{display:flex;gap:14px;align-items:stretch;min-width:0}
+.fxmain{flex:1 1 420px;min-width:0;display:flex;flex-direction:column}
+.fxsrc{width:100%;box-sizing:border-box;max-width:100%;min-height:64px;max-height:40vh;resize:vertical;font-family:Consolas,monospace;font-size:13px}
+.fxcols{height:150px;min-height:80px;max-height:50vh;resize:vertical;overflow:auto;align-content:flex-start;border:1px solid var(--line);border-radius:8px;padding:6px}
+.fxlib{flex:0 0 360px;min-width:0;max-height:62vh;display:flex;flex-direction:column;gap:6px;border-left:1px solid var(--line);padding-left:14px}
+.fxlib[hidden]{display:none}
+#fxLibList{overflow:auto;display:flex;flex-direction:column;gap:10px;padding-right:4px}
+.fxg[hidden],.fxi[hidden]{display:none}
+.fxgh{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.fxi{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;text-align:left;font-weight:500;padding:6px 8px;margin-bottom:4px;border-color:#e3e9f3;background:#fafbfd}
+.fxi:hover{border-color:#b9cbe6;background:var(--blue-soft)}
+.fxi code{font-size:12px;color:var(--navy);font-weight:700}.fxi span{font-size:12px;color:var(--ink)}.fxi small{font-size:11.5px;color:var(--muted);word-break:break-word} /* chữ thường để dấu tiếng Việt hiển thị đúng */
+@media (max-width:760px){.fxwrap{flex-direction:column}.fxlib{flex-basis:auto;border-left:0;border-top:1px solid var(--line);padding:10px 0 0;max-height:40vh}}
+/* v5.1 · nút ⚙ khi xem khối: ẩn mặc định, Ctrl+Shift+D để hiện / ẩn (người có quyền) */
+body.dashview #btnDiag{display:none!important}
+body.dashview.diagon #btnDiag{display:inline-flex!important}
+.card kbd{display:inline-block;padding:0 5px;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;background:#fff;font:600 11px/1.6 ui-monospace,Consolas,monospace}
 </style>
 </head>
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.0</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.1</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sidetabs" role="tablist" aria-label="Thiết lập"><button type="button" role="tab" id="stabBtnData" data-stab="data">Dữ liệu</button><button type="button" role="tab" id="stabBtnTpl" data-stab="tpl">Mẫu in</button></div>
@@ -661,7 +681,7 @@ let toastT;
 function toast(msg, ms = 3200) { const el = $('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), ms); }
 function setStatus(k, text) { $('dot').className = 'dot ' + k; $('stText').textContent = text; }
 function boxMsg(text, type = '') { const el = $('boxMsg'); el.className = 'msg ' + type; el.textContent = text; }
-function openModal(title, html) { $('mTitle').textContent = title; $('mBody').innerHTML = html; $('modal').classList.add('show'); }
+function openModal(title, html) { $('modal').querySelector('.card').classList.remove('fxcard', 'fxwide'); $('mTitle').textContent = title; $('mBody').innerHTML = html; $('modal').classList.add('show'); }
 $('mClose').onclick = () => $('modal').classList.remove('show');
 /* ---- Thu gọn từng phần / cả thanh thiết lập (nhớ theo trình duyệt, riêng cho chế độ sửa và chế độ xem khối) ---- */
 const uiKey = () => 'ps-ui-' + (document.body.classList.contains('dashview') ? 'view' : 'edit');
@@ -1250,6 +1270,28 @@ function openMap() {
 }
 $('tMap').onclick = openMap;
 /* ---- Trình soạn công thức ---- */
+const FX_CATALOG = [
+  ['Thống kê trên các dòng lặp', [
+    ['SUM(x)', 'Tổng các giá trị qua mọi dòng', 'SUM([Thành tiền])'], ['AVG(x)', 'Trung bình cộng', 'AVG([Điểm])'],
+    ['MIN(x) · MAX(x)', 'Nhỏ nhất / lớn nhất (1 cột hoặc nhiều số)', 'MAX([Ngày giao])'], ['COUNT()', 'Đếm số dòng (có cột: đếm dòng có giá trị)', 'COUNT([Mã hàng])']]],
+  ['Số & làm tròn', [
+    ['ROUND(x, n)', 'Làm tròn n chữ số thập phân', 'ROUND([Đơn giá] * 1.1, 0)'], ['ROUNDUP(x, n) · ROUNDDOWN(x, n)', 'Làm tròn lên / xuống', 'ROUNDUP([KL], 1)'],
+    ['INT(x)', 'Lấy phần nguyên', 'INT([Số giờ] / 8)'], ['ABS(x)', 'Giá trị tuyệt đối', 'ABS([Chênh lệch])'], ['MOD(a, b)', 'Phần dư của a chia b', 'MOD([STT], 2)']]],
+  ['Điều kiện', [
+    ['IF(đk, đúng, sai)', 'Chọn kết quả theo điều kiện', 'IF([SL] > 10, "Nhiều", "Ít")'], ['AND(a, b, …) · OR(a, b, …)', 'Tất cả / một trong các điều kiện đúng', 'IF(AND([Điểm] >= 5, [Chuyên cần] = "Đạt"), "Qua", "Trượt")'],
+    ['NOT(đk)', 'Đảo điều kiện', 'IF(NOT(ISBLANK([Ghi chú])), [Ghi chú], "—")'], ['ISBLANK(x)', 'Ô trống thì đúng', 'IF(ISBLANK([SĐT]), "Chưa có", [SĐT])']]],
+  ['Chữ', [
+    ['a & b · CONCAT(a, b, …)', 'Ghép chữ', '[Họ] & " " & [Tên]'], ['UPPER(x) · LOWER(x)', 'Viết hoa / viết thường', 'UPPER([Tên khách hàng])'],
+    ['TRIM(x)', 'Bỏ khoảng trắng đầu cuối', 'TRIM([Địa chỉ])'], ['LEN(x)', 'Số ký tự', 'LEN([Mã])'], ['LEFT(x, n) · RIGHT(x, n)', 'Lấy n ký tự đầu / cuối', 'RIGHT([Mã nhân sự], 3)']]],
+  ['Ngày', [
+    ['TODAY()', 'Ngày hôm nay', 'TEXT(TODAY(), "dd/mm/yyyy")'], ['DAY(d) · MONTH(d) · YEAR(d)', 'Lấy ngày / tháng / năm', '"Tháng " & MONTH([Ngày nhận việc])'],
+    ['DAYS(d1, d2)', 'Số ngày từ d2 đến d1', 'DAYS([Ngày kết thúc], [Ngày bắt đầu])'], ['ADDDAYS(d, n)', 'Cộng thêm n ngày', 'TEXT(ADDDAYS([Ngày nhận việc], 60), "dd/mm/yyyy")']]],
+  ['Định dạng & đọc số', [
+    ['TEXT(x, "mẫu")', 'Định dạng ngày hoặc số', 'TEXT([Ngày], "dd/mm/yyyy") · TEXT([Tiền], "#,##0")'], ['DOCSO(x)', 'Đọc số thành chữ', 'DOCSO([Số lượng])'], ['DOCTIEN(x)', 'Đọc số tiền thành chữ + "đồng"', 'DOCTIEN(SUM([Thành tiền]))']]],
+  ['Phép toán & so sánh', [
+    ['+  -  *  /  ^  %', 'Cộng, trừ, nhân, chia, lũy thừa, phần trăm', '[SL] * [Đơn giá] * (1 + 10%)'], ['=  <>  >  <  >=  <=', 'So sánh (dùng trong IF)', 'IF([Tổng] >= 1000000, "Duyệt", "")'],
+    ['[@Tên]', 'Giá trị ô "Điền nhanh" cùng tên', '[@Số lượng] * [Đơn giá]']]],
+];
 const FX_HELP = [
   ['[@Số lượng] * [Đơn giá]', 'Tính với ô điền tay: [@Tên] lấy giá trị ô "Điền nhanh" cùng tên'],
   ['DOCSO([Cột])', 'Số thành chữ: 1952 → Một nghìn chín trăm năm mươi hai'], ['DOCTIEN(SUM([Thành tiền]))', 'Tiền bằng chữ: … đồng'],
@@ -1263,12 +1305,21 @@ function openFx(initial) {
   const x = selected()[0];
   const cur = initial ?? ((x && String(x.cell.t).match(/^\s*\{\{=\s*([\s\S]*?)\s*\}\}\s*$/)) || [])[1] ?? '';
   openModal('ƒx Công thức', `<p class="hint">Tên cột đặt trong <b>[ ]</b>. Chuỗi đặt trong <b>" "</b>. Kết quả được chèn vào ô đang chọn dưới dạng <code>{{= … }}</code>. Ô nằm trên <b>dòng lặp</b> sẽ tính theo từng dòng; ô ngoài dòng lặp dùng SUM/AVG/COUNT để tính trên tất cả dòng.</p>
-    <textarea id="fxSrc" rows="3" style="width:100%;font-family:Consolas,monospace;font-size:13px" placeholder='VD: SUM([G.W]) * 1.1'>${esc(cur)}</textarea>
+    <div class="fxwrap"><div class="fxmain">
+    <textarea id="fxSrc" rows="3" class="fxsrc" placeholder='VD: SUM([G.W]) * 1.1'>${esc(cur)}</textarea>
     <div class="hint" style="margin:4px 0">Kết quả thử (bản ghi đang chọn): <b id="fxOut">—</b></div>
-    <input type="search" id="fxColQ" placeholder="Tìm cột…" style="margin:4px 0"><div id="fxCols" class="chips" style="max-height:90px"></div>
-    <details open style="margin-top:6px"><summary class="hint" style="cursor:pointer">Mẫu công thức (bấm để chèn)</summary><div id="fxFns" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px">${FX_HELP.map(([f, d], i) => `<button class="fit" data-fx="${i}" style="text-align:left;font-size:11px"><code>${esc(f)}</code><br><span class="hint">${esc(d)}</span></button>`).join('')}</div>
-    <p class="hint">Hàm có sẵn: ${Object.keys(FX_FN).join(', ')}.</p></details>
-    <div class="row" style="justify-content:flex-start;margin-top:8px"><button id="fxIns" class="primary fit">Chèn vào ô</button><button id="fxRep" class="fit">Thay nội dung ô</button></div>`);
+    <div class="row" style="gap:6px;margin:4px 0"><input type="search" id="fxColQ" placeholder="Tìm cột…" style="flex:1"><button type="button" class="fit" id="fxLibBtn" aria-expanded="true" aria-controls="fxLib">Danh sách hàm ◂</button></div>
+    <div id="fxCols" class="chips fxcols"></div>
+    <details style="margin-top:6px"><summary class="hint" style="cursor:pointer">Mẫu nhanh (bấm để chèn)</summary><div id="fxFns" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px">${FX_HELP.map(([f, d], i) => `<button class="fit" data-fx="${i}" style="text-align:left;font-size:11px"><code>${esc(f)}</code><br><span class="hint">${esc(d)}</span></button>`).join('')}</div></details>
+    <div class="row" style="justify-content:flex-start;margin-top:8px"><button id="fxIns" class="primary fit">Chèn vào ô</button><button id="fxRep" class="fit">Thay nội dung ô</button></div>
+    </div><aside class="fxlib" id="fxLib" aria-label="Danh sách hàm"><input type="search" id="fxLibQ" placeholder="Tìm hàm, ví dụ: ngày, làm tròn…"><div id="fxLibList">${FX_CATALOG.map(([g, items]) => `<div class="fxg"><div class="fxgh">${esc(g)}</div>${items.map(([s, d, ex]) => `<button type="button" class="fxi" data-ins="${esc(ex.split(' · ')[0])}"><code>${esc(s)}</code><span>${esc(d)}</span><small>VD: ${esc(ex)}</small></button>`).join('')}</div>`).join('')}</div></aside></div>`);
+  $('modal').querySelector('.card').classList.add('fxcard');
+  const lib = $('fxLib'), libBtn = $('fxLibBtn');
+  const setLib = (on) => { lib.hidden = !on; libBtn.setAttribute('aria-expanded', on ? 'true' : 'false'); libBtn.textContent = on ? 'Danh sách hàm ◂' : 'Danh sách hàm ▸'; $('modal').querySelector('.card').classList.toggle('fxwide', on); try { localStorage.setItem('ps-fxlib', on ? '1' : '0'); } catch (e) {} };
+  let libOn = true; try { libOn = localStorage.getItem('ps-fxlib') !== '0'; } catch (e) {} setLib(libOn);
+  libBtn.onclick = () => setLib(lib.hidden);
+  $('fxLibQ').oninput = () => { const q = fold($('fxLibQ').value); lib.querySelectorAll('.fxi').forEach((b) => { b.hidden = !!q && !fold(b.textContent).includes(q); }); lib.querySelectorAll('.fxg').forEach((g) => { g.hidden = ![...g.querySelectorAll('.fxi')].some((b) => !b.hidden); }); };
+  lib.addEventListener('click', (e) => { const b = e.target.closest('.fxi'); if (b) ins(b.dataset.ins); });
   const ta = $('fxSrc');
   const ins = (t) => { const a = ta.selectionStart ?? ta.value.length, b = ta.selectionEnd ?? a; ta.value = ta.value.slice(0, a) + t + ta.value.slice(b); ta.focus(); ta.selectionStart = ta.selectionEnd = a + t.length; preview(); };
   const preview = () => {
@@ -2121,7 +2172,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '5.0', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '5.1', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -2139,7 +2190,7 @@ $('btnDiag').onclick = async () => {
   try { info.lastSave = JSON.parse(localStorage.getItem('ps-savelog') || '[]'); } catch (e) {}
   info.log = diagLog;
   const text = JSON.stringify(info, null, 2);
-  openModal('Thông tin chẩn đoán', `<p class="hint">Gửi nội dung này cho người hỗ trợ nếu extension chậm hoặc lỗi (có thời gian từng bước và kết quả lưu khối).</p><pre id="diagPre">${esc(text)}</pre><button id="btnCopy">Sao chép</button>`);
+  openModal('Thông tin chẩn đoán', `<p class="hint">Gửi nội dung này cho người hỗ trợ nếu extension chậm hoặc lỗi (có thời gian từng bước và kết quả lưu khối).</p><p class="hint"><b>Phím tắt <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd></b>: khi sửa khối mở / đóng hộp này; khi xem khối hiện / ẩn nút ⚙ (chỉ người có quyền sửa). Bấm vào vùng extension trước rồi mới nhấn phím.</p><pre id="diagPre">${esc(text)}</pre><button id="btnCopy">Sao chép</button>`);
   $('btnCopy').onclick = async () => { try { await navigator.clipboard.writeText(text); toast('Đã sao chép'); } catch (e) { const r = document.createRange(); r.selectNodeContents($('diagPre')); getSelection().removeAllRanges(); getSelection().addRange(r); toast('Đã bôi đen, nhấn Ctrl+C'); } };
 };
 
@@ -2280,6 +2331,13 @@ async function previewPack(silent) {
 }
 // Base App: một khối có thể đọc nhiều base, nên API dữ liệu của dashboard phải gọi qua đúng base (workspace.getBitable(token).dashboard)
 // và điều kiện dữ liệu phải ghi rõ baseToken. Gọi dashboard chung sẽ báo "table not found error".
+// Đường dẫn mở bảng nguồn: tên miền Lark của trang chứa extension + /base/<mã base>?table=<mã bảng>
+async function sourceTableUrl(tableId) {
+  const tok = await baseTokenNow().catch(() => ''); if (!tok) return '';
+  let origin = ''; try { origin = (location.ancestorOrigins && location.ancestorOrigins[location.ancestorOrigins.length - 1]) || new URL(document.referrer).origin; } catch (e) {}
+  if (!/^https:\/\/[\w.-]*(larksuite|feishu|larkoffice)\.(com|cn)$/.test(origin || '')) origin = 'https://www.larksuite.com';
+  return origin + '/base/' + encodeURIComponent(tok) + (tableId ? '?table=' + encodeURIComponent(tableId) : '');
+}
 async function baseTokenNow() {
   if (S.srcToken) return S.srcToken;
   if (S.selfToken !== undefined) return S.selfToken;
@@ -2333,8 +2391,19 @@ async function makePack() {
   let check = null; if (done) { await sleep(1500); check = await previewPack(true); }
   openModal('Cột gói dữ liệu cho khối',
     (done ? `<p>${check && check.ok ? '' : 'Lưu ý: '}Đã ${'tạo/cập nhật'} cột <b>${esc(PACK_NAME)}</b>. ${esc(check ? check.msg : '')}</p>` : `<p>Không tự tạo được cột (${esc(err)}). Hãy làm thủ công:</p><ol class="hint"><li>Trong bảng <b>${esc(tblName)}</b>, thêm cột mới kiểu <b>Công thức</b>, đặt tên <b>${esc(PACK_NAME)}</b>.</li><li>Dán công thức bên dưới, lưu cột.</li><li>Quay lại đây, chọn cột đó ở ô "Cột gói dữ liệu" rồi bấm Kiểm tra.</li></ol>`)
-    + `<p class="hint">Công thức (${cols.length} cột: ${esc(cols.map((c) => c.name).join(', '))}):</p><pre id="packPre" style="white-space:pre-wrap">${esc(formula)}</pre><button id="btnCopyPack" class="fit">Sao chép công thức</button><p class="hint">Mỗi khi thêm biến mới vào mẫu, bấm lại nút này để cập nhật công thức.</p>`);
-  $('btnCopyPack').onclick = async () => { try { await navigator.clipboard.writeText(formula); toast('Đã sao chép'); } catch (e) { const r = document.createRange(); r.selectNodeContents($('packPre')); getSelection().removeAllRanges(); getSelection().addRange(r); toast('Đã bôi đen, nhấn Ctrl+C'); } };
+    + `<div class="row" style="justify-content:flex-start;gap:8px;flex-wrap:wrap"><button id="btnCopyPack" class="primary fit">Sao chép công thức &amp; mở bảng</button><span class="hint">Công thức gói ${cols.length} cột · dán vào cột <b>${esc(PACK_NAME)}</b> của bảng <b>${esc(tblName)}</b>.</span></div>`
+    + `<details style="margin-top:6px"><summary class="hint" style="cursor:pointer">Xem công thức</summary><pre id="packPre" style="white-space:pre-wrap;max-height:220px;overflow:auto">${esc(formula)}</pre></details>`
+    + `<p class="hint">Thêm biến vào mẫu thì bấm lại "Tạo / cập nhật cột gói".</p>`);
+  // v5.1: 1 lần bấm = chép công thức vào bộ nhớ tạm của máy + mở đúng bảng nguồn trong tab mới để dán
+  $('btnCopyPack').onclick = async () => {
+    let copied = false;
+    try { await navigator.clipboard.writeText(formula); copied = true; } catch (e) {}
+    if (!copied) { try { const t = document.createElement('textarea'); t.value = formula; t.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(t); t.select(); copied = document.execCommand('copy'); t.remove(); } catch (e) {} }
+    const url = await sourceTableUrl(link ? S.link.tableId : (S.tableMeta && S.tableMeta.id));
+    if (url) { const w = window.open(url, '_blank', 'noopener'); if (!w) $('mBody').insertAdjacentHTML('beforeend', `<p class="hint">Trình duyệt chặn mở tab mới: <a href="${esc(url)}" target="_blank" rel="noopener">mở bảng ${esc(tblName)}</a>.</p>`); }
+    toast((copied ? 'Đã chép công thức' : 'Chưa chép được, hãy mở "Xem công thức" rồi chép tay') + (url ? '. Đang mở bảng ' + tblName + ': thêm / sửa cột ' + PACK_NAME + ' (kiểu Công thức) rồi dán.' : '.'), 9000);
+    if (!copied) $('mBody').querySelector('details').open = true;
+  };
 }
 $('selPack').addEventListener('change', () => { S.packSig = null; });
 $('btnPack').onclick = () => makePack().catch((e) => toast('Lỗi: ' + e.message));
@@ -2638,6 +2707,26 @@ async function saveDash() {
   }
 }
 $('btnDashSave').onclick = () => saveDash();
+
+/* ============ v5.1 · Phím tắt Ctrl+Shift+D ============
+   Khi sửa khối: mở / đóng hộp chẩn đoán.  Khi xem khối: hiện / ẩn nút ⚙ (chỉ người sửa khối hoặc có quyền sửa base). */
+let DIAG_OK = null;
+async function canDiag() {
+  if (DIAG_OK !== null) return DIAG_OK;
+  if (S.isEditor) return (DIAG_OK = true);
+  try { DIAG_OK = !!(await withTimeout(bitable.base.getPermission({ entity: (SDK.PermissionEntity || {}).Base || 'Base', type: (SDK.OperationType || {}).Editable || 'editable' }), 2500)); } catch (e) { DIAG_OK = false; }
+  return DIAG_OK;
+}
+document.addEventListener('keydown', async (e) => {
+  if (!(e.ctrlKey || e.metaKey) || !e.shiftKey || e.altKey || String(e.key).toLowerCase() !== 'd') return;
+  e.preventDefault(); e.stopPropagation();
+  if (document.body.classList.contains('dashview')) {
+    if (!(await canDiag())) return;
+    const on = document.body.classList.toggle('diagon'); toast(on ? 'Đã hiện nút ⚙ chẩn đoán (Ctrl+Shift+D để ẩn).' : 'Đã ẩn nút ⚙ chẩn đoán.');
+  } else if ($('modal').classList.contains('show') && $('mTitle').textContent === 'Thông tin chẩn đoán') $('modal').classList.remove('show');
+  else $('btnDiag').click();
+}, true);
+
 document.body.dataset.motion = 'on'; // v5.0: bật chuyển động nhẹ cho mọi người
 
 /* ============ v4.9 · Thanh công cụ: gom nhóm, vạch ngăn | , tooltip thật (hiện khi rê chuột và khi Tab tới) ============ */
@@ -2672,7 +2761,7 @@ function ttShow(el) {
   TT.style.left = Math.max(6, Math.min(x, innerWidth - w - 6)) + 'px'; TT.style.top = y + 'px';
 }
 const ttHide = () => TT.classList.remove('on');
-const ttTarget = (e) => { const el = e.target.closest && e.target.closest('#barDesign [title], #barDesign [data-tt], #secChips [data-tt], #varFloat [data-tt]'); return el; };
+const ttTarget = (e) => { const el = e.target.closest && e.target.closest('#barDesign [title], #barDesign [data-tt], #secChips [data-tt], #varFloat [data-tt], #btnDiag'); return el; };
 document.addEventListener('mouseover', (e) => { const el = ttTarget(e); if (el) ttShow(el); else ttHide(); });
 document.addEventListener('focusin', (e) => { const el = ttTarget(e); if (el && el.matches(':focus-visible')) ttShow(el); else ttHide(); });
 document.addEventListener('focusout', ttHide); document.addEventListener('mousedown', ttHide, true); addEventListener('scroll', ttHide, true);
@@ -2774,7 +2863,7 @@ const TOUR_EDIT = [
   ['#tabPrint', 'Xem & in', 'Xem phiếu với dữ liệu thật. Có thể sửa nhanh chữ trên phiếu trước khi in (không đổi dữ liệu gốc).'],
   ['#dlWrap', 'Tải về', 'Xuất PDF, Excel hoặc Word.'],
   ['#btnPrint', 'In', 'In trực tiếp các phiếu đang xem.'],
-  ['#btnDiag', 'Chẩn đoán', 'Khi khối lỗi, bấm ⚙ → Sao chép và gửi nội dung cho người hỗ trợ.'],
+  ['#btnDiag', 'Chẩn đoán', 'Khi khối lỗi, bấm ⚙ (hoặc Ctrl+Shift+D) → Sao chép và gửi nội dung cho người hỗ trợ. Khi xem khối, nút ⚙ ẩn sẵn; người có quyền sửa nhấn Ctrl+Shift+D để hiện.'],
 ];
 const TOUR_VIEW = [
   [null, 'Xem & in phiếu', 'Khối này in phiếu từ dữ liệu Lark Base theo mẫu đã thiết lập sẵn. Bấm Tiếp để xem nhanh.'],
