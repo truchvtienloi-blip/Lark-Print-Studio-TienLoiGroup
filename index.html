@@ -193,6 +193,19 @@ body.dashview:not(.editor) #btnDiag{display:none!important}
 #qvList button.on,#qvList button:hover{background:var(--blue-soft);color:var(--navy)}
 #qvList .qe{padding:10px;font-size:12px;color:var(--muted)}
 </style>
+<style>
+/* v5.3 · khung chọn đồng nhất bo góc */
+.cbxp.ns input{position:absolute;width:1px;height:1px;opacity:0;padding:0;border:0;pointer-events:none}
+.tools .cbx.cbxt{flex:0 0 auto;width:auto;min-width:64px;max-width:170px;height:30px;padding:0 24px 0 9px;font-size:12.5px;border-radius:7px}
+#tFont+.cbx.cbxt{min-width:130px}
+.cbx.cbxs{flex:0 0 auto;width:auto;padding:3px 24px 3px 8px;font-size:12px}
+.frow .cbx{border-radius:7px}
+#fSug{position:fixed;z-index:9300;max-height:240px;overflow:auto;padding:4px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 28px #1b2b4a2e}
+#fSug[hidden]{display:none}
+#fSug .fso{display:flex;justify-content:space-between;gap:8px;padding:6px 8px;border-radius:6px;font-size:12.5px;cursor:pointer}
+#fSug .fso small{color:var(--muted);font-size:11px}
+#fSug .fso:hover,#fSug .fso.hi{background:var(--blue-soft);color:var(--navy)}
+</style>
 <style id="motionCss">
 /* v5.0 · Chuyển động nhẹ: 150–220ms cho nút, tab, mục, menu, hộp thông báo; tự tắt khi máy đặt giảm chuyển động */
 body[data-motion=on] button,body[data-motion=on] .vrow,body[data-motion=on] .rec,body[data-motion=on] .cbx,body[data-motion=on] .sidetabs button,body[data-motion=on] .seg label{transition:background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease,transform .1s ease}
@@ -233,7 +246,7 @@ body.dashview #btnDiag{display:none!important}
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.2</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.3.1</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sidetabs" role="tablist" aria-label="Thiết lập"><button type="button" role="tab" id="stabBtnData" data-stab="data">Dữ liệu</button><button type="button" role="tab" id="stabBtnTpl" data-stab="tpl">Mẫu in</button></div>
@@ -742,10 +755,11 @@ CBX_PANEL.querySelector('input').addEventListener('keydown', (e) => {
 });
 document.addEventListener('mousedown', (e) => { if (!CBX_PANEL.hidden && !CBX_PANEL.contains(e.target) && !(CBX_CUR && CBX_CUR.btn.contains(e.target))) cbxClose(); });
 window.addEventListener('resize', cbxClose); document.addEventListener('scroll', (e) => { if (!CBX_CUR || CBX_PANEL.contains(e.target) || Date.now() - (CBX_CUR.at || 0) < 400) return; if (e.target === document || (e.target.contains && e.target.contains(CBX_CUR.btn))) cbxClose(); }, true);
-function enhanceSelect(sel) {
-  if (!sel || sel._cbx) return; const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'cbx'; sel.after(btn); sel.classList.add('cbx-native');
-  const st = { sel, btn, hi: -1 }; sel._cbx = st;
-  const sync = () => { const o = sel.options[sel.selectedIndex]; btn.textContent = o ? o.text : ''; btn.title = btn.textContent; btn.disabled = sel.disabled; };
+function enhanceSelect(sel, opt = {}) {
+  if (!sel || sel._cbx) return; const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'cbx' + (opt.cls ? ' ' + opt.cls : ''); sel.after(btn); sel.classList.add('cbx-native');
+  const st = { sel, btn, hi: -1, opt }; sel._cbx = st;
+  if (opt.tip) { btn.dataset.tt = opt.tip; btn.setAttribute('aria-label', opt.tip); }
+  const sync = () => { const o = sel.options[sel.selectedIndex]; btn.textContent = o ? o.text : ''; if (!opt.tip) btn.title = btn.textContent; btn.disabled = sel.disabled; };
   st.sync = sync; sync();
   new MutationObserver(sync).observe(sel, { childList: true, subtree: true, attributes: true, attributeFilter: ['disabled'] });
   sel.addEventListener('change', sync);
@@ -754,7 +768,8 @@ function enhanceSelect(sel) {
   Object.defineProperty(sel, 'selectedIndex', { get() { return protoIdx.get.call(this); }, set(v) { protoIdx.set.call(this, v); sync(); } });
   btn.addEventListener('click', () => {
     if (CBX_CUR === st) { cbxClose(); return; } cbxClose(); CBX_CUR = st; st.at = Date.now(); btn.classList.add('open');
-    const r = btn.getBoundingClientRect(), w = Math.max(r.width, 220), left = Math.min(r.left, innerWidth - w - 8), below = innerHeight - r.bottom > 300 || r.top < 300;
+    const few = sel.options.length <= 12; CBX_PANEL.classList.toggle('ns', few); // ít lựa chọn: ẩn ô tìm (vẫn dùng được phím ↑ ↓ Enter)
+    const r = btn.getBoundingClientRect(), w = Math.max(r.width, opt.minW || 220), left = Math.min(r.left, innerWidth - w - 8), below = innerHeight - r.bottom > 300 || r.top < 300;
     Object.assign(CBX_PANEL.style, { left: left + 'px', width: w + 'px', top: below ? r.bottom + 4 + 'px' : '', bottom: below ? '' : innerHeight - r.top + 4 + 'px' });
     CBX_PANEL.hidden = false; const inp = CBX_PANEL.querySelector('input'); inp.value = ''; cbxRenderList(); inp.focus();
     CBX_PANEL.querySelector('.cbxo.on')?.scrollIntoView({ block: 'nearest' });
@@ -762,6 +777,10 @@ function enhanceSelect(sel) {
 }
 
 ['selBase', 'selTable', 'selView', 'selLabel', 'selKey', 'selPack', 'selTpl', 'selGroup', 'selLink'].forEach((id) => enhanceSelect($(id)));
+// v5.3: mọi ô chọn đều dùng khung bo góc giống nhau (trước đây cỡ chữ, phông, khổ giấy, nơi lưu, kiểu khớp lọc còn dùng khung vuông của trình duyệt)
+[['tSize', 'Cỡ chữ của ô đang chọn', 120], ['tFont', 'Phông cả mẫu', 180], ['tPaper', 'Khổ giấy', 170]].forEach(([id, tip, minW]) => { const s = $(id); if (s) enhanceSelect(s, { tip, minW, cls: 'cbxt' }); });
+['saveWhere'].forEach((id) => enhanceSelect($(id)));
+enhanceSelect($('fMatch'), { minW: 160, cls: 'cbxs' });
 
 /* ============ Vẽ mẫu ============ */
 const paperDims = () => PAPER[S.tpl.paper] || PAPER.A4;
@@ -1475,14 +1494,14 @@ function renderFilters() {
         + lockBtn + `<button class="fit fx" data-k="del" title="Bỏ điều kiện">✕</button></div>`;
     }
     const type = kind === 'date' ? 'date' : kind === 'num' ? 'number' : 'text', need = !NOVAL.has(f.op);
-    const dl = kind === 'text' ? `list="fdl${i}"` : '';
-    const vals = kind === 'text' ? [...new Set(S.order.slice(0, 800).map((id) => S.recMap.get(id)).filter(Boolean).flatMap((r) => String(fmtCell(m, r.fields[m.id]) || '').split(/\s*,\s*/)).filter(Boolean))].slice(0, 200) : [];
+    const dl = kind === 'text' ? 'autocomplete="off"' : '';
+    const vals = []; // v5.3: gợi ý dùng khung riêng (fSugShow), chỉ lấy bản ghi còn lại sau các điều kiện khác
     return `<div class="frow" data-i="${i}"><select data-k="f">${opts(f.f)}</select><select data-k="op">${ops.map(([k, l]) => `<option value="${k}"${k === f.op ? ' selected' : ''}>${l}</option>`).join('')}</select>`
       + (need ? `<input data-k="v" type="${type}" ${dl} value="${esc(f.v || '')}" placeholder="Giá trị">` : '<span></span>')
       + (need && f.op === 'between' ? `<input data-k="v2" type="${type}" value="${esc(f.v2 || '')}" placeholder="đến">` : '')
       + lockBtn + `<button class="fit fx" data-k="del" title="Bỏ điều kiện">✕</button>${vals.length ? `<datalist id="fdl${i}">${vals.map((v) => `<option value="${esc(v)}">`).join('')}</datalist>` : ''}</div>`;
   }).join('') || '<div class="hint">Chưa có điều kiện lọc.</div>';
-  box.querySelectorAll('select[data-k="f"]').forEach(enhanceSelect);
+  box.querySelectorAll('select[data-k="f"]').forEach((s) => enhanceSelect(s)); box.querySelectorAll('select[data-k="op"]').forEach((s) => enhanceSelect(s, { minW: 160 }));
   const nLk = S.filters.filter(lockedFilter).length; $('fClear').hidden = view && nLk > 0 && nLk === S.filters.length;
   updFHint();
 }
@@ -2202,7 +2221,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '5.2', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '5.3.1', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -2771,11 +2790,12 @@ document.body.dataset.motion = 'on'; // v5.0: bật chuyển động nhẹ cho m
     ['numMenu'],
     ['chkGuide'],
   ].map((g) => g.map((x) => pick(typeof x === 'string' ? $(x) : x)).filter(Boolean));
-  const used = new Set(groups.flat()), rest = [...T.children].filter((c) => !used.has(c) && !c.classList.contains('tsep'));
+  const used = new Set(groups.flat()), rest = [...T.children].filter((c) => !used.has(c) && !c.classList.contains('tsep') && !c.classList.contains('cbx'));
   if (rest.length) groups.push(rest); // phòng khi có nút mới chưa xếp nhóm
   const sep = () => { const s = document.createElement('span'); s.className = 'tsep'; s.setAttribute('role', 'separator'); s.setAttribute('aria-orientation', 'vertical'); return s; };
   const out = []; groups.filter((g) => g.length).forEach((g, i) => { if (i) out.push(sep()); out.push(...g); });
   T.replaceChildren(...out);
+  T.querySelectorAll('select').forEach((s) => { if (s._cbx) s.after(s._cbx.btn); }); // giữ nút chọn bo góc ngay cạnh ô chọn gốc
   const lab = { tBold: 'In đậm', tItalic: 'In nghiêng' }; for (const [id, t] of Object.entries(lab)) { const b = $(id); if (b && !b.title) b.title = t; }
 })();
 const TT = (() => { const d = document.createElement('div'); d.id = 'tt'; d.setAttribute('role', 'tooltip'); document.body.appendChild(d); return d; })();
@@ -2840,6 +2860,44 @@ $('qvList').addEventListener('mousedown', (e) => e.preventDefault());
 $('qvList').addEventListener('click', (e) => { const b = e.target.closest('button[data-i]'); if (b) qvPick(+b.dataset.i); });
 document.addEventListener('mousedown', (e) => { if (!qvBox.hidden && !e.target.closest('#qv')) qvClose(false); });
 addEventListener('scroll', (e) => { if (!qvBox.hidden && !(e.target.closest && e.target.closest('#qv'))) qvClose(false); }, true);
+
+
+/* ============ v5.3 · Gợi ý khi gõ giá trị lọc: chỉ lấy từ các bản ghi còn lại sau những điều kiện lọc khác (kể cả lọc cố định) ============ */
+function recPassExcept(r, skip) {
+  const fs = activeFilters().filter((f) => f !== skip); if (!fs.length || !r) return true;
+  const lk = fs.filter((f) => f.lk), soft = fs.filter((f) => !f.lk);
+  if (lk.length && !lk.every((f) => condPass(r, f))) return false;
+  if (!soft.length) return true; return S.fMatch === 'or' ? soft.some((f) => condPass(r, f)) : soft.every((f) => condPass(r, f));
+}
+const FSUG = (() => { const d = document.createElement('div'); d.id = 'fSug'; d.hidden = true; d.setAttribute('role', 'listbox'); document.body.appendChild(d); return d; })();
+let FSUG_IN = null, FSUG_HI = -1;
+function fSugClose() { FSUG.hidden = true; FSUG_IN = null; FSUG_HI = -1; }
+function fSugShow(inp) {
+  const row = inp.closest('.frow'); if (!row) return; const f = S.filters[+row.dataset.i]; if (!f) return;
+  const m = S.metas.find((x) => x.id === f.f); if (!m || fKind(m) !== 'text') { fSugClose(); return; }
+  const q = fold(inp.value), seen = new Map();
+  for (const id of S.order) { const r = S.recMap.get(id); if (!r || !recPassExcept(r, f)) continue;
+    for (const v of String(fmtCell(m, r.fields[m.id]) || '').split(/\s*,\s*/)) { if (!v) continue; const k = fold(v); if (q && !k.includes(q)) continue; seen.set(v, (seen.get(v) || 0) + 1); }
+    if (seen.size > 400) break; }
+  const list = [...seen.entries()].sort((a, b) => a[0].localeCompare(b[0], 'vi')).slice(0, 60);
+  if (!list.length || (list.length === 1 && fold(list[0][0]) === q)) { fSugClose(); return; }
+  FSUG_IN = inp; FSUG_HI = -1;
+  FSUG.innerHTML = list.map(([v, n], i) => `<div class="fso" role="option" data-v="${esc(v)}" data-i="${i}"><span>${esc(v)}</span><small>${n}</small></div>`).join('');
+  FSUG.hidden = false; const r = inp.getBoundingClientRect(), w = Math.max(r.width, 200);
+  Object.assign(FSUG.style, { left: Math.max(8, Math.min(r.left, innerWidth - w - 8)) + 'px', width: w + 'px', top: (innerHeight - r.bottom > 240 ? r.bottom + 4 : Math.max(8, r.top - 4 - Math.min(FSUG.offsetHeight, 240))) + 'px' });
+}
+function fSugPick(v) { const inp = FSUG_IN; fSugClose(); if (!inp) return; inp.value = v; inp.dispatchEvent(new Event('input', { bubbles: true })); inp.focus(); }
+$('fRows').addEventListener('focusin', (e) => { if (e.target.matches('input[data-k="v"]')) fSugShow(e.target); });
+$('fRows').addEventListener('input', (e) => { if (e.target.matches('input[data-k="v"]') && e.isTrusted) fSugShow(e.target); });
+$('fRows').addEventListener('keydown', (e) => {
+  if (!FSUG_IN || e.target !== FSUG_IN) return; const items = [...FSUG.querySelectorAll('.fso')];
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); FSUG_HI = Math.max(0, Math.min(items.length - 1, FSUG_HI + (e.key === 'ArrowDown' ? 1 : -1))); items.forEach((x, i) => x.classList.toggle('hi', i === FSUG_HI)); items[FSUG_HI]?.scrollIntoView({ block: 'nearest' }); }
+  else if (e.key === 'Enter' && FSUG_HI >= 0) { e.preventDefault(); fSugPick(items[FSUG_HI].dataset.v); }
+  else if (e.key === 'Escape') fSugClose();
+});
+$('fRows').addEventListener('focusout', () => setTimeout(() => { if (FSUG_IN && document.activeElement !== FSUG_IN) fSugClose(); }, 120));
+FSUG.addEventListener('mousedown', (e) => { const o = e.target.closest('.fso'); if (o) { e.preventDefault(); fSugPick(o.dataset.v); } });
+document.querySelector('.side').addEventListener('scroll', fSugClose, { passive: true });
 
 /* ============ v4.9 · Mẫu có thay đổi chưa lưu? (so với bản mẫu đã lưu cùng mã) ============ */
 function tplSig(t) {
