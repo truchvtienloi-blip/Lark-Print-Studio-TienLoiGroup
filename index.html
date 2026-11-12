@@ -246,18 +246,14 @@ body.dashview #btnDiag{display:none!important}
 .adot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#f08c00;box-shadow:0 0 0 2px #fff;flex:none}
 .sidetabs button{position:relative}.sidetabs button .adot{position:absolute;top:6px;right:10px}
 .sec h3 .adot{margin-left:6px;vertical-align:middle}
-.attnchip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border:1px solid #f5c58a;border-radius:13px;background:#fff7ec;color:#9a4d00;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
-.attnchip:hover{background:#ffeed6}.attnchip[hidden],.pwarn[hidden],#stText[hidden]{display:none!important}
-.pwarn{display:flex;flex-direction:column;gap:6px;margin:8px 0 4px;padding:10px 12px;border:1px solid #f5c58a;border-left:3px solid #f08c00;border-radius:8px;background:#fff7ec;font-size:12.5px;color:#5c3a00}
-.pwarn b{color:#9a4d00;font-size:13px}.pwarn span{line-height:1.5}.pwarn.ok{border-color:#9fd8b4;border-left-color:#1a9e55;background:#effaf3;color:#1d5c37}.pwarn.ok b{color:#16743f}
-.pwarn .spin{display:inline-block;width:11px;height:11px;border:2px solid #f0b46a;border-top-color:transparent;border-radius:50%;animation:pwspin .8s linear infinite;vertical-align:-1px;margin-right:4px}
-@keyframes pwspin{to{transform:rotate(360deg)}}
+#stText[hidden]{display:none!important}
+.dlok{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #9fd8b4;border-radius:10px;background:#effaf3}.dlok>div{display:flex;flex-direction:column;gap:2px;min-width:0}.dlok b{color:#16743f;font-size:13.5px}.dlok span:not(.dlck){font-size:12.5px;color:#1f2329;word-break:break-all}.dlck{flex:none;width:28px;height:28px;border-radius:50%;background:#1a9e55;color:#fff;display:grid;place-items:center}
 .ctxm{position:fixed;z-index:9400;min-width:236px;padding:5px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px #0f142333;display:flex;flex-direction:column;font-size:12.5px}
 .ctxm[hidden]{display:none}
 .ctxm button{display:flex;align-items:center;gap:8px;height:30px;padding:0 10px;border:0;border-radius:7px;background:transparent;color:#1f2329;text-align:left;font-size:12.5px;cursor:pointer;width:100%}
 .ctxm button:hover:not(:disabled),.ctxm button.on{background:#eef3fb}
 .ctxm button:disabled{color:#a3a9b3;cursor:default}
-.ctxm button .ci{width:16px;text-align:center;color:#5b6270;flex:none}
+.ctxm button .ci{width:15px;height:15px;color:#5b6270;flex:none}
 .ctxm button kbd{margin-left:auto;padding-left:16px;font-family:inherit;font-size:11px;color:#8a919c;background:none;border:0}
 .ctxm hr{border:0;border-top:1px solid #eceef2;margin:4px 2px}
 .dlpick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0 4px}
@@ -267,7 +263,6 @@ body.dashview #btnDiag{display:none!important}
 .dlpick button .fx{font-size:11px;color:#6b7280;font-weight:400}
 .dlpick button kbd{font-size:10.5px;color:#8a919c;border:1px solid #dfe3ea;border-radius:4px;padding:1px 5px}
 .dlpick .ft{width:34px;height:40px;border-radius:5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px;color:#fff;font-size:10px;font-weight:700}
-@media (prefers-reduced-motion:reduce){.pwarn .spin{animation:none}}
 body[data-motion=on] .ctxm:not([hidden]){animation:ctxin .12s ease-out}
 @keyframes ctxin{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
 </style>
@@ -275,7 +270,7 @@ body[data-motion=on] .ctxm:not([hidden]){animation:ctxin .12s ease-out}
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.4</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><button type="button" id="attnChip" class="attnchip" hidden><span class="adot"></span><span id="attnTxt"></span></button><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.4.1</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sidetabs" role="tablist" aria-label="Thiết lập"><button type="button" role="tab" id="stabBtnData" data-stab="data">Dữ liệu</button><button type="button" role="tab" id="stabBtnTpl" data-stab="tpl">Mẫu in</button></div>
@@ -318,7 +313,7 @@ body[data-motion=on] .ctxm:not([hidden]){animation:ctxin .12s ease-out}
  <div class="sec" id="secManual" style="display:none"><h3>3 · Điền nhanh <span class="tip" tabindex="0" data-tip="Các biến dạng {{@Tên}} trong mẫu: nội dung gõ tay, không lấy từ bản ghi.">i</span></h3><div id="manualBox" style="display:flex;flex-direction:column;gap:6px"></div><p class="hint">Chỉ dùng cho lần in này.</p></div>
  <div class="sec" id="secChips"><h3><button type="button" class="vfbtn qvt" id="btnQv" aria-pressed="true" aria-label="Chọn biến nhanh khi nhấp đúp vào ô" data-tt="Chọn biến nhanh: nhấp đúp vào ô trong mẫu để mở danh sách biến (bấm để tắt / bật)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></button>Biến trong mẫu</h3><div class="row"><button id="tMap" class="fit" title="Đổi các biến của mẫu sang cột của bảng đang chọn">Khớp cột với bảng</button><span class="hint" id="mapHint" style="flex:1"></span></div><input type="search" id="chipSearch" class="chipSearch" placeholder="Tìm biến theo tên cột…"><div id="chipTabs" class="ctabs"></div><div id="chips" class="vlist"></div>
   <p class="hint">Kéo thả hoặc bấm để chèn vào ô. Công thức: nút <b>ƒx</b>.</p></div>
- <div class="sec" id="secDash" style="display:none"><h3>4 · Khối trong Base App</h3><label class="lbl"><span>Cột định danh <span class="tip" tabindex="0" data-tip="Dùng làm mã cho từng dòng khi xem khối: nhớ bản ghi đã chọn sau mỗi lần dữ liệu làm mới và tách các dòng trùng. Nên dùng cột Tự động đánh số hoặc cột mã không trùng.">i</span></span><select id="selKey"></select></label><label class="lbl"><span>Cột gói dữ liệu <span class="tip" tabindex="0" data-tip="Khi xem khối, Lark chỉ cho đọc dữ liệu qua 1 cột nhóm. Cột gói là cột Công thức ghép mọi cột mẫu cần thành 1 chuỗi, nhờ vậy khối tự cập nhật dữ liệu mới.">i</span></span><select id="selPack"></select></label><div class="row" style="gap:6px;flex-wrap:wrap"><button id="btnPack" class="fit">Tạo / cập nhật cột gói</button><button id="btnPackTest" class="fit">Kiểm tra</button></div><div id="packWarn" class="pwarn" hidden role="status"><b id="pwTitle"></b><span id="pwBody"></span><div class="row" style="gap:6px;flex-wrap:wrap"><button type="button" id="btnPackFix" class="primary fit">Cập nhật cột gói</button><button type="button" id="btnPackRe" class="fit">Kiểm tra lại</button></div></div><p class="hint">Thêm biến vào mẫu → bấm lại <b>Tạo / cập nhật cột gói</b>.</p></div>
+ <div class="sec" id="secDash" style="display:none"><h3>4 · Khối trong Base App</h3><label class="lbl"><span>Cột định danh <span class="tip" tabindex="0" data-tip="Dùng làm mã cho từng dòng khi xem khối: nhớ bản ghi đã chọn sau mỗi lần dữ liệu làm mới và tách các dòng trùng. Nên dùng cột Tự động đánh số hoặc cột mã không trùng.">i</span></span><select id="selKey"></select></label><label class="lbl"><span>Cột gói dữ liệu <span class="tip" tabindex="0" data-tip="Khi xem khối, Lark chỉ cho đọc dữ liệu qua 1 cột nhóm. Cột gói là cột Công thức ghép mọi cột mẫu cần thành 1 chuỗi, nhờ vậy khối tự cập nhật dữ liệu mới.">i</span></span><select id="selPack"></select></label><div class="row" style="gap:6px;flex-wrap:wrap"><button id="btnPack" class="fit">Tạo / cập nhật cột gói</button><button id="btnPackTest" class="fit">Kiểm tra</button></div><p class="hint">Thêm biến vào mẫu → bấm lại <b>Tạo / cập nhật cột gói</b>.</p></div>
  </div>
 </aside>
 <main class="main">
@@ -982,7 +977,7 @@ $('pages').addEventListener('mousemove', (e) => {
   if (S.tab !== 'design' || document.body.classList.contains('coldrag')) { hideRowAdd(); return; }
   if (e.target.closest('.rowadd')) return;
   const tr = e.target.closest('table.design > tbody > tr');
-  if (tr) showRowAdd(tr); else if (!e.target.closest('.page')) hideRowAdd();
+  hideRowAdd(); // v5.4.1: bỏ nút + thêm dòng nhanh, dùng menu chuột phải
 });
 $('pages').addEventListener('mouseleave', hideRowAdd);
 const colName = (i) => { let n = '', x = i + 1; while (x > 0) { const m = (x - 1) % 26; n = String.fromCharCode(65 + m) + n; x = Math.floor((x - 1) / 26); } return n; };
@@ -2075,9 +2070,18 @@ $('btnImp').onclick = () => $('fileImp').click();
 $('fileImp').onchange = async () => { const f = $('fileImp').files[0]; $('fileImp').value = ''; if (!f) return; try { S.tpl = normalizeTpl(JSON.parse(await f.text())); S.cur = null; $('selTpl').value = ''; $('tplName').value = S.tpl.name; S.tpl.id = uid(); render(); toast('Đã nhập mẫu. Bấm "Lưu mẫu" để lưu.'); } catch (e) { toast('Tệp JSON không hợp lệ.'); } };
 
 /* ============ In / PDF ============ */
+// v5.4.1: tên tệp = giá trị "Cột hiển thị tên" của bản ghi đầu + " - " + tên mẫu, bỏ dấu tiếng Việt; nhiều bản ghi thì thêm "+N"
+function fileBase() {
+  const unacc = (t) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+  let lab = '';
+  try { const m = labelMeta(), ids = S.sel || []; const r = ids.length && S.recMap.get(ids[0]); if (m && r) lab = String(fmtCell(m, r.fields[m.id]) || '').trim(); if (lab && ids.length > 1) lab += ' +' + (ids.length - 1); } catch (e) {}
+  const name = [lab, (S.tpl && S.tpl.name) || ''].filter((x) => String(x).trim()).join(' - ') || 'Phieu in';
+  return unacc(name).replace(/[\\/:*?"<>|\u0000-\u001f]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 120) || 'Phieu in';
+}
 function deliver(blob, name, title) {
   const url = URL.createObjectURL(blob), canShare = navigator.canShare && navigator.canShare({ files: [new File([blob], name, { type: blob.type })] });
-  openModal(title, `<p>Tệp đã sẵn sàng. Nếu trình duyệt không tự tải xuống, bấm nút bên dưới.</p><div class="row" style="justify-content:flex-start;flex-wrap:wrap"><a class="btn fit" href="${url}" download="${esc(name)}">Tải ${esc(name)}</a><a class="btn fit" style="background:#fff;color:var(--blue);border:1px solid var(--blue)" href="${url}" target="_blank" rel="noopener">Mở trong tab mới</a>${canShare ? '<button id="btnShare" class="fit">Chia sẻ…</button>' : ''}</div>`);
+  openModal(title, `<div class="dlok"><span class="dlck" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div><b>Đã tải xuống</b><span>${esc(name)}</span></div></div><p class="hint" style="margin:10px 0 6px">Không thấy tệp trong thư mục Tải xuống? Bấm <b>Tải lại</b> hoặc <b>Mở trong tab mới</b>.</p><div class="row" style="justify-content:flex-start;flex-wrap:wrap"><a class="btn fit" href="${url}" download="${esc(name)}">Tải lại</a><a class="btn fit" style="background:#fff;color:var(--blue);border:1px solid var(--blue)" href="${url}" target="_blank" rel="noopener">Mở trong tab mới</a>${canShare ? '<button id="btnShare" class="fit">Chia sẻ…</button>' : ''}</div>`);
+  $('modal').querySelector('.card').classList.add('dlcard');
   if ($('btnShare')) $('btnShare').onclick = () => navigator.share({ files: [new File([blob], name, { type: blob.type })], title: name }).catch(() => {});
   const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
 }
@@ -2144,7 +2148,7 @@ $('btnXlsx').onclick = async () => {
     });
     ws.views = [{ showGridLines: false }];
     const buf = await wb.xlsx.writeBuffer();
-    deliver(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), (S.tpl.name || 'phieu-in').replace(/[^\w\-]+/g, '_') + '.xlsx', 'Tải Excel');
+    deliver(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), fileBase() + '.xlsx', 'Tải Excel');
   } catch (e) { toast('Không tạo được Excel: ' + (e && e.message || e), 6000); dlog('xlsx.error', String(e && e.message || e)); }
   finally { btn.disabled = false; btn.textContent = 'Excel (.xlsx)'; }
 };
@@ -2221,7 +2225,7 @@ function buildDocx() {
 }
 $('btnDocx').onclick = () => {
   closeDl(); if (!needRecords()) return; S.tab = 'print'; render();
-  try { deliver(buildDocx(), (S.tpl.name || 'phieu-in').replace(/[^\w\-]+/g, '_') + '.docx', 'Tải Word'); }
+  try { deliver(buildDocx(), fileBase() + '.docx', 'Tải Word'); }
   catch (e) { toast('Không tạo được Word: ' + (e && e.message || e), 6000); dlog('docx.error', String(e && e.message || e)); }
 };
 function closeDl() { $('dlWrap').classList.remove('open'); }
@@ -2245,12 +2249,12 @@ $('btnPdf').onclick = async () => {
         else { const sh = img.height * H / hmm, cv = document.createElement('canvas'); cv.width = img.width; cv.height = Math.min(sh, img.height - k * sh); cv.getContext('2d').drawImage(img, 0, k * sh, img.width, cv.height, 0, 0, img.width, cv.height); pdf.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, cv.height * W / img.width); }
       }
     }
-    deliver(pdf.output('blob'), (S.tpl.name || 'phieu-in').replace(/[^\w\-]+/g, '_') + '.pdf', 'Tải PDF');
+    deliver(pdf.output('blob'), fileBase() + '.pdf', 'Tải PDF');
   } catch (e) { dlog('pdf.error', String(e && e.message || e)); toast('Không tạo được PDF: ' + (e && e.message || e), 6000); }
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '5.4', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '5.4.1', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -2710,7 +2714,7 @@ function flagFix(el, msg) {
   if (!el) return; clearFix();
   showTabOf(el); const sec = el.closest('.sec'); if (sec) { setSec(sec, false, false); if (sec.style.display === 'none') sec.style.display = ''; }
   const vis = el._cbx ? el._cbx.btn : el; // ô chọn đã được thay bằng nút tùy biến: viền đỏ đặt lên nút hiển thị
-  const host = el.closest('.lbl') || vis; vis.classList.add('needfix');
+  const host = el.closest('.lbl') || (vis.parentElement && vis.parentElement.classList.contains('row') ? vis.parentElement : vis); vis.classList.add('needfix');
   const m = document.createElement('div'); m.className = 'fixmsg'; m.setAttribute('role', 'alert'); m.innerHTML = '<b aria-hidden="true">!</b><span></span>'; m.lastChild.textContent = msg; host.after(m);
   const done = () => clearFix(); ['change', 'input'].forEach((ev) => el.addEventListener(ev, done, { once: true })); vis.addEventListener('click', done, { once: true });
   setTimeout(() => { vis.scrollIntoView({ block: 'center', behavior: 'smooth' }); try { vis.focus({ preventScroll: true }); } catch (e) {} }, 60);
@@ -2723,7 +2727,7 @@ async function saveDash() {
   if (!packId) { const hasPack = [...$('selPack').options].some((o) => o.value); flagFix(hasPack ? $('selPack') : $('btnPack'), hasPack ? 'Chọn cột gói dữ liệu cho khối.' : 'Khối cần cột gói để tự lấy dữ liệu: bấm "Tạo / cập nhật cột gói".'); return; }
   let miss = packMissing();
   if (miss.length) { const ck = await previewPack(true).catch(() => null); if (ck && ck.ok) miss = []; else if (!ck) { dlog('save.packcheck', 'không kiểm tra được, bỏ qua'); miss = []; } }
-  if (miss.length) { flagFix($('btnPack'), 'Cột gói chưa có ' + miss.length + ' cột mẫu đang cần: ' + miss.slice(0, 4).map((g) => g.name).join(', ') + (miss.length > 4 ? '…' : '') + '. Bấm "Tạo / cập nhật cột gói" rồi Lưu khối.'); return; }
+  if (miss.length) { flagFix($('btnPack'), 'Cột gói chưa có ' + miss.length + ' biến mới của mẫu: ' + miss.slice(0, 4).map((g) => g.name).join(', ') + (miss.length > 4 ? '…' : '') + '. Bấm "Tạo / cập nhật cột gói" rồi Lưu khối.'); return; }
   if (tplDirty()) {
     const a = await askSaveTpl(); if (a === 'cancel') return;
     if (a === 'save') { await $('btnSave').onclick(); if (tplDirty()) { flagFix($('tplName'), 'Chưa lưu được mẫu. Kiểm tra tên mẫu và nơi lưu rồi thử lại.'); return; } }
@@ -3216,25 +3220,7 @@ function updateAttention() {
   let a; try { a = attention(); } catch (e) { return; }
   setDot($('stabBtnData'), !!a.data, a.data); setDot($('stabBtnTpl'), !!a.tpl, a.tpl);
   const h3 = $('secDash') && $('secDash').querySelector('h3'); setDot(h3, !!a.pack, a.tpl);
-  const chip = $('attnChip'), msg = a.data || a.tpl;
-  chip.hidden = !msg; $('attnTxt').textContent = msg; chip.title = msg ? msg + ' – bấm để tới chỗ cần chỉnh' : '';
-  const w = $('packWarn'); if (!w) return;
-  if (S.packChecking === 'loud' || (S.packChecking && a.pack && a.pack.kind !== 'none')) { w.hidden = false; w.classList.remove('ok'); $('pwTitle').innerHTML = '<span class="spin"></span>Đang kiểm tra cột gói…'; $('pwBody').textContent = 'Đang hỏi Lark xem cột gói đã có đủ cột mẫu cần chưa.'; $('btnPackFix').hidden = true; $('btnPackRe').hidden = true; return; }
-  if (!a.pack || a.pack.kind === 'none') { if (!w.classList.contains('ok')) w.hidden = true; return; }
-  w.hidden = false; w.classList.remove('ok'); $('btnPackFix').hidden = false; $('btnPackRe').hidden = false;
-  if (a.pack.kind === 'miss') {
-    const names = a.pack.miss.map((g) => g.name);
-    $('pwTitle').textContent = `Cột gói chưa có ${names.length} biến mới của mẫu`;
-    $('pwBody').textContent = names.slice(0, 6).join(', ') + (names.length > 6 ? ` và ${names.length - 6} cột khác` : '') + '. Khối sẽ không hiện được các giá trị này cho tới khi cập nhật cột gói.';
-  } else { $('pwTitle').textContent = 'Cột gói chưa khớp mẫu'; $('pwBody').textContent = a.pack.msg; }
 }
-function goAttention() {
-  const a = attention();
-  if (a.data) { flagFix($('selTable'), a.data + '.'); return; }
-  if (S.mode === 'link' && !S.link && S.tableMeta) { flagFix($('selLink'), a.tpl + '.'); return; }
-  if (a.pack) { showTabOf($('secDash')); setSec($('secDash'), false); const t = a.pack.kind === 'none' ? $('selPack') : $('packWarn'); (t._cbx ? t._cbx.btn : t).scrollIntoView({ block: 'center', behavior: 'smooth' }); if (a.pack.kind === 'none') flagFix($('selPack'), 'Chọn hoặc tạo cột gói dữ liệu.'); }
-}
-$('attnChip').onclick = goAttention;
 { const _r = render; render = function (...a) { const v = _r.apply(this, a); updateAttention(); return v; }; }
 { const _m = markUsedChips; markUsedChips = function (...a) { const v = _m.apply(this, a); updateAttention(); return v; }; } // gõ biến mới vào ô → báo ngay
 $('selPack').addEventListener('change', () => { S.packBad = ''; updateAttention(); });
@@ -3246,14 +3232,14 @@ let PACKCHK = { t: 0, until: 0, last: 0 };
 async function recheckPack(reason, loud) {
   if (S.packChecking || !document.body.classList.contains('dashedit') || !$('selPack').value || !dashboard || !dashboard.getPreviewData) return null;
   let before = false; try { before = !!(S.packPending || S.packBad || packMissing().length); } catch (e) {}
-  S.packChecking = loud ? 'loud' : 'quiet'; updateAttention(); let r = null;
+  S.packChecking = loud ? 'loud' : 'quiet'; const bt = $('btnPackTest'), bt0 = bt.textContent; if (loud) { bt.disabled = true; bt.textContent = 'Đang kiểm tra…'; } let r = null;
   try { r = await previewPack(true); } catch (e) { r = null; }
-  S.packChecking = false; PACKCHK.last = Date.now();
+  S.packChecking = false; PACKCHK.last = Date.now(); if (loud) { bt.disabled = false; bt.textContent = bt0; }
   dlog('pack.recheck', { reason, ok: r && r.ok, msg: r && r.msg });
   if (r && r.ok) {
     const was = before; S.packBad = ''; S.packPending = false; stopPackPoll();
     updateAttention();
-    if (was || loud) { const w = $('packWarn'); w.hidden = false; w.classList.add('ok'); $('btnPackFix').hidden = true; $('btnPackRe').hidden = true; $('pwTitle').textContent = '✓ Cột gói đã khớp mẫu'; $('pwBody').textContent = r.msg; clearTimeout(w._t); w._t = setTimeout(() => { w.classList.remove('ok'); updateAttention(); }, 8000); toast('✓ Cột gói đã khớp: ' + r.msg, 6000); }
+    if (was || loud) toast('✓ Cột gói đã khớp mẫu. ' + r.msg, 6000);
   } else { if (r) S.packBad = r.msg; updateAttention(); if (loud && r) toast(r.msg, 9000); }
   return r;
 }
@@ -3272,8 +3258,6 @@ document.addEventListener('visibilitychange', onBack); window.addEventListener('
     return v; }; }
 $('btnPack').onclick = () => makePack().catch((e) => toast('Lỗi: ' + e.message));
 $('btnPackTest').onclick = () => recheckPack('button', true).then((r) => { if (r === null && !S.packChecking) previewPack(false).catch((e) => toast('Lỗi: ' + e.message)); });
-$('btnPackFix').onclick = () => $('btnPack').click();
-$('btnPackRe').onclick = () => $('btnPackTest').click();
 // Mở khối để sửa: tự kiểm tra cột gói 1 lần (phát hiện công thức bị sửa / thiếu cột)
 setTimeout(function first() { if (!document.body.classList.contains('dashedit')) return; if (!S.tableMeta || !$('selPack').value) { if ((first.n = (first.n || 0) + 1) < 10) setTimeout(first, 2000); return; } recheckPack('open'); }, 3500);
 
@@ -3378,15 +3362,29 @@ function addColLeft() {
 }
 const ctx = (() => { const d = document.createElement('div'); d.className = 'ctxm'; d.id = 'ctxMenu'; d.hidden = true; d.setAttribute('role', 'menu'); d.setAttribute('aria-label', 'Thao tác với ô'); document.body.appendChild(d); return d; })();
 const MOD = /Mac|iPhone|iPad/.test(navigator.platform || '') ? '⌘' : 'Ctrl+';
+const CTX_IC = {
+  cut: '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/>',
+  copy: '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  paste: '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>',
+  clear: '<path d="m7 21-4.3-4.3a2.4 2.4 0 0 1 0-3.4l9.6-9.6a2.4 2.4 0 0 1 3.4 0l5.6 5.6a2.4 2.4 0 0 1 0 3.4L13 21"/><path d="M22 21H7M5 11l9 9"/>',
+  rowUp: '<path d="M5 3h14M18 13l-6-6-6 6M12 7v14"/>', rowDown: '<path d="M12 17V3M6 11l6 6 6-6M19 21H5"/>',
+  colLeft: '<path d="M3 19V5M13 6l-6 6 6 6M7 12h14"/>', colRight: '<path d="M17 12H3M11 18l6-6-6-6M21 5v14"/>',
+  del: '<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/>',
+  merge: '<rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M7 12h10M9 9.5 6.5 12 9 14.5M15 9.5l2.5 2.5-2.5 2.5"/>',
+  unmerge: '<rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M12 5v14"/>',
+  rep: '<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
+  var: '<path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1M16 21h1a2 2 0 0 0 2-2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/>',
+  fx: '<path d="M18 7V4H6l6 8-6 8h12v-3"/>',
+};
 function ctxItems() {
   const sel = selected(), one = sel.length === 1 && sel[0], merged = one && (one.cell.cs > 1 || one.cell.rs > 1), R = S.rect;
   const rep = R && S.tpl.rows[R.r0] && S.tpl.rows[R.r0].rep, nR = R ? R.r1 - R.r0 + 1 : 1, nC = R ? R.c1 - R.c0 + 1 : 1;
   return [
-    ['cut', '✂', 'Cắt', MOD + 'X'], ['copy', '⧉', 'Sao chép', MOD + 'C'], ['paste', '📋', 'Dán', MOD + 'V'], ['clear', '⌫', 'Xóa nội dung', 'Delete'], '-',
-    ['rowUp', '↑', 'Chèn dòng phía trên'], ['rowDown', '↓', 'Chèn dòng phía dưới'], ['colLeft', '←', 'Chèn cột bên trái'], ['colRight', '→', 'Chèn cột bên phải'], '-',
-    ['delRow', '−', nR > 1 ? `Xóa ${nR} dòng` : 'Xóa dòng'], ['delCol', '−', nC > 1 ? `Xóa ${nC} cột` : 'Xóa cột'], '-',
-    merged ? ['unmerge', '⊟', 'Bỏ gộp ô'] : ['merge', '⊞', 'Gộp ô', '', sel.length < 2], ['rep', '↻', rep ? 'Bỏ dòng lặp' : 'Đặt làm dòng lặp'], '-',
-    ['var', '{}', 'Chèn biến…', 'nhấp đúp', sel.length !== 1], ['fx', 'ƒx', 'Công thức ƒx…'],
+    ['cut', 'cut', 'Cắt', MOD + 'X'], ['copy', 'copy', 'Sao chép', MOD + 'C'], ['paste', 'paste', 'Dán', MOD + 'V'], ['clear', 'clear', 'Xóa nội dung', 'Delete'], '-',
+    ['rowUp', 'rowUp', 'Chèn dòng phía trên'], ['rowDown', 'rowDown', 'Chèn dòng phía dưới'], ['colLeft', 'colLeft', 'Chèn cột bên trái'], ['colRight', 'colRight', 'Chèn cột bên phải'], '-',
+    ['delRow', 'del', nR > 1 ? `Xóa ${nR} dòng` : 'Xóa dòng'], ['delCol', 'del', nC > 1 ? `Xóa ${nC} cột` : 'Xóa cột'], '-',
+    merged ? ['unmerge', 'unmerge', 'Bỏ gộp ô'] : ['merge', 'merge', 'Gộp ô', '', sel.length < 2], ['rep', 'rep', rep ? 'Bỏ dòng lặp' : 'Đặt làm dòng lặp'], '-',
+    ['var', 'var', 'Chèn biến…', 'nhấp đúp', sel.length !== 1], ['fx', 'fx', 'Công thức ƒx…'],
   ];
 }
 const CTX_ACT = {
@@ -3405,7 +3403,7 @@ function qvOpenAt(td, cx, cy) {
 }
 function ctxClose() { ctx.hidden = true; }
 function ctxOpen(x, y) {
-  ctx.innerHTML = ctxItems().map((it) => it === '-' ? '<hr>' : `<button type="button" role="menuitem" data-a="${it[0]}"${it[4] ? ' disabled' : ''}><span class="ci">${it[1]}</span>${esc(it[2])}${it[3] ? `<kbd>${esc(it[3])}</kbd>` : ''}</button>`).join('');
+  ctx.innerHTML = ctxItems().map((it) => it === '-' ? '<hr>' : `<button type="button" role="menuitem" data-a="${it[0]}"${it[4] ? ' disabled' : ''}><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CTX_IC[it[1]] || ''}</svg>${esc(it[2])}${it[3] ? `<kbd>${esc(it[3])}</kbd>` : ''}</button>`).join('');
   ctx.hidden = false; const w = ctx.offsetWidth, h = ctx.offsetHeight;
   ctx.style.left = Math.max(8, Math.min(x, innerWidth - w - 8)) + 'px'; ctx.style.top = Math.max(8, y + h > innerHeight - 8 ? y - h : y) + 'px';
   const f = ctx.querySelector('button:not(:disabled)'); if (f) f.focus({ preventScroll: true });
