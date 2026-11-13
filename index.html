@@ -266,11 +266,38 @@ body.dashview #btnDiag{display:none!important}
 body[data-motion=on] .ctxm:not([hidden]){animation:ctxin .12s ease-out}
 @keyframes ctxin{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
 </style>
+<style id="v55Css">
+body.expmode .sidetabs,body.expmode .sidetools,body.expmode .side>.stab:not(#stabExp){display:none!important}
+body.expmode .side{display:block!important}body.expmode .layout{grid-template-columns:340px minmax(0,1fr)!important}
+#stabExp{display:flex;flex-direction:column;min-height:100%}#stabExp[hidden]{display:none}
+.exphead{position:sticky;top:0;z-index:4;background:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.exphead>div{display:flex;flex-direction:column;min-width:0}.exphead b{font-size:14px;color:var(--navy)}.exphead small{font-size:11.5px;color:#6b7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#btnXuat[aria-pressed=true]{background:#e8effa;border-color:#9db8e3;color:var(--navy)}
+.fnprev{font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#374151;background:#f7f8fa;border:1px dashed #d5dae2;border-radius:8px;padding:7px 10px;word-break:break-all;font-weight:400}
+.pbar{height:6px;border-radius:3px;background:#e8ecf2;overflow:hidden;margin:2px 0 10px}.pbar[hidden]{display:none}.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#1f56a0,#3b7dd8);border-radius:3px;transition:width .3s}
+.explist{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:auto;max-height:340px;background:#fff}
+.explist .empty{padding:14px;font-size:12.5px;color:#6b7280;text-align:center}
+.exprow{display:flex;align-items:center;gap:9px;padding:7px 10px;border:0;border-top:1px solid #eef0f4;font-size:12.5px;cursor:pointer;background:#fff;text-align:left;width:100%;color:inherit}
+.exprow:first-child{border-top:0}.exprow:hover{background:#f6f8fc}.exprow.cur{background:#eef3fb}
+.exprow .nm{display:flex;flex-direction:column;min-width:0;flex:1;gap:1px}.exprow .nm b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exprow .nm small{color:#6b7280;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.exprow .nm small.e{color:#b42318;white-space:normal}
+.xst{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;flex:none;color:#fff;box-sizing:border-box}
+.xst.wait{border:2px solid #cfd5de}.xst.ok{background:#1a9e55}.xst.err{background:#d13438;font:700 11px/1 system-ui}.xst.run{border:2px solid #3b7dd8;border-top-color:transparent;animation:xspin .8s linear infinite}
+@keyframes xspin{to{transform:rotate(360deg)}}
+.expfoot{position:sticky;bottom:0;z-index:4;background:#fff;border-top:1px solid var(--line);padding:10px 12px;display:flex;flex-direction:column;gap:8px;margin-top:auto}
+.expfoot .row button{flex:1}.expsum{font-size:12px;color:#4b5563;line-height:1.45}.expsum:empty{display:none}.expsum b{color:#1f2329}
+body.exprun #expRecHome,body.exprun #secExpOut{pointer-events:none;opacity:.55}
+body.expmode #rowFollow{display:none!important}
+.expbadge{position:absolute;top:-13px;left:14px;z-index:2;display:inline-flex;align-items:center;gap:6px;max-width:80%;height:24px;padding:0 10px;border-radius:12px;font:600 11.5px/1 'Be Vietnam Pro',system-ui,sans-serif;background:#fff;border:1px solid #d5dae2;color:#374151;box-shadow:0 2px 6px #1b1f5a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.expbadge .xst{width:13px;height:13px;border-width:2px}.expbadge.ok{background:#effaf3;border-color:#9fd8b4;color:#16743f}.expbadge.err{background:#fef3f2;border-color:#f5b5ad;color:#b42318}.expbadge.run{border-color:#9db8e3;color:#1f56a0}
+body.expmode .pages{gap:30px;padding-top:12px}.page.expcur{outline:3px solid #3b7dd8;outline-offset:5px}
+@media (prefers-reduced-motion:reduce){.xst.run{animation:none;border-top-color:#3b7dd8}}
+</style>
 </head>
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.4.1</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.5</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sidetabs" role="tablist" aria-label="Thiết lập"><button type="button" role="tab" id="stabBtnData" data-stab="data">Dữ liệu</button><button type="button" role="tab" id="stabBtnTpl" data-stab="tpl">Mẫu in</button></div>
@@ -315,13 +342,30 @@ body[data-motion=on] .ctxm:not([hidden]){animation:ctxin .12s ease-out}
   <p class="hint">Kéo thả hoặc bấm để chèn vào ô. Công thức: nút <b>ƒx</b>.</p></div>
  <div class="sec" id="secDash" style="display:none"><h3>4 · Khối trong Base App</h3><label class="lbl"><span>Cột định danh <span class="tip" tabindex="0" data-tip="Dùng làm mã cho từng dòng khi xem khối: nhớ bản ghi đã chọn sau mỗi lần dữ liệu làm mới và tách các dòng trùng. Nên dùng cột Tự động đánh số hoặc cột mã không trùng.">i</span></span><select id="selKey"></select></label><label class="lbl"><span>Cột gói dữ liệu <span class="tip" tabindex="0" data-tip="Khi xem khối, Lark chỉ cho đọc dữ liệu qua 1 cột nhóm. Cột gói là cột Công thức ghép mọi cột mẫu cần thành 1 chuỗi, nhờ vậy khối tự cập nhật dữ liệu mới.">i</span></span><select id="selPack"></select></label><div class="row" style="gap:6px;flex-wrap:wrap"><button id="btnPack" class="fit">Tạo / cập nhật cột gói</button><button id="btnPackTest" class="fit">Kiểm tra</button></div><p class="hint">Thêm biến vào mẫu → bấm lại <b>Tạo / cập nhật cột gói</b>.</p></div>
  </div>
+ <div class="stab" id="stabExp" hidden aria-label="Xuất dữ liệu">
+  <div class="exphead"><button type="button" id="expBack" class="fit ico" title="Quay lại thiết lập (Esc)" aria-label="Quay lại thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><div><b>Xuất vào cột đính kèm</b><small id="expTbl"></small></div></div>
+  <div id="expRecHome"></div>
+  <div class="sec" id="secExpOut"><h3>2 · Cột nhận &amp; định dạng</h3>
+   <label class="lbl">Cột đính kèm nhận tệp<select id="expField"><option value="">Đang tải cột…</option></select></label>
+   <div class="row" style="justify-content:flex-start;gap:8px"><button type="button" id="expNew" class="fit">+ Tạo cột đính kèm mới</button><span class="hint" id="expFieldHint"></span></div>
+   <div class="lbl">Định dạng tệp<div class="seg" id="expFmt"><label><input type="radio" name="expFmt" value="pdf" checked><span>PDF</span></label><label><input type="radio" name="expFmt" value="png"><span>Ảnh PNG</span></label></div></div>
+   <div class="lbl">Nếu ô đã có tệp<div class="seg" id="expMode"><label><input type="radio" name="expMode" value="replace" checked><span>Thay tệp cũ</span></label><label><input type="radio" name="expMode" value="append"><span>Thêm bên cạnh</span></label></div></div>
+   <div class="lbl">Tên tệp<div class="fnprev" id="expName"></div><span class="hint">Cột hiển thị tên – Tên mẫu in, bỏ dấu. Đổi ở <b>Cột hiển thị tên</b> (tab Dữ liệu).</span></div>
+  </div>
+  <div class="sec" id="secExpRun"><h3>3 · Kết quả <span id="expCount" style="text-transform:none;font-weight:500"></span></h3>
+   <div class="pbar" id="expBar" hidden><i></i></div>
+   <div id="expList" class="explist" role="list"></div>
+   <p class="hint" style="margin:6px 0 0">Bấm 1 dòng để xem phiếu tương ứng bên phải.</p>
+  </div>
+  <div class="expfoot"><div class="expsum" id="expSum" aria-live="polite"></div><div class="row" style="gap:8px"><button type="button" id="expRetry" class="fit" hidden>Thử lại dòng lỗi</button><button type="button" id="expGo" class="primary">Xuất</button></div></div>
+ </div>
 </aside>
 <main class="main">
  <div class="bar">
   <div class="tabs"><button id="tabDesign" class="on">Thiết kế mẫu</button><button id="tabPrint">Xem &amp; in</button></div>
   <div class="grow"></div>
   <span id="pageInfo" class="hint"></span><span id="warn" class="hint"></span>
-  <div class="dl" id="dlWrap"><button id="btnDl" class="ib" title="Tải về PDF / Excel / Word (Ctrl+D)"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> Tải về <span class="car">▾</span></button><div class="dlmenu"><button id="btnPdf">PDF</button><button id="btnXlsx">Excel (.xlsx)</button><button id="btnDocx">Word (.docx)</button></div></div><button id="btnPrint" class="primary ib" title="In phiếu (Ctrl+P)"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8V3h10v5M7 17H4v-7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7h-3"/><rect x="7" y="14" width="10" height="7"/></svg> In</button>
+  <button id="btnXuat" class="ib" title="Xuất phiếu vào cột đính kèm của bảng" aria-pressed="false"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/></svg> Xuất dữ liệu</button><div class="dl" id="dlWrap"><button id="btnDl" class="ib" title="Tải về PDF / Excel / Word (Ctrl+D)"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> Tải về <span class="car">▾</span></button><div class="dlmenu"><button id="btnPdf">PDF</button><button id="btnXlsx">Excel (.xlsx)</button><button id="btnDocx">Word (.docx)</button></div></div><button id="btnPrint" class="primary ib" title="In phiếu (Ctrl+P)"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8V3h10v5M7 17H4v-7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7h-3"/><rect x="7" y="14" width="10" height="7"/></svg> In</button>
  </div>
  <div class="bar" id="barDesign">
   <div class="tools">
@@ -847,7 +891,8 @@ function printHTML(missing) {
   const now = new Date();
   return pages.map((recs) => {
     const ctx = { recs, idx: S.idx, manual: S.manual, now, fmtCell, missing, rec: null, i: 0 };
-    const open = `<div class="page print" style="${pageStyle()}"><table>${colGroup()}<tbody>`;
+    const gid = esc(String((recs[0] && recs[0].recordId) || '').split('/')[0]);
+    const open = `<div class="page print" data-gid="${gid}" style="${pageStyle()}"><table>${colGroup()}<tbody>`;
     let h = open, started = false;
     for (const row of pageRows(S.tpl, recs, ctx)) {
       ctx.rec = row.rec; ctx.i = row.i; ctx.fill = !row.row.rep;
@@ -2254,7 +2299,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '5.4.1', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '5.5', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -3426,6 +3471,244 @@ ctx.addEventListener('keydown', (e) => {
 });
 document.addEventListener('mousedown', (e) => { if (!ctx.hidden && !ctx.contains(e.target)) ctxClose(); }, true);
 addEventListener('blur', ctxClose); addEventListener('resize', ctxClose); $('stage').addEventListener('scroll', ctxClose, { passive: true });
+
+/* ============ v5.5 · Xem & in tự mở khung Chọn bản ghi; Xuất dữ liệu vào cột đính kèm ============ */
+function focusRecSec() {
+  if (document.body.classList.contains('expmode') || document.body.classList.contains('sidehid')) return;
+  const sec = $('secRec'); showTab('data', false); setSec(sec, false); setTimeout(() => sec.scrollIntoView({ block: 'start', behavior: 'smooth' }), 30);
+}
+$('tabPrint').addEventListener('click', focusRecSec);
+
+const EXP = { on: false, st: new Map(), run: false, stop: false, tbl: null, keyMap: null, prevMode: null, home: null };
+const unaccent = (t) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+function nameOf(rec) {
+  let lab = ''; try { const m = labelMeta(); if (m && rec) lab = String(fmtCell(m, rec.fields[m.id]) || '').trim(); } catch (e) {}
+  const nm = [lab, (S.tpl && S.tpl.name) || ''].filter((x) => String(x).trim()).join(' - ') || 'Phieu in';
+  return unaccent(nm).replace(/[\\/:*?"<>|\u0000-\u001f]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 120) || 'Phieu in';
+}
+const expFmt = () => (document.querySelector('input[name=expFmt]:checked') || {}).value || 'pdf';
+const expAppend = () => ((document.querySelector('input[name=expMode]:checked') || {}).value === 'append');
+function expGroups() {
+  const seen = new Set(), out = [];
+  for (const recs of getPages()) {
+    const r0 = recs[0]; if (!r0) continue; const id = String(r0.recordId).split('/')[0]; if (seen.has(id)) continue; seen.add(id);
+    const master = S.recMap.get(id) || r0;
+    out.push({ id, recs, label: recLabel(master), file: nameOf(r0) + '.' + expFmt() });
+  }
+  return out;
+}
+const XST = { ok: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>', err: '!', run: '', wait: '' };
+const fmtSize = (n) => n > 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
+function expRefresh() {
+  if (!EXP.on) return;
+  const gs = expGroups(), n = gs.length, cur = EXP.cur;
+  $('expName').textContent = n ? gs[0].file : nameOf(null) + '.' + expFmt();
+  const box = $('expList'), top = box.scrollTop;
+  box.innerHTML = n ? gs.slice(0, 500).map((g) => {
+    const st = EXP.st.get(g.id) || { s: 'wait' };
+    const sub = st.s === 'err' ? `<small class="e">${esc(st.msg)}</small>` : st.s === 'run' ? `<small>${esc(st.msg || 'Đang tạo tệp…')}</small>` : st.s === 'ok' ? `<small>Đã lưu · ${esc(g.file)} · ${fmtSize(st.size || 0)}</small>` : `<small>${esc(g.file)}</small>`;
+    return `<button type="button" role="listitem" class="exprow${g.id === cur ? ' cur' : ''}" data-gid="${esc(g.id)}"><span class="xst ${st.s}" aria-hidden="true">${XST[st.s] || ''}</span><span class="nm"><b>${esc(g.label)}</b>${sub}</span></button>`;
+  }).join('') + (n > 500 ? `<div class="empty">… và ${n - 500} dòng nữa</div>` : '') : '<div class="empty">Chưa chọn bản ghi nào. Tích chọn ở mục 1 phía trên.</div>';
+  box.scrollTop = top;
+  const done = gs.filter((g) => (EXP.st.get(g.id) || {}).s === 'ok').length, bad = gs.filter((g) => (EXP.st.get(g.id) || {}).s === 'err').length;
+  $('expCount').textContent = n ? `· ${n} dòng` : '';
+  const bar = $('expBar'); bar.hidden = !(EXP.run || done || bad); bar.firstElementChild.style.width = n ? Math.round(((done + bad) / n) * 100) + '%' : '0';
+  const go = $('expGo'), fid = $('expField').value;
+  if (EXP.run) { go.textContent = 'Dừng'; go.classList.remove('primary'); go.disabled = false; }
+  else { go.classList.add('primary'); go.textContent = n ? (expAppend() ? `Xuất & thêm vào ${n} dòng` : `Xuất vào ${n} dòng`) : 'Xuất'; go.disabled = !n || !fid; }
+  $('expRetry').hidden = EXP.run || !bad; $('expRetry').textContent = `Thử lại ${bad} dòng lỗi`;
+  $('expSum').innerHTML = EXP.run ? `Đang xuất <b>${done + bad + 1} / ${n}</b>${bad ? ` · ${bad} lỗi` : ''}. Giữ khung này mở cho tới khi xong.`
+    : (done || bad) ? `<b>Đã lưu ${done} / ${n} dòng</b>${bad ? ` · ${bad} lỗi` : ''} vào cột <b>${esc(fieldName(fid))}</b>.`
+    : !fid ? 'Chọn hoặc tạo cột đính kèm để nhận tệp.' : expAppend() ? 'Tệp mới sẽ được thêm cạnh các tệp đang có trong ô.' : 'Tệp cũ trong ô (nếu có) sẽ được thay bằng tệp mới.';
+  expDecorate();
+}
+const fieldName = (fid) => { const o = [...$('expField').options].find((x) => x.value === fid); return o ? o.text : ''; };
+function expDecorate() {
+  if (!EXP.on || S.tab !== 'print') return;
+  const seen = new Set(), gs = new Map(expGroups().map((g) => [g.id, g]));
+  document.querySelectorAll('#pages .page[data-gid]').forEach((pg) => {
+    const id = pg.dataset.gid; pg.classList.toggle('expcur', id === EXP.cur);
+    let b = pg.querySelector(':scope > .expbadge'); if (seen.has(id)) { if (b) b.remove(); return; } seen.add(id);
+    const g = gs.get(id); if (!g) return; const st = EXP.st.get(id) || { s: 'wait' };
+    if (!b) { b = document.createElement('div'); pg.prepend(b); }
+    b.className = 'expbadge ' + st.s; b.innerHTML = `<span class="xst ${st.s}" aria-hidden="true">${XST[st.s] || ''}</span>${esc(g.label)} · ${st.s === 'ok' ? 'Đã lưu' : st.s === 'err' ? 'Lỗi' : st.s === 'run' ? 'Đang xuất…' : esc(g.file)}`;
+  });
+}
+function expShow(id, smooth) {
+  EXP.cur = id; const pg = document.querySelector(`#pages .page[data-gid="${CSS.escape(id)}"]`);
+  if (pg) { const st = $('stage'), d = pg.getBoundingClientRect().top - st.getBoundingClientRect().top - 28; st.scrollTo({ top: st.scrollTop + d, behavior: smooth ? 'smooth' : 'auto' }); }
+  document.querySelectorAll('#expList .exprow').forEach((r) => r.classList.toggle('cur', r.dataset.gid === id)); expDecorate();
+  const row = document.querySelector(`#expList .exprow[data-gid="${CSS.escape(id)}"]`); if (row) row.scrollIntoView({ block: 'nearest' });
+}
+$('expList').onclick = (e) => { const r = e.target.closest('.exprow'); if (r) expShow(r.dataset.gid, true); };
+{ const _r = render; render = function (...a) { const v = _r.apply(this, a); try { expDecorate(); } catch (e) {} return v; }; }
+{ const _o = onSelChange; onSelChange = function (...a) { const v = _o.apply(this, a); if (EXP.on && !EXP.run) expRefresh(); return v; }; }
+document.querySelectorAll('input[name=expFmt],input[name=expMode]').forEach((el) => el.addEventListener('change', () => { const u = uiLoad(); u.expFmt = expFmt(); u.expMode = expAppend() ? 'append' : 'replace'; uiSave(u); EXP.st.clear(); expRefresh(); }));
+
+async function expTable() {
+  if (S.table) return S.table; if (EXP.tbl) return EXP.tbl;
+  if (!S.tableMeta || !S.tableMeta.id || !S.base) throw new Error('Chưa xác định được bảng nguồn.');
+  try { EXP.tbl = await withTimeout(S.base.getTableById(S.tableMeta.id), 10000); return EXP.tbl; }
+  catch (e) { throw new Error(friendlyErr(e)); }
+}
+function friendlyErr(e) {
+  const m = String((e && (e.message || e.msg)) || e || '');
+  if (/config mode|only supported/i.test(m)) return 'Base App ở chế độ xem chưa cho ghi vào bảng (Lark chặn). Thử lại khi sửa khối hoặc dùng trong Base.';
+  if (/permission|denied|forbidden|no ?auth|权限|1254302|91403|403/i.test(m)) return 'Bạn không có quyền sửa dòng hoặc cột này.';
+  if (/timeout|quá thời gian/i.test(m)) return 'Lark phản hồi quá lâu, thử lại sau.';
+  return m || 'Lỗi không rõ';
+}
+async function expLoadFields(keep) {
+  const sel = $('expField'), u = uiLoad(), tid = S.tableMeta && S.tableMeta.id;
+  $('expTbl').textContent = 'Bảng ' + ((S.tableMeta && S.tableMeta.name) || '');
+  try {
+    const tbl = await expTable(), metas = (await withTimeout(tbl.getFieldMetaList(), 10000)) || [];
+    const att = metas.filter((m) => m.type === 17);
+    sel.innerHTML = att.length ? att.map((m) => `<option value="${esc(m.id)}">${esc(m.name)}</option>`).join('') : '<option value="">Bảng chưa có cột đính kèm</option>';
+    const want = keep || (u.expField && u.expField[tid]); if (want && att.some((m) => m.id === want)) sel.value = want;
+    sel.disabled = !att.length; $('expFieldHint').textContent = att.length ? '' : 'Tạo 1 cột để nhận tệp.';
+    $('expNew').classList.toggle('primary', !att.length);
+  } catch (e) { sel.innerHTML = '<option value="">Không đọc được cột</option>'; sel.disabled = true; $('expFieldHint').textContent = friendlyErr(e); dlog('exp.fields', String(e && e.message || e)); }
+  expRefresh();
+}
+$('expField').addEventListener('change', () => { const u = uiLoad(); u.expField = u.expField || {}; if (S.tableMeta) u.expField[S.tableMeta.id] = $('expField').value; uiSave(u); EXP.st.clear(); expRefresh(); });
+$('expNew').onclick = () => {
+  openModal('Tạo cột đính kèm', `<label class="lbl">Tên cột mới trong bảng ${esc((S.tableMeta && S.tableMeta.name) || '')}<input id="expNewName" value="${esc('Tệp ' + ((S.tpl && S.tpl.name) || 'mẫu in'))}" maxlength="100"></label><div class="row" style="justify-content:flex-end;margin-top:12px;gap:8px"><button type="button" class="fit" id="expNewNo">Hủy</button><button type="button" class="primary fit" id="expNewOk">Tạo cột</button></div>`);
+  const inp = $('expNewName'); inp.focus(); inp.select();
+  $('expNewNo').onclick = () => $('modal').classList.remove('show');
+  const ok = async () => {
+    const name = inp.value.trim(); if (!name) { inp.focus(); return; }
+    const b = $('expNewOk'); b.disabled = true; b.textContent = 'Đang tạo…';
+    try { const tbl = await expTable(); const id = await withTimeout(tbl.addField({ type: 17, name }), 15000); $('modal').classList.remove('show'); toast('Đã tạo cột "' + name + '".'); await expLoadFields(typeof id === 'string' ? id : (id && id.id)); if ($('expField').value === '' && $('expField').options.length) $('expField').selectedIndex = $('expField').options.length - 1; $('expField').dispatchEvent(new Event('change')); }
+    catch (e) { b.disabled = false; b.textContent = 'Tạo cột'; dlog('exp.addField', String(e && e.message || e)); toast('Không tạo được cột: ' + friendlyErr(e), 7000); }
+  };
+  $('expNewOk').onclick = ok; inp.onkeydown = (e) => { if (e.key === 'Enter') ok(); };
+};
+
+function expEnter() {
+  if (EXP.on) return; if (!S.tableMeta) { toast('Chọn bảng dữ liệu trước.'); return; }
+  closeDl(); EXP.on = true; EXP.st.clear(); EXP.prevMode = S.mode; EXP.prevSel = S.sel.slice(); EXP.tbl = null; EXP.keyMap = null;
+  if (S.mode === 'one' || S.mode === 'multi') { S.mode = 'each'; if (S.selMulti && S.selMulti.includes(S.sel[0])) S.sel = S.selMulti.filter((id) => S.recMap.has(id)); }
+  const sec = $('secRec'); EXP.home = { parent: sec.parentNode, next: sec.nextSibling, h: sec.querySelector('h3').firstChild.textContent };
+  $('expRecHome').appendChild(sec); sec.querySelector('h3').firstChild.textContent = '1 · Bản ghi cần xuất '; setSec(sec, false);
+  const u = uiLoad(); if (u.expFmt) { const r = document.querySelector(`input[name=expFmt][value="${u.expFmt}"]`); if (r) r.checked = true; } if (u.expMode) { const r = document.querySelector(`input[name=expMode][value="${u.expMode}"]`); if (r) r.checked = true; }
+  document.body.classList.add('expmode'); $('stabExp').hidden = false; $('btnXuat').setAttribute('aria-pressed', 'true');
+  enhanceSelect($('expField'), { tip: 'Cột đính kèm nhận tệp' });
+  S.tab = 'print'; renderRecList(); render(); expRefresh(); expLoadFields();
+  $('stabExp').closest('.side').scrollTop = 0; setTimeout(() => $('expBack').focus(), 50);
+}
+function expExit() {
+  if (!EXP.on) return; if (EXP.run) { toast('Đang xuất, bấm Dừng trước khi quay lại.'); return; }
+  EXP.on = false; const sec = $('secRec'), h = EXP.home;
+  if (h) { h.parent.insertBefore(sec, h.next); sec.querySelector('h3').firstChild.textContent = h.h; }
+  if (EXP.prevMode && EXP.prevMode !== S.mode) { if (EXP.prevMode === 'one') { S.selMulti = S.sel.slice(); S.sel = S.sel.slice(0, 1); } S.mode = EXP.prevMode; }
+  document.body.classList.remove('expmode'); $('stabExp').hidden = true; $('btnXuat').setAttribute('aria-pressed', 'false');
+  renderRecList(); render(); focusRecSec();
+}
+$('btnXuat').onclick = () => (EXP.on ? expExit() : expEnter());
+$('expBack').onclick = expExit;
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && EXP.on && !EXP.run && !$('modal').classList.contains('show') && !document.querySelector('.cbxp:not([hidden])')) expExit(); });
+$('tabDesign').addEventListener('click', () => { if (EXP.on && !EXP.run) expExit(); }, true);
+
+async function capPage(pg, W) {
+  const host = document.createElement('div'); host.style.cssText = 'position:fixed;left:-99999px;top:0;background:#fff'; document.body.appendChild(host);
+  try {
+    const c = pg.cloneNode(true); c.classList.remove('expcur'); c.querySelectorAll('.pgmark, .colhead, .rowhead, .rowadd, .rowadd-line, .expbadge').forEach((e) => e.remove());
+    c.style.cssText += `;width:${W}mm;margin:0;box-shadow:none;outline:none`; host.appendChild(c);
+    const url = await window.htmlToImage.toPng(c, { pixelRatio: 2, backgroundColor: '#fff' }); return { url, img: await loadImg(url) };
+  } finally { host.remove(); }
+}
+async function expMakeFile(g) {
+  let els = [...document.querySelectorAll(`#pages .page[data-gid="${CSS.escape(g.id)}"]`)];
+  if (!els.length) { render(); els = [...document.querySelectorAll(`#pages .page[data-gid="${CSS.escape(g.id)}"]`)]; }
+  if (!els.length) throw new Error('Không tìm thấy phiếu của dòng này trên màn hình.');
+  const [W, H] = paperDims(), fmt = expFmt();
+  if (fmt === 'png') {
+    const shots = []; for (const pg of els) shots.push((await capPage(pg, W)).img);
+    const w = Math.max(...shots.map((i) => i.width)), gap = 24, h = shots.reduce((a, i) => a + i.height, 0) + gap * (shots.length - 1);
+    const cv = document.createElement('canvas'); cv.width = w; cv.height = h; const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, w, h);
+    let y = 0; for (const i of shots) { cx.drawImage(i, 0, y); y += i.height + gap; }
+    const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));
+    return new File([blob], g.file, { type: 'image/png' });
+  }
+  const land = W > H, pf = [Math.min(W, H), Math.max(W, H)], orient = land ? 'l' : 'p';
+  const pdf = new window.jspdf.jsPDF({ orientation: orient, unit: 'mm', format: pf }); let first = true;
+  for (const pg of els) {
+    const { url, img } = await capPage(pg, W), hmm = img.height * W / img.width, n = Math.max(1, Math.ceil(hmm / H - 0.01));
+    for (let k = 0; k < n; k++) {
+      if (!first) pdf.addPage(pf, orient); first = false;
+      if (n === 1) pdf.addImage(url, 'PNG', 0, 0, W, hmm);
+      else { const sh = img.height * H / hmm, cv = document.createElement('canvas'); cv.width = img.width; cv.height = Math.min(sh, img.height - k * sh); cv.getContext('2d').drawImage(img, 0, k * sh, img.width, cv.height, 0, 0, img.width, cv.height); pdf.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, cv.height * W / img.width); }
+    }
+  }
+  return new File([pdf.output('blob')], g.file, { type: 'application/pdf' });
+}
+// Base App: bản ghi mang mã "k:<giá trị cột định danh>" → tìm recordId thật trong bảng theo cột định danh
+async function expRid(tbl, id) {
+  if (!/^[kg]:/.test(id)) return id;
+  const key = id.slice(2).replace(/#\d+$/, ''), kf = S.metas[0] && S.metas[0].id;
+  if (!EXP.keyMap) {
+    const ids = await withTimeout(tbl.getRecordIdList(), 15000), map = new Map();
+    for (let i = 0; i < ids.length; i += 20) { const part = ids.slice(i, i + 20), got = await Promise.all(part.map((r) => tbl.getCellString(kf, r).catch(() => ''))); part.forEach((r, j) => { const k = String(got[j] || '').trim(); if (k && !map.has(k)) map.set(k, r); }); }
+    EXP.keyMap = map;
+  }
+  const rid = EXP.keyMap.get(key.trim()); if (!rid) throw new Error('Không tìm thấy dòng có mã "' + key + '" trong bảng.'); return rid;
+}
+async function expPut(tbl, fid, rid, file, append) {
+  const up = S.base && S.base.batchUploadFile ? (f) => S.base.batchUploadFile(f) : (bitable.base.batchUploadFile ? (f) => bitable.base.batchUploadFile(f) : null);
+  if (!append) {
+    try { const f = await tbl.getFieldById(fid); await withTimeout(f.setValue(rid, [file]), 60000); return 'field.setValue'; }
+    catch (e) { if (!up) throw e; dlog('exp.setValue.fallback', String(e && e.message || e)); }
+  }
+  if (up) {
+    const toks = await withTimeout(up([file]), 60000), token = Array.isArray(toks) ? toks[0] : toks;
+    const att = { name: file.name, size: file.size, type: file.type, token, timeStamp: Date.now() };
+    let old = []; if (append) { try { old = (await tbl.getCellValue(fid, rid)) || []; } catch (e) { old = []; } }
+    await withTimeout(tbl.setCellValue(fid, rid, [...(Array.isArray(old) ? old : []), att]), 30000); return 'upload+setCellValue';
+  }
+  const f = await tbl.getFieldById(fid); const old = (await f.getValue(rid).catch(() => [])) || []; await withTimeout(f.setValue(rid, [...old, file]), 60000); return 'field.setValue(append)';
+}
+function askReplace(n, col) {
+  return new Promise((res) => {
+    openModal('Ô đã có tệp', `<p style="margin:0 0 6px"><b>${n} dòng</b> đã có tệp trong cột <b>${esc(col)}</b>.</p><p class="hint" style="margin:0 0 14px">Chọn <b>Thay tệp cũ</b> để chỉ giữ tệp mới, hoặc <b>Thêm bên cạnh</b> để giữ cả tệp cũ.</p><div class="row" style="justify-content:flex-end;gap:8px;flex-wrap:wrap"><button type="button" class="fit" data-a="">Hủy</button><button type="button" class="fit" data-a="append">Thêm bên cạnh</button><button type="button" class="primary fit" data-a="replace">Thay tệp cũ</button></div>`);
+    const done = (v) => { $('modal').classList.remove('show'); obs.disconnect(); res(v); };
+    const obs = new MutationObserver(() => { if (!$('modal').classList.contains('show')) { obs.disconnect(); res(null); } }); obs.observe($('modal'), { attributes: true, attributeFilter: ['class'] });
+    $('mBody').querySelectorAll('[data-a]').forEach((b) => { b.onclick = () => done(b.dataset.a || null); });
+    $('mBody').querySelector('[data-a=replace]').focus();
+  });
+}
+async function expRun(only) {
+  if (EXP.run) { EXP.stop = true; $('expGo').disabled = true; $('expGo').textContent = 'Đang dừng…'; return; }
+  const fid = $('expField').value; if (!fid) { flagFix($('expField'), 'Chọn hoặc tạo cột đính kèm để nhận tệp.'); return; }
+  let gs = expGroups(); if (only) gs = gs.filter((g) => only.has(g.id));
+  if (!gs.length) { toast('Chọn ít nhất 1 bản ghi để xuất.'); return; }
+  if (!window.htmlToImage || (expFmt() === 'pdf' && !window.jspdf)) { toast('Thư viện tạo tệp chưa tải xong hoặc bị chặn mạng. Thử lại sau vài giây.', 5000); return; }
+  let tbl; try { tbl = await expTable(); } catch (e) { toast(friendlyErr(e), 8000); return; }
+  let append = expAppend();
+  if (!append) {
+    $('expSum').textContent = 'Đang kiểm tra các ô đã có tệp…'; let has = 0;
+    for (let i = 0; i < gs.length && i < 200; i += 10) { const got = await Promise.all(gs.slice(i, i + 10).map(async (g) => { try { const v = await tbl.getCellValue(fid, await expRid(tbl, g.id)); return Array.isArray(v) && v.length; } catch (e) { return 0; } })); has += got.filter(Boolean).length; }
+    if (has) { const a = await askReplace(has, fieldName(fid)); if (!a) { expRefresh(); return; } if (a === 'append') { append = true; document.querySelector('input[name=expMode][value=append]').checked = true; } }
+  }
+  EXP.run = true; EXP.stop = false; document.body.classList.add('exprun'); setSec($('secRec'), true); setSec($('secExpOut'), true); setSec($('secExpRun'), false); gs.forEach((g) => EXP.st.set(g.id, { s: 'wait' })); expRefresh();
+  const t0 = Date.now(); let ok = 0, bad = 0;
+  for (const g of gs) {
+    if (EXP.stop) break;
+    EXP.st.set(g.id, { s: 'run', msg: 'Đang tạo ' + expFmt().toUpperCase() + '…' }); expRefresh(); expShow(g.id, false);
+    try {
+      const rid = await expRid(tbl, g.id); const file = await expMakeFile(g);
+      EXP.st.set(g.id, { s: 'run', msg: 'Đang tải lên ' + fmtSize(file.size) + '…' }); expRefresh();
+      const how = await expPut(tbl, fid, rid, file, append); EXP.st.set(g.id, { s: 'ok', size: file.size }); ok++; dlog('exp.ok', { id: g.id, rid, size: file.size, how });
+    } catch (e) { bad++; EXP.st.set(g.id, { s: 'err', msg: friendlyErr(e) }); dlog('exp.err', { id: g.id, err: String(e && e.message || e) }); }
+    expRefresh();
+  }
+  const stopped = EXP.stop; EXP.run = false; EXP.stop = false; document.body.classList.remove('exprun');
+  gs.forEach((g) => { if ((EXP.st.get(g.id) || {}).s === 'wait') EXP.st.delete(g.id); }); expRefresh();
+  toast((stopped ? 'Đã dừng. ' : '') + `Đã lưu ${ok} tệp vào cột "${fieldName(fid)}"` + (bad ? ` · ${bad} dòng lỗi` : '') + ` (${Math.round((Date.now() - t0) / 1000)} giây).`, 7000);
+}
+$('expGo').onclick = () => expRun();
+$('expRetry').onclick = () => expRun(new Set([...EXP.st].filter(([, v]) => v.s === 'err').map(([k]) => k)));
+window.addEventListener('beforeunload', (e) => { if (EXP.run) { e.preventDefault(); e.returnValue = ''; } });
 
 S.tpl = defaultTpl(); render(); renderChips(); boot();
 
