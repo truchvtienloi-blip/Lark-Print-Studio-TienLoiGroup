@@ -285,7 +285,8 @@ body.expmode .side{display:block!important}body.expmode .layout{grid-template-co
 .xst.wait{border:2px solid #cfd5de}.xst.ok{background:#1a9e55}.xst.err{background:#d13438;font:700 11px/1 system-ui}.xst.run{border:2px solid #3b7dd8;border-top-color:transparent;animation:xspin .8s linear infinite}
 @keyframes xspin{to{transform:rotate(360deg)}}
 .expfoot{position:sticky;bottom:0;z-index:4;background:#fff;border-top:1px solid var(--line);padding:10px 12px;display:flex;flex-direction:column;gap:8px;margin-top:auto}
-.expfoot .row button{flex:1}.expsum{font-size:12px;color:#4b5563;line-height:1.45}.expsum:empty{display:none}.expsum b{color:#1f2329}
+.expfoot .row button{flex:1}.xdet{margin:6px 0 12px;font-size:12.5px}.xdet summary{cursor:pointer;color:#1f56a0;font-weight:600}.xdet ul{list-style:none;margin:8px 0 0;padding:0;max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:8px}.xdet li{display:flex;flex-direction:column;gap:1px;padding:6px 10px;border-top:1px solid #eef0f4}.xdet li:first-child{border-top:0}.xdet li b{font-weight:600}.xdet small{color:#6b7280;font-size:11px;word-break:break-all}
+.expsum a{color:#1f56a0;font-weight:600}.expsum{font-size:12px;color:#4b5563;line-height:1.45}.expsum:empty{display:none}.expsum b{color:#1f2329}
 body.exprun #expRecHome,body.exprun #secExpOut{pointer-events:none;opacity:.55}
 body.expmode #rowFollow{display:none!important}
 .expbadge{position:absolute;top:-13px;left:14px;z-index:2;display:inline-flex;align-items:center;gap:6px;max-width:80%;height:24px;padding:0 10px;border-radius:12px;font:600 11.5px/1 'Be Vietnam Pro',system-ui,sans-serif;background:#fff;border:1px solid #d5dae2;color:#374151;box-shadow:0 2px 6px #1b1f5a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -297,7 +298,7 @@ body.expmode .pages{gap:30px;padding-top:12px}.page.expcur{outline:3px solid #3b
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.5</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.5.1</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sidetabs" role="tablist" aria-label="Thiết lập"><button type="button" role="tab" id="stabBtnData" data-stab="data">Dữ liệu</button><button type="button" role="tab" id="stabBtnTpl" data-stab="tpl">Mẫu in</button></div>
@@ -2299,7 +2300,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '5.5', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '5.5.1', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -3479,7 +3480,7 @@ function focusRecSec() {
 }
 $('tabPrint').addEventListener('click', focusRecSec);
 
-const EXP = { on: false, st: new Map(), run: false, stop: false, tbl: null, keyMap: null, prevMode: null, home: null };
+const EXP = { seq: 0, on: false, st: new Map(), run: false, stop: false, tbl: null, keyMap: null, prevMode: null, home: null };
 const unaccent = (t) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
 function nameOf(rec) {
   let lab = ''; try { const m = labelMeta(); if (m && rec) lab = String(fmtCell(m, rec.fields[m.id]) || '').trim(); } catch (e) {}
@@ -3506,7 +3507,7 @@ function expRefresh() {
   const box = $('expList'), top = box.scrollTop;
   box.innerHTML = n ? gs.slice(0, 500).map((g) => {
     const st = EXP.st.get(g.id) || { s: 'wait' };
-    const sub = st.s === 'err' ? `<small class="e">${esc(st.msg)}</small>` : st.s === 'run' ? `<small>${esc(st.msg || 'Đang tạo tệp…')}</small>` : st.s === 'ok' ? `<small>Đã lưu · ${esc(g.file)} · ${fmtSize(st.size || 0)}</small>` : `<small>${esc(g.file)}</small>`;
+    const sub = st.s === 'err' ? `<small class="e">${esc(st.msg)}</small>` : st.s === 'run' ? `<small>${esc(st.msg || 'Đang tạo tệp…')}</small>` : st.s === 'ok' ? `<small>Đã lưu · ${esc(g.file)} · ${fmtSize(st.size || 0)}</small>` : (EXP.has && EXP.has.get(g.id)) ? `<small>${esc(g.file)} · ô đang có ${EXP.has.get(g.id).length} tệp</small>` : `<small>${esc(g.file)}</small>`;
     return `<button type="button" role="listitem" class="exprow${g.id === cur ? ' cur' : ''}" data-gid="${esc(g.id)}"><span class="xst ${st.s}" aria-hidden="true">${XST[st.s] || ''}</span><span class="nm"><b>${esc(g.label)}</b>${sub}</span></button>`;
   }).join('') + (n > 500 ? `<div class="empty">… và ${n - 500} dòng nữa</div>` : '') : '<div class="empty">Chưa chọn bản ghi nào. Tích chọn ở mục 1 phía trên.</div>';
   box.scrollTop = top;
@@ -3515,11 +3516,16 @@ function expRefresh() {
   const bar = $('expBar'); bar.hidden = !(EXP.run || done || bad); bar.firstElementChild.style.width = n ? Math.round(((done + bad) / n) * 100) + '%' : '0';
   const go = $('expGo'), fid = $('expField').value;
   if (EXP.run) { go.textContent = 'Dừng'; go.classList.remove('primary'); go.disabled = false; }
-  else { go.classList.add('primary'); go.textContent = n ? (expAppend() ? `Xuất & thêm vào ${n} dòng` : `Xuất vào ${n} dòng`) : 'Xuất'; go.disabled = !n || !fid; }
+  else {
+    const todo = n - done; go.classList.toggle('primary', todo > 0);
+    go.textContent = !n ? 'Xuất' : !todo ? `✓ Đã xuất ${n} dòng` : (done ? `Xuất tiếp ${todo} dòng mới` : expAppend() ? `Xuất & thêm vào ${todo} dòng` : `Xuất vào ${todo} dòng`);
+    go.disabled = !n || !fid || !todo;
+  }
   $('expRetry').hidden = EXP.run || !bad; $('expRetry').textContent = `Thử lại ${bad} dòng lỗi`;
   $('expSum').innerHTML = EXP.run ? `Đang xuất <b>${done + bad + 1} / ${n}</b>${bad ? ` · ${bad} lỗi` : ''}. Giữ khung này mở cho tới khi xong.`
-    : (done || bad) ? `<b>Đã lưu ${done} / ${n} dòng</b>${bad ? ` · ${bad} lỗi` : ''} vào cột <b>${esc(fieldName(fid))}</b>.`
+    : (done || bad) ? `<b>Đã lưu ${done} / ${n} dòng</b>${bad ? ` · ${bad} lỗi` : ''} vào cột <b>${esc(fieldName(fid))}</b>.${done === n ? ' Chọn thêm bản ghi để xuất tiếp, hoặc <a href="#" id="expAgain">xuất lại</a>.' : ''}`
     : !fid ? 'Chọn hoặc tạo cột đính kèm để nhận tệp.' : expAppend() ? 'Tệp mới sẽ được thêm cạnh các tệp đang có trong ô.' : 'Tệp cũ trong ô (nếu có) sẽ được thay bằng tệp mới.';
+  const ag = $('expAgain'); if (ag) ag.onclick = (e) => { e.preventDefault(); EXP.st.clear(); expRefresh(); };
   expDecorate();
 }
 const fieldName = (fid) => { const o = [...$('expField').options].find((x) => x.value === fid); return o ? o.text : ''; };
@@ -3574,7 +3580,7 @@ async function expLoadFields(keep) {
 $('expField').addEventListener('change', () => { const u = uiLoad(); u.expField = u.expField || {}; if (S.tableMeta) u.expField[S.tableMeta.id] = $('expField').value; uiSave(u); EXP.st.clear(); expRefresh(); });
 $('expNew').onclick = () => {
   openModal('Tạo cột đính kèm', `<label class="lbl">Tên cột mới trong bảng ${esc((S.tableMeta && S.tableMeta.name) || '')}<input id="expNewName" value="${esc('Tệp ' + ((S.tpl && S.tpl.name) || 'mẫu in'))}" maxlength="100"></label><div class="row" style="justify-content:flex-end;margin-top:12px;gap:8px"><button type="button" class="fit" id="expNewNo">Hủy</button><button type="button" class="primary fit" id="expNewOk">Tạo cột</button></div>`);
-  const inp = $('expNewName'); inp.focus(); inp.select();
+  noClose(); const inp = $('expNewName'); inp.focus(); inp.select();
   $('expNewNo').onclick = () => $('modal').classList.remove('show');
   const ok = async () => {
     const name = inp.value.trim(); if (!name) { inp.focus(); return; }
@@ -3619,9 +3625,12 @@ async function capPage(pg, W) {
   } finally { host.remove(); }
 }
 async function expMakeFile(g) {
-  let els = [...document.querySelectorAll(`#pages .page[data-gid="${CSS.escape(g.id)}"]`)];
-  if (!els.length) { render(); els = [...document.querySelectorAll(`#pages .page[data-gid="${CSS.escape(g.id)}"]`)]; }
-  if (!els.length) throw new Error('Không tìm thấy phiếu của dòng này trên màn hình.');
+  // Dựng lại phiếu chỉ với đúng bản ghi này (tránh lấy nhầm trang của dòng khác)
+  const saved = S.sel, savedMode = S.mode; let html = '';
+  try { S.sel = [g.id]; if (S.mode !== 'link') S.mode = 'each'; html = printHTML(new Set()); } finally { S.sel = saved; S.mode = savedMode; }
+  const box = document.createElement('div'); box.innerHTML = html; const els = [...box.querySelectorAll('.page')];
+  if (!els.length) throw new Error('Không dựng được phiếu cho dòng này.');
+  const sig = els.map((e) => e.textContent).join(' ').replace(/\s+/g, ' ').trim(); g.sig = sig.slice(0, 160);
   const [W, H] = paperDims(), fmt = expFmt();
   if (fmt === 'png') {
     const shots = []; for (const pg of els) shots.push((await capPage(pg, W)).img);
@@ -3637,8 +3646,9 @@ async function expMakeFile(g) {
     const { url, img } = await capPage(pg, W), hmm = img.height * W / img.width, n = Math.max(1, Math.ceil(hmm / H - 0.01));
     for (let k = 0; k < n; k++) {
       if (!first) pdf.addPage(pf, orient); first = false;
-      if (n === 1) pdf.addImage(url, 'PNG', 0, 0, W, hmm);
-      else { const sh = img.height * H / hmm, cv = document.createElement('canvas'); cv.width = img.width; cv.height = Math.min(sh, img.height - k * sh); cv.getContext('2d').drawImage(img, 0, k * sh, img.width, cv.height, 0, 0, img.width, cv.height); pdf.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, cv.height * W / img.width); }
+      const al = 'x' + (++EXP.seq) + '_' + k;
+      if (n === 1) pdf.addImage(url, 'PNG', 0, 0, W, hmm, al);
+      else { const sh = img.height * H / hmm, cv = document.createElement('canvas'); cv.width = img.width; cv.height = Math.min(sh, img.height - k * sh); cv.getContext('2d').drawImage(img, 0, k * sh, img.width, cv.height, 0, 0, img.width, cv.height); pdf.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, cv.height * W / img.width, al); }
     }
   }
   return new File([pdf.output('blob')], g.file, { type: 'application/pdf' });
@@ -3668,10 +3678,13 @@ async function expPut(tbl, fid, rid, file, append) {
   }
   const f = await tbl.getFieldById(fid); const old = (await f.getValue(rid).catch(() => [])) || []; await withTimeout(f.setValue(rid, [...old, file]), 60000); return 'field.setValue(append)';
 }
-function askReplace(n, col) {
+function noClose() { const b = $('mClose'); b.style.display = 'none'; const o = new MutationObserver(() => { if (!$('modal').classList.contains('show')) { b.style.display = ''; o.disconnect(); } }); o.observe($('modal'), { attributes: true, attributeFilter: ['class'] }); }
+function askReplace(list, col) {
+  const n = list.length;
   return new Promise((res) => {
-    openModal('Ô đã có tệp', `<p style="margin:0 0 6px"><b>${n} dòng</b> đã có tệp trong cột <b>${esc(col)}</b>.</p><p class="hint" style="margin:0 0 14px">Chọn <b>Thay tệp cũ</b> để chỉ giữ tệp mới, hoặc <b>Thêm bên cạnh</b> để giữ cả tệp cũ.</p><div class="row" style="justify-content:flex-end;gap:8px;flex-wrap:wrap"><button type="button" class="fit" data-a="">Hủy</button><button type="button" class="fit" data-a="append">Thêm bên cạnh</button><button type="button" class="primary fit" data-a="replace">Thay tệp cũ</button></div>`);
-    const done = (v) => { $('modal').classList.remove('show'); obs.disconnect(); res(v); };
+    const det = `<details class="xdet"><summary>Xem chi tiết ${n} dòng</summary><ul>${list.slice(0, 300).map((x) => `<li><b>${esc(x.g.label)}</b><small>Đang có: ${esc(x.files.join(', ') || '(tệp)')}</small></li>`).join('')}${n > 300 ? `<li><small>… và ${n - 300} dòng nữa</small></li>` : ''}</ul></details>`;
+    openModal('Ô đã có tệp', `<p style="margin:0 0 6px"><b>${n} dòng</b> đã có tệp trong cột <b>${esc(col)}</b>.</p>${det}<p class="hint" style="margin:0 0 14px">Chọn <b>Thay tệp cũ</b> để chỉ giữ tệp mới, hoặc <b>Thêm bên cạnh</b> để giữ cả tệp cũ.</p><div class="row" style="justify-content:flex-end;gap:8px;flex-wrap:wrap"><button type="button" class="fit" data-a="">Hủy</button><button type="button" class="fit" data-a="append">Thêm bên cạnh</button><button type="button" class="primary fit" data-a="replace">Thay tệp cũ</button></div>`);
+    noClose(); const done = (v) => { $('modal').classList.remove('show'); obs.disconnect(); res(v); };
     const obs = new MutationObserver(() => { if (!$('modal').classList.contains('show')) { obs.disconnect(); res(null); } }); obs.observe($('modal'), { attributes: true, attributeFilter: ['class'] });
     $('mBody').querySelectorAll('[data-a]').forEach((b) => { b.onclick = () => done(b.dataset.a || null); });
     $('mBody').querySelector('[data-a=replace]').focus();
@@ -3680,15 +3693,16 @@ function askReplace(n, col) {
 async function expRun(only) {
   if (EXP.run) { EXP.stop = true; $('expGo').disabled = true; $('expGo').textContent = 'Đang dừng…'; return; }
   const fid = $('expField').value; if (!fid) { flagFix($('expField'), 'Chọn hoặc tạo cột đính kèm để nhận tệp.'); return; }
-  let gs = expGroups(); if (only) gs = gs.filter((g) => only.has(g.id));
+  let gs = expGroups(); gs = only ? gs.filter((g) => only.has(g.id)) : gs.filter((g) => (EXP.st.get(g.id) || {}).s !== 'ok');
   if (!gs.length) { toast('Chọn ít nhất 1 bản ghi để xuất.'); return; }
   if (!window.htmlToImage || (expFmt() === 'pdf' && !window.jspdf)) { toast('Thư viện tạo tệp chưa tải xong hoặc bị chặn mạng. Thử lại sau vài giây.', 5000); return; }
   let tbl; try { tbl = await expTable(); } catch (e) { toast(friendlyErr(e), 8000); return; }
   let append = expAppend();
   if (!append) {
-    $('expSum').textContent = 'Đang kiểm tra các ô đã có tệp…'; let has = 0;
-    for (let i = 0; i < gs.length && i < 200; i += 10) { const got = await Promise.all(gs.slice(i, i + 10).map(async (g) => { try { const v = await tbl.getCellValue(fid, await expRid(tbl, g.id)); return Array.isArray(v) && v.length; } catch (e) { return 0; } })); has += got.filter(Boolean).length; }
-    if (has) { const a = await askReplace(has, fieldName(fid)); if (!a) { expRefresh(); return; } if (a === 'append') { append = true; document.querySelector('input[name=expMode][value=append]').checked = true; } }
+    $('expSum').textContent = 'Đang kiểm tra các ô đã có tệp…'; const has = [];
+    for (let i = 0; i < gs.length && i < 500; i += 10) { const part = gs.slice(i, i + 10), got = await Promise.all(part.map(async (g) => { try { const v = await tbl.getCellValue(fid, await expRid(tbl, g.id)); return Array.isArray(v) && v.length ? v : null; } catch (e) { return null; } })); part.forEach((g, j) => { if (got[j]) has.push({ g, files: got[j].map((x) => x && x.name).filter(Boolean) }); }); }
+    EXP.has = new Map(has.map((x) => [x.g.id, x.files])); expRefresh();
+    if (has.length) { const a = await askReplace(has, fieldName(fid)); if (!a) { expRefresh(); return; } if (a === 'append') { append = true; document.querySelector('input[name=expMode][value=append]').checked = true; } }
   }
   EXP.run = true; EXP.stop = false; document.body.classList.add('exprun'); setSec($('secRec'), true); setSec($('secExpOut'), true); setSec($('secExpRun'), false); gs.forEach((g) => EXP.st.set(g.id, { s: 'wait' })); expRefresh();
   const t0 = Date.now(); let ok = 0, bad = 0;
@@ -3698,7 +3712,7 @@ async function expRun(only) {
     try {
       const rid = await expRid(tbl, g.id); const file = await expMakeFile(g);
       EXP.st.set(g.id, { s: 'run', msg: 'Đang tải lên ' + fmtSize(file.size) + '…' }); expRefresh();
-      const how = await expPut(tbl, fid, rid, file, append); EXP.st.set(g.id, { s: 'ok', size: file.size }); ok++; dlog('exp.ok', { id: g.id, rid, size: file.size, how });
+      const how = await expPut(tbl, fid, rid, file, append); EXP.st.set(g.id, { s: 'ok', size: file.size }); ok++; dlog('exp.ok', { id: g.id, rid, size: file.size, how, sig: g.sig });
     } catch (e) { bad++; EXP.st.set(g.id, { s: 'err', msg: friendlyErr(e) }); dlog('exp.err', { id: g.id, err: String(e && e.message || e) }); }
     expRefresh();
   }
