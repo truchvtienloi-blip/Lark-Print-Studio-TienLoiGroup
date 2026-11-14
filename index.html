@@ -284,6 +284,16 @@ body:not(.expmode) #stabExp{display:none!important}body.expmode .side{display:bl
 .xst{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;flex:none;color:#fff;box-sizing:border-box}
 .xst.wait{border:2px solid #cfd5de}.xst.ok{background:#1a9e55}.xst.err{background:#d13438;font:700 11px/1 system-ui}.xst.run{border:2px solid #3b7dd8;border-top-color:transparent;animation:xspin .8s linear infinite}
 @keyframes xspin{to{transform:rotate(360deg)}}
+.xprep{display:flex;gap:10px;align-items:flex-start;background:#eef4ff;border:1px solid #b9cdf3;border-radius:9px;padding:9px 11px;color:#1b3d78;animation:xprepGlow 1.6s ease-in-out infinite}
+.xprep .xst{margin-top:1px}.xprep>div{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}.xprep b{color:#16336a}.xprep small{color:#4b6290;font-size:11px}
+.xprep .xpb{height:3px;border-radius:2px;background:#d6e2f8;overflow:hidden;margin-top:3px}.xprep .xpb i{display:block;height:100%;width:30%;background:#3b7dd8;border-radius:2px;transition:width .3s}
+.xprep .xpb.ind i{animation:xind 1.2s ease-in-out infinite}
+@keyframes xprepGlow{0%,100%{box-shadow:0 0 0 0 #3b7dd800}50%{box-shadow:0 0 0 4px #3b7dd822}}
+@keyframes xind{0%{transform:translateX(-100%)}100%{transform:translateX(340%)}}
+#expGo.busy{display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:progress;opacity:1}
+#expGo .bsp{width:14px;height:14px;border-radius:50%;border:2px solid #ffffff66;border-top-color:#fff;animation:xspin .8s linear infinite;flex:none}
+body.expprep #expRecHome,body.expprep #secExpOut{pointer-events:none;opacity:.55}
+@media (prefers-reduced-motion:reduce){.xprep,.xprep .xpb.ind i{animation:none}}
 .expfoot{position:sticky;bottom:0;z-index:4;background:#fff;border-top:1px solid var(--line);padding:10px 12px;display:flex;flex-direction:column;gap:8px;margin-top:auto}
 .expfoot .row button{flex:1}.xdet{margin:6px 0 12px;font-size:12.5px}.xdet summary{cursor:pointer;color:#1f56a0;font-weight:600}.xdet ul{list-style:none;margin:8px 0 0;padding:0;max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:8px}.xdet li{display:flex;flex-direction:column;gap:1px;padding:6px 10px;border-top:1px solid #eef0f4}.xdet li:first-child{border-top:0}.xdet li b{font-weight:600}.xdet small{color:#6b7280;font-size:11px;word-break:break-all}
 .expsum a{color:#1f56a0;font-weight:600}.expsum{font-size:12px;color:#4b5563;line-height:1.45}.expsum:empty{display:none}.expsum b{color:#1f2329}
@@ -309,7 +319,7 @@ body.explock #secExpOut .lbl,body.explock #secExpOut .row,body.explock #expField
 <body>
 <div id="printRoot"></div>
 <div class="app">
-<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwMDAgQDAwMEBAQFBgoGBgUFBgwICQcKDgwPDg4MDQ0PERYTDxAVEQ0NExoTFRcYGRkZDxIbHRsYHRYYGRj/2wBDAQQEBAYFBgsGBgsYEA0QGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCABOAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7+ooooAKKKKAGnPHFGevFch8SPHWnfDv4cah4q1IhhbJiGDdtaeZvlSNfq2PoMntXyD4B/aC8cfDu31ebxpZXl9D4hgk1fSmnXCrcOzAFf+mDFfur93C7fvV6GDyuti6bqU+n4nDicfTw81CZ3/7Q3xa8TL8UdL8FfDn7TPfaG/8Aa+ofZFZ9zonmeU2PvIqbmZf4tyjtX0P4C8ZaZ4++HumeK9Kb9zeRbjFnJiccOh/2lYMK8c/Zc+Ht5ZeHL74n+KA8+veJGMqSTD51t2bdu/7at83+6sddVo/h9vhL8Vpk01dngrxTc58kfc0vUW6Y/uxT/d9n2r/EtdONVDl+r0t4de/f/gHPhXW5vbz2n07dv+CexUUUV4x6wUUUUAFFFFABRRRQA3jpSmkI6V5F+0J8UB8NfhTLJYTbdc1PdaaeFPzIcfPL/wAAB/MrWlCjKvUjThuzGrVVGDnLZHknxHu7r4//ALTdj8MdJmk/4Rfw/K0uqXETcO6/LKf/AGkv+0zN0rnvH+q+HPin+0Fb6Nc3lnpfw48DR+XeXx/dxKgZEdVb/bdUiXb/AAruWrpMn7PX7LX8Ufj3xl/39tY9v80Vv++5PauN8Y/Aj4wR/BzRPBfhDwbcXa3xXWNeuluoIt8/KwWu2R1bES5Zv4d8h9K+rjOFGKcJWS92P/t0v8jw4UniJ8s+ur/RH1Pb/tDfAi2t0t4PiLoUccaqiIjMAAOgHy1HqXx9+AWraZPp2ofETQpre4TZJG0jfMv5V+V1xBJb3UtvLt3xOyN5brIu5f7rL8rf8Br1DQ/2bvjZ4j8PWeu6P4FuJ9PvY1mgna7tk3o33TtZ1ba3+7XnSyyjD3pVLHuqX2T9M/BPi7w34z8NC/8AC/iGDXre3f7NJeQ8hpFUHnj72GXOP71dTivzY8BfGiH4SftD6Tp+nXnn+DNKgXQb3yuUuQX3TXi/3m89mdf4tiqtfpDBcQ3VrHcW8iSwyKHR0O4MD0INeVisM6MvJlxZYooormKCiiigAooooAq3VxBa20lzcyLFDGpd5HOFQDqTXyJ4blX4+ftNah8QNcbZ4G8JrvtvP+WJlTLJu3f3mVpW/wBlVVq7X9qP4hX1ro9j8KvC++fXfERWKZIfvrAzbQn1dvl/3Q3rXB/E5H+G3wk8Ofs8+Cx9q8Ra6yPqskH3pS7KuP8AgbLt/wBxPm+9X0OXYZwp8y+OpovKPWR4eOrqc+VfDHfzfRF34eWdz+0F+1DffEjVYnbwt4ecJp8Eq4WRlP7kf+hSt/tbV+61eg/tYfFQfDn4Fz6fp9wI9c8Qb7G02n5oo9v76X/gKnb/ALzrXo3wy8Dad8Nfhdp/hi0ZHaBfMu7jGPOmbl3/AMPYCvzg/aM+KDfFT456hqtnOX0ax/0HS1DfK0KN8z/8Dbc3+6yr/DWaSxeJ9z+HDb+vM7sJRdKn73xvVmb8CvhnN8VvjXpfhpo3/s1D9r1Jx/BbIy5/FvlQe7196/tOfEeD4V/s83VtpMiWuqaon9laakXy+SCvzuv93YmdvoxSsT9j34V/8IJ8Fl8TanCI9Z8SbLp9w+aK2/5Yp+IYv/wMelfKH7V3xN/4WJ8e7yzsLgvo2gbtNtMN8rurfv5f+BP8uf4lRaT/ANsxNvsxOnaJxHwb+Hlx8UPjNo3hKJX+yzS+beyr/wAsrZPmlP5fKv8AtMtfrXaWdvp9hBY2cKQW1uixRRIMKiAYCivlf9if4c23hf4a3Xj/AFfyotR147LUSMqtHaI3/s77m/3Ujr6o+3WP/P5B/wB9iuTMqzq1bR2Q4L3S1RUcckcib43V19VOakrzjQKKKKAG4GOtZPiHWLfw94Yvtbuo5pYbSFpmjgTfI+3+FR3Y9K1+MVwvxb8K6x4z+D2seGfD9zBbaheJGsMtxIyIu2VHOWUE9FParpJOpFS2Mqrag3Hc+ffhHpGs6l4v8V/tE/ETSb4TWvm/2bp7wsZWfbt2omN3yjbEnuzelbH7PfgrxD4q+KGt/G3x9p89vqE07x6fbXMTRmMldrOobnaE2ov/AAKub/4UD+0Z/wAK7/4Qr/hM9C/sbz/tXkfbZd2/+7v8rdt/i25xu5rb8L/C39qjwb4eTRNB8f8Ahu3skcukUreftLcnDPbs23/Zr6nEThKnPkrR5paddI9jwaMZqUOem7LX5ncftSeL/Enh/wCB9zonhHRtVv8AWNd3WKvp9s8xt4MfvXbaOPlOwf7+7+Gvi34H/AfxR43+NOk6Z4l8L6vYaFA32zUZbyzeBHiT/lkpZV+Z22r/AMCZv4a+tv8AhF/2xf8AoovhT/vxF/8AItH/AAi/7Yv/AEUXwp/34i/+Ra4aEfY0pQhVhr5v/I9J4pt/w393/BO/+Oni3WPBHwI1W68KaXfXmszxiw0+Gwt2maJ3G3zNqD5VRct6ZVV/ir85fBXwd8beJviBpuk6p4Z1/TLCWXfe30+nSqsEKLvlf5l+9sVtq/xNtX+Kvtn/AIRb9sf/AKKP4U/78Rf/ACLS/wDCLftjf9FI8Kf9+Iv/AJFow0FQjKMakNfN/wCQPFN/8u393/BPibxzofj7xh4+1DXE+H/iO0tHdYrK0XTZ9tvaoqpDEvy/woqL/wABrnf+Fe/ED/oR/Ev/AILZ/wD4mvvv/hFf2xP+ik+Ff+/EX/yLR/wiv7Yv/RSfCv8A34i/+Ra6Y11GNlOH3v8AyJ+tS/59v7v+CeffsY+JfGvhvUL34beKvDWvWWlXWbzTbm7sJY44JlHzxbmXCq6ruX/aVu7V9pj1zXhfgfw7+0tYePdPuvHXjnw9qWgIz/a7W1jRZXHltt2kW6fx7f4hXueTjrXh463tOa6d+x2UZ88b2a9R1FFFchufJvgCzmP/AAUL8beFJdb8RS6Loumx39jYT63dyxRTMtqWLK0vzr+9f5X3Lz0+Va8FtPHPjqf9mHSbpvGHiGW8n8eS2bTf2pPHK8X2WFvK37t23czf99V+gdj4B8IaZ8SNQ8dWWjRxeI9TgEF3qAd90sa7PlI3bR/q4+gH3a5gfAH4Q/8ACJR+Hh4MtxpSXjamlutxMMXDRhDJu37t21QOtd1PFwUuZrsRynzl+0m/jrwrYfDfSfBs/iDw7qMw1S4ksItfuL6SRovJdd0ruxl+VW2q397bXf8A7IXjnXPiBB8Qdf1m/vJvtGsrNBbT3DypaK4dvKj3H5VX0HpXs0Pwq8BR3uh3f9iPNcaJJLPpstzdzztbvJjzDl3O7dtX72elWvBfw58FfD6zvIPBmgQaTFfSie4jidysjr0PzMcfhUzxMHR9ny6/8EdtTxb4Wa/rt5+3j8VNHu9a1C5022tozb2c1zI8MB/dfcRjtX7zfdr54v8Ax746HxAv/EA8aeIVvYvH66am3Up/KW13P+68rds2fKvy7a+4Jfg/8PZPHlx4zbQGj125kWee9gvbiNpWXGNwVwpHyj5SMVUPwG+Esni9vEz+CrFtRN39vZvMk8s3Gd3m+Vu2bs/7NXTxVNSvy9EK0jzH9nLXtc1b4/fHCx1TWr++trHXlitLe5uXlS3T7RdjbGrHCD5V+76CvJ/jT4t1M/tXfEPSdZ8e+LdC0bSdJtJbCfRpJ3XTpWay/eeRHLErbvNlTczfelX+6tfY3hz4f+EvCWva3rHh3RorG/1yf7VqVwjuzXMmXbcdzHHMjn5cferC8T/BT4YeLfE954j8SeELS91G6txBdT+bKnnxrjAdVYB9u1dpPTav90VFPEwVRya6f5FW0PjT4yeNPGcXxd8SNpXi7xI9taeF9OvYJ7fVJ7PyncWim48qN9rM3mtuT/b3fw1vfFbxh4nvvGPgywj8beIJ7GT4YvrXmQXktn9pu1s7qVbh1R1+dmiRtrbvu4r6u1D4I/C3VNQvLzUfCFrPPd2MWmXDtLJ+8t02bE+928uP5uvy9aj1v4G/CvXbLSoNX8JQzppdl/Ztk63EySRWu1l8nerhmTazDDE/eNarF0/d93YmzPkFPH/jm8PwimufGGtu174Z1N7lheyr9pdDdqjyfN8zKET5m+b5azYPGPjC9+F/wQW58ReLb46nrOp297FY6lOt1fItxbqsW7erM21mVdzfLu/hr7T1j4IfCvWdG0rTr/wdZfZdJha3sRbO9u9vE3VFeNlbactnn+JvU1PB8HPhnHF4big8JWcSeGpnudIWJnQWspkV2cYb5iWRT82elV9cp9I/1r/mFpHLfs2aR8TNI+CS2nxSm1V9Z+3SvF/aN0LmYQFU2hmLMfvb+Cc0V7PiivPlVu2zS5//2Q==" alt="Tiến Lợi Group">Print Studio<small>v5.5.9</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:8px"><button id="btnSide" class="fit sidebtn" title="Ẩn / hiện thanh thiết lập"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg><span id="sideLbl">Thu gọn</span></button><div class="brand"><img src="data:image/jpeg;base64,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" alt="Tiến Lợi Group">Print Studio<small>v5.5.11</small></div><span id="hdrName"></span></div><div class="status"><span id="dot" class="dot wait"></span><span id="stText">Đang khởi tạo…</span><button id="btnDashSave" class="primary" style="display:none">Lưu khối</button><button id="btnTour" class="fit tourbtn" title="Hướng dẫn từng bước"><span class="tq">?</span><span class="tl">Hướng dẫn</span></button><button id="btnDiag" title="Thông tin chẩn đoán (Ctrl+Shift+D)" aria-keyshortcuts="Control+Shift+D">⚙</button></div></header>
 <div class="layout">
 <aside class="side"><div class="sidetools"><a id="secAllC">Thu gọn tất cả</a><a id="secAllO">Mở tất cả</a></div>
  <div class="sidetabs" role="tablist" aria-label="Thiết lập"><button type="button" role="tab" id="stabBtnData" data-stab="data">Dữ liệu</button><button type="button" role="tab" id="stabBtnTpl" data-stab="tpl">Mẫu in</button></div>
@@ -2343,7 +2353,7 @@ $('btnPdf').onclick = async () => {
   finally { host.remove(); btn.disabled = false; btn.textContent = 'PDF'; }
 };
 $('btnDiag').onclick = async () => {
-  const info = { version: '5.5.9', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
+  const info = { version: '5.5.11', isEditor: !!S.isEditor, bid: S.bid || '(chưa có)', modes: S.allow, mode: S.mode, link: S.link, detailRows: S.mode === 'link' ? (S.dRecMap.size || S.order.reduce((n, id) => n + (((S.recMap.get(id) || {})._det || []).length), 0)) : undefined, skipEmpty: !!(S.tpl && S.tpl.skipEmpty), ua: navigator.userAgent, touch: matchMedia('(pointer:coarse)').matches, url: location.href.replace(/token=[^&#]+/g, 'token=…'), dash: S.dash, query: [...Q.keys()], sdk: SDK ? { dashboard: !!dashboard, workspace: !!workspace, bridge: !!(bitable && bitable.bridge), keys: Object.keys(SDK).filter((k) => /^[a-z]/.test(k)) } : 'chưa tải', table: S.tableMeta && S.tableMeta.name, fields: S.metas.length, records: S.order.length };
   const tryGet = async (label, fn) => { try { info[label] = await withTimeout(fn(), 2500); } catch (e) { info[label] = 'LỖI: ' + (e && e.message || e); } };
   if (dashboard) {
     await tryGet('dashboard.state', async () => dashboard.state);
@@ -3567,19 +3577,32 @@ function expRefresh() {
   $('expCount').textContent = n ? `· ${n} ${U}${M ? ' · ' + M + ' bản ghi' : ''}` : '';
   const bar = $('expBar'); bar.hidden = !(EXP.run || done || bad); bar.firstElementChild.style.width = n ? Math.round(((done + bad) / n) * 100) + '%' : '0';
   const go = $('expGo'), fid = $('expField').value;
-  if (EXP.run) { go.textContent = 'Dừng'; go.classList.remove('primary'); go.disabled = false; }
+  go.classList.toggle('busy', !!EXP.prep);
+  if (EXP.prep) { go.classList.add('primary'); go.disabled = true; go.innerHTML = '<span class="bsp"></span>Đang chuẩn bị…'; }
+  else if (EXP.run) { go.textContent = 'Dừng'; go.classList.remove('primary'); go.disabled = false; }
   else {
     const todo = n - done; go.classList.toggle('primary', todo > 0);
     go.textContent = !n ? 'Xuất' : !todo ? `✓ Đã xuất ${n} ${U}` : (done ? `Xuất tiếp ${todo} ${U} mới` : (M ? `Xuất ${todo} phiếu vào ${M} bản ghi` : `Xuất vào ${todo} dòng`));
     go.disabled = !n || !fid || !todo;
   }
-  $('expRetry').hidden = EXP.run || !bad; $('expRetry').textContent = `Thử lại ${bad} dòng lỗi`;
+  $('expRetry').hidden = EXP.run || EXP.prep || !bad; $('expRetry').textContent = `Thử lại ${bad} dòng lỗi`;
+  if (EXP.prep) { expPrepPaint(); expDecorate(); return; }
   $('expSum').innerHTML = EXP.run ? `Đang xuất <b>${done + bad + 1} / ${n}</b>${bad ? ` · ${bad} lỗi` : ''}. Giữ khung này mở cho tới khi xong.`
     : (done || bad) ? `<b>Đã lưu ${done} / ${n} ${U}</b>${bad ? ` · ${bad} lỗi` : ''} vào cột <b>${esc(fieldName(fid))}</b>.${done === n ? ' Chọn thêm bản ghi để xuất tiếp, hoặc <a href="#" id="expAgain">xuất lại</a>.' : ''}`
     : !fid ? 'Chọn hoặc tạo cột đính kèm để nhận tệp.' : (M ? 'Mỗi phiếu gộp tạo 1 tệp, gắn vào tất cả bản ghi trong nhóm đó.' : 'Mỗi dòng nhận 1 tệp riêng.') + ' Nếu ô đã có tệp, bạn sẽ được hỏi thay tệp cũ hay thêm bên cạnh.';
   const ag = $('expAgain'); if (ag) ag.onclick = (e) => { e.preventDefault(); EXP.st.clear(); expRefresh(); };
   expDecorate();
 }
+function expPrepPaint() {
+  const p = EXP.prep; if (!p) return; const sec = Math.round((Date.now() - p.t0) / 1000);
+  const pct = p.total ? Math.min(100, Math.round((p.done / p.total) * 100)) : 0;
+  $('expSum').innerHTML = `<div class="xprep" role="status"><span class="xst run"></span><div><b>${esc(p.text)}</b><small>Bước ${p.step === 3 ? (EXP.prepN || 3) : p.step}/${EXP.prepN || 3} trước khi xuất · ${sec}s · Extension vẫn đang chạy, không cần bấm lại.</small><span class="xpb${p.total ? '' : ' ind'}"><i style="${p.total ? 'width:' + pct + '%' : ''}"></i></span></div></div>`;
+}
+function expPrep(step, text, done, total) {
+  if (!EXP.prep) { EXP.prep = { t0: Date.now() }; document.body.classList.add('expprep'); EXP.prepTick = setInterval(() => { if (EXP.prep) expPrepPaint(); }, 1000); }
+  Object.assign(EXP.prep, { step, text, done: done || 0, total: total || 0 }); expRefresh();
+}
+function expPrepEnd() { if (!EXP.prep) return; EXP.prep = null; clearInterval(EXP.prepTick); document.body.classList.remove('expprep'); expRefresh(); }
 const fieldName = (fid) => { const o = [...$('expField').options].find((x) => x.value === fid); return o ? o.text : ''; };
 function expDecorate() {
   if (!EXP.on || S.tab !== 'print') return;
@@ -3652,7 +3675,7 @@ $('expNew').onclick = () => {
 
 function expEnter() {
   if (EXP.on) return; if (!expTid()) { toast('Chưa xác định được bảng nguồn của khối.'); return; }
-  closeDl(); EXP.on = true; EXP.st.clear(); EXP.prevMode = S.mode; EXP.prevSel = S.sel.slice(); EXP.tbl = null; EXP.keyMap = null; EXP.keyMaps = null; EXP.ridList = null;
+  closeDl(); EXP.on = true; EXP.st.clear(); EXP.prevMode = S.mode; EXP.prevSel = S.sel.slice(); EXP.tbl = null; EXP.keyMap = null; EXP.keyMaps = null; EXP.ridList = null; EXP.recsP = null;
   if (S.mode === 'one') { S.mode = 'each'; if (S.selMulti && S.selMulti.includes(S.sel[0])) S.sel = S.selMulti.filter((id) => S.recMap.has(id)); }
   const sec = $('secRec'); EXP.home = { parent: sec.parentNode, next: sec.nextSibling, h: sec.querySelector('h3').firstChild.textContent };
   $('expRecHome').appendChild(sec); sec.querySelector('h3').firstChild.textContent = '1 · Bản ghi cần xuất '; setSec(sec, false);
@@ -3713,22 +3736,59 @@ async function expMakeFile(g) {
   return new File([pdf.output('blob')], g.file, { type: 'application/pdf' });
 }
 // Base App: bản ghi mang mã "k:<giá trị cột định danh>" → tìm recordId thật trong bảng theo cột định danh
+// Đọc toàn bộ dòng của bảng nguồn theo trang (getRecordIdList chỉ trả 200 dòng khi mở base qua token)
+function expAllRecs(tbl) {
+  if (EXP.recsP) return EXP.recsP;
+  EXP.recsP = (async () => {
+    const out = [], seen = new Set(); let pages = 0, how = '';
+    const getPage = tbl.getRecordsByPage ? (o) => tbl.getRecordsByPage(o) : (tbl.getRecords ? (o) => tbl.getRecords(o) : null);
+    if (getPage) {
+      try {
+        let token;
+        while (pages < 1000) {
+          const res = await withTimeout(getPage({ pageSize: 200, pageToken: token }), 20000); pages++;
+          for (const r of (res && res.records) || []) if (r && r.recordId && !seen.has(r.recordId)) { seen.add(r.recordId); out.push(r); }
+          if (EXP.prep) expPrep(2, `Đang đọc bảng nguồn · đã đọc ${out.length} dòng…`);
+          const nx = res && res.pageToken; if (!res || !res.hasMore || nx === undefined || nx === null || nx === '' || nx === token) break; token = nx;
+        }
+        how = 'records';
+      } catch (e) { dlog('exp.pages.err', String(e && e.message || e)); }
+    }
+    // Dự phòng: lấy danh sách mã dòng theo trang, đọc từng ô sau
+    let ids = [];
+    if (tbl.getRecordIdListByPage) {
+      try { let token, n = 0; while (n < 1000) { const res = await withTimeout(tbl.getRecordIdListByPage({ pageSize: 200, pageToken: token }), 20000); n++; ids.push(...((res && (res.recordIds || res.items)) || [])); const nx = res && res.pageToken; if (!res || !res.hasMore || nx === undefined || nx === null || nx === '' || nx === token) break; token = nx; } }
+      catch (e) { dlog('exp.idpages.err', String(e && e.message || e)); }
+    }
+    if (!ids.length) { try { ids = (await withTimeout(tbl.getRecordIdList(), 15000)) || []; } catch (e) {} }
+    const extra = ids.filter((id) => id && !seen.has(id));
+    dlog('exp.recs', { rows: out.length, pages, ids: ids.length, extra: extra.length, how });
+    return { recs: out, extra };
+  })();
+  return EXP.recsP;
+}
 async function expRid(tbl, id) {
   if (!/^[kg]:/.test(id)) return id;
   const key = id.slice(2).replace(/#\d+$/, '').trim(), kf0 = S.metas[0] && S.metas[0].id;
   EXP.keyMaps = EXP.keyMaps || new Map();
-  const build = async (fid) => {
+  const build = (fid) => {
     if (EXP.keyMaps.has(fid)) return EXP.keyMaps.get(fid);
-    if (!EXP.ridList) EXP.ridList = await withTimeout(tbl.getRecordIdList(), 15000);
-    const ids = EXP.ridList, map = new Map(); let bad = 0;
-    for (let i = 0; i < ids.length; i += 20) { const part = ids.slice(i, i + 20), got = await Promise.all(part.map((r) => tbl.getCellString(fid, r).catch(() => { bad++; return ''; }))); part.forEach((r, j) => { const k = String(got[j] || '').trim(); if (k && !map.has(k)) map.set(k, r); }); }
-    EXP.keyMaps.set(fid, map); dlog('exp.keymap', { field: fid, rows: map.size, of: ids.length, err: bad, sample: [...map.keys()].slice(0, 3) }); return map;
+    const pr = (async () => {
+      const { recs, extra } = await expAllRecs(tbl), map = new Map(); let bad = 0;
+      for (const r of recs) { const k = toText((r.fields || {})[fid]).trim(); if (k && !map.has(k)) map.set(k, r.recordId); }
+      for (let i = 0; i < extra.length; i += 20) { const part = extra.slice(i, i + 20), got = await Promise.all(part.map((r) => tbl.getCellString(fid, r).catch(() => { bad++; return ''; }))); part.forEach((r, j) => { const k = String(got[j] || '').trim(); if (k && !map.has(k)) map.set(k, r); }); }
+      dlog('exp.keymap', { field: fid, keys: map.size, of: recs.length + extra.length, err: bad, sample: [...map.keys()].slice(0, 3) }); return map;
+    })();
+    EXP.keyMaps.set(fid, pr); return pr;
   };
+  const nz = (x) => fold(String(x)).replace(/\s+/g, ' ').trim();
+  const find = (m) => { if (m.has(key)) return m.get(key); const nk = nz(key); for (const [k, v] of m) if (nz(k) === nk) return v; return null; };
   const cands = [];
   if (kf0) { const k = String(kf0); if (/^m(?=fld)/.test(k)) cands.push(k.slice(1)); cands.push(k); }
-  for (const fid of [...new Set(cands)]) { const m = await build(fid); if (m.has(key)) return m.get(key); }
-  try { const metas = await withTimeout(tbl.getFieldMetaList(), 10000), pri = (metas || []).find((m) => m.isPrimary); if (pri && !cands.includes(pri.id)) { const m = await build(pri.id); if (m.has(key)) return m.get(key); } } catch (e) {}
-  throw new Error('Không tìm thấy dòng có mã "' + key + '" trong bảng nguồn. Kiểm tra cột định danh (cột đầu của cột gói) có trùng giá trị với bảng tổng.');
+  for (const fid of [...new Set(cands)]) { const r = find(await build(fid)); if (r) return r; }
+  try { const metas = await withTimeout(tbl.getFieldMetaList(), 10000), pri = (metas || []).find((m) => m.isPrimary); if (pri && !cands.includes(pri.id)) { const r = find(await build(pri.id)); if (r) return r; } } catch (e) {}
+  const { recs, extra } = await expAllRecs(tbl);
+  throw new Error('Không tìm thấy dòng có mã "' + key + '" trong bảng nguồn (đã dò ' + (recs.length + extra.length) + ' dòng). Kiểm tra cột định danh (cột đầu của cột gói) có trùng giá trị với bảng nguồn.');
 }
 async function expPut(tbl, fid, rid, file, append) {
   const ub = EXP.base || S.base, up = ub && ub.batchUploadFile ? (f) => ub.batchUploadFile(f) : (bitable.base.batchUploadFile ? (f) => bitable.base.batchUploadFile(f) : null);
@@ -3757,20 +3817,26 @@ function askReplace(list, col) {
   });
 }
 async function expRun(only) {
+  if (EXP.prep) { toast('Extension đang chuẩn bị xuất, vui lòng chờ…'); return; }
   if (EXP.run) { EXP.stop = true; $('expGo').disabled = true; $('expGo').textContent = 'Đang dừng…'; return; }
   const fid = $('expField').value; if (!fid) { flagFix($('expField'), 'Chọn hoặc tạo cột đính kèm để nhận tệp.'); return; }
   let gs = expGroups(); gs = only ? gs.filter((g) => only.has(g.id)) : gs.filter((g) => (EXP.st.get(g.id) || {}).s !== 'ok');
   if (!gs.length) { toast('Chọn ít nhất 1 bản ghi để xuất.'); return; }
   if (!window.htmlToImage || (expFmt() === 'pdf' && !window.jspdf)) { toast('Thư viện tạo tệp chưa tải xong hoặc bị chặn mạng. Thử lại sau vài giây.', 5000); return; }
-  let tbl; try { tbl = await expTable(); } catch (e) { toast(friendlyErr(e), 8000); return; }
+  EXP.prepN = gs.some((g) => (g.members || [g.id]).some((x) => /^[kg]:/.test(x))) ? 3 : 2;
+  expPrep(1, 'Đang kết nối bảng nguồn…');
+  let tbl; try { tbl = await expTable(); } catch (e) { expPrepEnd(); toast(friendlyErr(e), 8000); return; }
   let append = false;
-  {
-    $('expSum').textContent = 'Đang kiểm tra các ô đã có tệp…'; const has = [];
+  try {
+    const has = [];
     const units = []; gs.forEach((g) => (g.members || [g.id]).forEach((mid) => units.push({ g, mid })));
-    for (let i = 0; i < units.length && i < 1000; i += 10) { const part = units.slice(i, i + 10), got = await Promise.all(part.map(async (u) => { try { const v = await tbl.getCellValue(fid, await expRid(tbl, u.mid)); return Array.isArray(v) && v.length ? v : null; } catch (e) { return null; } })); part.forEach((u, j) => { if (got[j]) { const r = S.recMap.get(u.mid); has.push({ g: { id: u.g.id, label: r ? recLabel(r) : u.g.label }, files: got[j].map((x) => x && x.name).filter(Boolean) }); } }); }
-    EXP.has = new Map(); has.forEach((x) => { EXP.has.set(x.g.id, [...(EXP.has.get(x.g.id) || []), ...x.files]); }); expRefresh();
+    if (units.some((u) => /^[kg]:/.test(u.mid))) { expPrep(2, 'Đang đọc bảng nguồn để tìm đúng dòng…'); await expAllRecs(tbl).catch(() => null); }
+    expPrep(3, `Đang kiểm tra ô đã có tệp · 0/${Math.min(units.length, 1000)} bản ghi…`, 0, Math.min(units.length, 1000));
+    for (let i = 0; i < units.length && i < 1000; i += 10) {
+      if (i) expPrep(3, `Đang kiểm tra ô đã có tệp · ${i}/${Math.min(units.length, 1000)} bản ghi…`, i, Math.min(units.length, 1000)); const part = units.slice(i, i + 10), got = await Promise.all(part.map(async (u) => { try { const v = await tbl.getCellValue(fid, await expRid(tbl, u.mid)); return Array.isArray(v) && v.length ? v : null; } catch (e) { return null; } })); part.forEach((u, j) => { if (got[j]) { const r = S.recMap.get(u.mid); has.push({ g: { id: u.g.id, label: r ? recLabel(r) : u.g.label }, files: got[j].map((x) => x && x.name).filter(Boolean) }); } }); }
+    EXP.has = new Map(); has.forEach((x) => { EXP.has.set(x.g.id, [...(EXP.has.get(x.g.id) || []), ...x.files]); }); expPrepEnd();
     if (has.length) { const a = await askReplace(has, fieldName(fid)); if (!a) { expRefresh(); return; } if (a === 'append') append = true; }
-  }
+  } finally { expPrepEnd(); }
   EXP.run = true; EXP.stop = false; document.body.classList.add('exprun'); setSec($('secRec'), true); setSec($('secExpOut'), true); setSec($('secExpRun'), false); gs.forEach((g) => EXP.st.set(g.id, { s: 'wait' })); expRefresh();
   const t0 = Date.now(); let ok = 0, bad = 0;
   for (const g of gs) {
