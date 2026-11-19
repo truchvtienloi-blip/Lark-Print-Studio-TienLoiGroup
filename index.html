@@ -371,6 +371,17 @@ body.editing #pages .page{box-shadow:0 0 0 2px #f3cf9a,0 6px 24px #1b2b4a1f}
 #pages .edv:hover,#pages .edv:focus-visible{background:#eaf2ff}#pages .edv.act{outline:2px solid var(--blue)}
 #pages .edv.chg{background:#fff3c4;outline:1.5px solid #e0a100}#pages .edv.chg::after{content:'';position:absolute;top:-3px;right:-3px;width:6px;height:6px;border-radius:50%;background:#e08a00}
 #pages .edv.lk{outline:none;cursor:not-allowed;padding:0;min-width:0}#pages .edv.lk:hover{background:#f3f4f6}
+/* v5.16 · dòng chi tiết mới (lưu vào Base): xanh lá = thêm mới, vàng = đã sửa */
+#pages tr.nrow td{background-image:linear-gradient(#effbf3,#effbf3)}#pages tr.nrow td:first-child{box-shadow:inset 3px 0 0 #16a34a;position:relative}
+#pages tr.nrow .nb{position:absolute;right:calc(100% + 6px);top:50%;transform:translateY(-50%);background:#16a34a;color:#fff;font:600 10px/1 system-ui,sans-serif;padding:3px 7px;border-radius:999px;white-space:nowrap;pointer-events:none;letter-spacing:.02em}
+#pages tr.nrow .edv{outline-color:#3da66b}#pages tr.nrow .edv:hover,#pages tr.nrow .edv:focus-visible{background:#dcf5e6}#pages tr.nrow .edv .ph{color:#7fb394;font-style:italic;font-size:.9em}
+#pages tr.nrow .edv.chg{background:#cdf1da;outline:1.5px solid #16a34a}#pages tr.nrow .edv.chg::after{background:#16a34a}
+body[data-motion=on] #pages tr.nrow.nin td{animation:nIn .5s ease-out}@keyframes nIn{from{background-image:linear-gradient(#b5e8c8,#b5e8c8)}}
+.ctxm .ctxhd{padding:6px 10px 4px;font-size:11px;font-weight:600;color:#166534;display:flex;align-items:center;gap:6px;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ctxm .ctxhd i{flex:0 0 8px;height:8px;border-radius:50%;background:#16a34a}
+.ctxm .ctxnote.g{color:#166534;background:#effbf3;border-radius:6px;margin:4px 4px 2px;padding:6px 8px;max-width:250px}
+.edadd{display:flex;flex-direction:column;gap:4px;border-top:1px dashed var(--line);padding-top:8px;margin-top:2px}.edadd[hidden]{display:none}
+.rv h4{margin:2px 0 4px;font-size:12px;color:#374151;display:flex;align-items:center;gap:6px;font-weight:600}.rv h4 .pill{font-weight:600;font-size:10.5px;padding:2px 8px;border-radius:999px;background:#fff3c4;color:#7a4b00}.rv h4 .pill.g{background:#d6f5e1;color:#166534}
+.rv tr.nw td{background:#f6fdf8}.rv tr.skip td{color:#9aa3b2;font-style:italic}.rv .kv{display:inline-block;margin:0 10px 2px 0;color:#4b5563}.rv .new.g{background:#d6f5e1}
 .edpop{position:fixed;z-index:85;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px #1b2b4a33;padding:8px;width:260px;font-size:12.5px;display:flex;flex-direction:column;gap:6px;animation:uiDrop .14s ease-out}
 .edpop .hd{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11.5px}.edpop .hd b{color:#1f2329;font-size:12.5px}
 .edpop textarea,.edpop input[type=text],.edpop input[type=date]{width:100%;box-sizing:border-box;padding:6px 8px;font:inherit;font-size:13px}
@@ -518,6 +529,8 @@ body.explock #secExpOut .lbl,body.explock #secExpOut .row,body.explock #expField
     <div class="edlh"><b>Cột được sửa</b><span>· chỉ cột có trong mẫu</span><button type="button" class="lnk" id="edAll">Chọn hết</button></div>
     <div class="edcols" id="edCols"></div>
     <p class="hint" style="margin:0">Bấm để bật / tắt. Cột công thức, tra cứu, tự đánh số do Lark tự tính nên không sửa được. Người dùng bấm <b>Sửa</b> ở tab Xem &amp; in, sửa trên phiếu rồi xem lại trước khi lưu.</p>
+    <div class="edadd" id="edAddBox" hidden><label class="row" style="gap:8px;justify-content:flex-start;cursor:pointer"><input type="checkbox" id="chkEdAdd" class="fit"><span style="font-size:13px">Cho thêm dòng chi tiết mới vào Base</span></label>
+     <p class="hint" style="margin:0">Khi đang <b>Sửa</b>, chuột phải vào dòng lặp → <b>Thêm dòng</b>. Dòng mới điền được mọi cột chi tiết nhập tay có trong mẫu; bấm Lưu mới tạo bản ghi trong bảng chi tiết và gắn vào phiếu.</p></div>
     <p class="hint" id="edLockNote" hidden style="margin:0">Sau khi Lưu khối, người xem chỉ sửa được các cột này.</p>
    </div>
    <p class="hint" id="edCfgHint">Bật để người dùng sửa ô trên phiếu (tab Xem &amp; in), xem lại thay đổi rồi mới lưu vào Base.</p>
@@ -944,7 +957,7 @@ function pageRows(tpl, recs, ctx) {
   const out = [];
   tpl.rows.forEach((row, r) => {
     // Bỏ dòng lặp trống (tùy chọn của mẫu): dòng lặp mà mọi biến dữ liệu đều trống thì không in, STT đánh lại liên tục
-    if (row.rep && recs.length) (tpl.skipEmpty && ctx ? recs.filter((rec) => !repRowEmpty(row, rec, ctx)) : recs).forEach((rec, i) => out.push({ r, rec, i, row }));
+    if (row.rep && recs.length) (tpl.skipEmpty && ctx ? recs.filter((rec) => /\/n:[^/]*$/.test(String(rec.recordId)) || !repRowEmpty(row, rec, ctx)) : recs).forEach((rec, i) => out.push({ r, rec, i, row }));
     else out.push({ r, rec: recs[0] || null, i: 0, row });
   });
   return out;
@@ -1146,7 +1159,7 @@ function getPages() {
   if (S.mode === 'each') return recs.map((r) => [r]);
   if (S.mode === 'one') return [[recs[0]]];
   // Phiếu & chi tiết: mỗi phiếu 1 trang; các dòng lặp chạy theo dòng của bảng chi tiết (mỗi dòng mang kèm thông tin phiếu)
-  if (S.mode === 'link') return recs.map((h) => { const ds = detailsOf(h); return ds.length ? ds.map((d) => ({ recordId: h.recordId + '/' + d.recordId, fields: { ...h.fields, ...d.fields } })) : [h]; });
+  if (S.mode === 'link') return recs.map((h) => { const ds = ED.on && S.tab === 'print' ? edMergeDet(h.recordId, detailsOf(h)) : detailsOf(h); return ds.length ? ds.map((d) => ({ recordId: h.recordId + '/' + d.recordId, fields: { ...h.fields, ...d.fields } })) : [h]; });
   const gm = grpMeta();
   if (gm) { const m = new Map(); for (const r of recs) { const k = grpKey(r, gm); if (!m.has(k)) m.set(k, []); m.get(k).push(r); } return [...m.values()]; }
   return [recs];
@@ -1198,22 +1211,23 @@ async function edDetRid(c) {
 }
 function edOpts(meta) { const fm = ED.fm.get(edRealFid(meta)) || meta, o = fm && fm.property && fm.property.options; return Array.isArray(o) ? o.filter((x) => x && x.id) : []; }
 function edInfo(meta, rec) {
-  const rid = String(rec.recordId || ''), det = edIsDet(meta) && rid.includes('/'), hId = rid.split('/')[0], dId = det ? rid.split('/')[1] : '';
-  const key = (det ? 'd:' + dId : hId) + '|' + meta.id, src = det ? ((S.dRecMap && S.dRecMap.get(dId)) || ((S.recMap.get(hId) || {})._det || []).find((d) => d.recordId === dId)) : (S.recMap.get(hId) || rec);
+  const rid = String(rec.recordId || ''), sp = edSplitDk(rid), det = edIsDet(meta) && !!sp.dId, hId = sp.hId, dId = det ? sp.dId : '', nid = det && dId.startsWith('n:') ? dId.slice(2) : '', nw = nid ? edNwFind(hId, nid) : null;
+  const key = (det ? 'd:' + dId : hId) + '|' + meta.id, src = nw ? { fields: {} } : det ? ((S.dRecMap && S.dRecMap.get(dId)) || ((S.recMap.get(hId) || {})._det || []).find((d) => d.recordId === dId)) : (S.recMap.get(hId) || rec);
   const fid = edRealFid(meta), old = src && src.fields ? src.fields[meta.id] : undefined, kind = edKind(meta);
   let lock = '';
-  if (!(S.edCfg && S.edCfg.fids || []).includes(fid)) lock = `Cột "${meta.name}" chưa bật sửa (mục 4 · Sửa dữ liệu).`;
+  if (nw) lock = !edAddOn() ? 'Chưa bật thêm dòng chi tiết (mục 4 · Sửa dữ liệu).' : ED.fm.size && !ED.fm.get(fid) ? `Không thấy cột "${meta.name}" trong bảng chi tiết.` : !kind ? `Cột "${meta.name}" do Lark tự tính sau khi lưu hoặc kiểu cột chưa hỗ trợ nhập.` : (kind === 'one' || kind === 'many') && !edOpts(meta).length ? `Không đọc được danh sách lựa chọn của cột "${meta.name}".` : '';
+  else if (!(S.edCfg && S.edCfg.fids || []).includes(fid)) lock = `Cột "${meta.name}" chưa bật sửa (mục 4 · Sửa dữ liệu).`;
   else if (edIsDet(meta) && (!det || !(S.dTable || (S.link && S.link.tableId && S.link.fieldId)))) lock = 'Chưa xác định được bảng chi tiết của dòng này.';
   else if (ED.fm.size && !ED.fm.get(fid)) lock = `Không thấy cột "${meta.name}" trong bảng (có thể đã đổi tên hoặc xóa).`;
   else if (!kind) lock = `Cột "${meta.name}" do Lark tự tính hoặc kiểu cột chưa hỗ trợ sửa.`;
   else if ((kind === 'one' || kind === 'many') && !edOpts(meta).length) lock = `Không đọc được danh sách lựa chọn của cột "${meta.name}".`;
-  return { key, meta, fid, det, hId, dId, src, old, kind, lock, oldText: fmtCell(meta, old) };
+  return { key, meta, fid, det, hId, dId, src, old, kind, lock, nid, nw, oldText: fmtCell(meta, old) };
 }
 function edCellHTML(c, row, ctx) {
   const k = edVar(c.t); if (!k || !row.rec) return null; const meta = S.idx.get(fold(k)); if (!meta) return null;
   const t = String(c.t), m = t.match(/\{\{\s*[^{}]+?\s*\}\}/), info = edInfo(meta, row.rec); ED.km.set(info.key, info);
   const ch = ED.ch.get(info.key), val = ch ? ch.text : fillText(m[0], ctx);
-  const span = `<span class="edv${info.lock ? ' lk' : ch ? ' chg' : ''}" data-ek="${esc(info.key)}"${info.lock ? ` title="${esc(info.lock)}"` : ` tabindex="0" role="button" title="Bấm để sửa ${esc(meta.name)}"`}>${esc(val) || '&nbsp;'}</span>`;
+  const span = `<span class="edv${info.lock ? ' lk' : ch ? ' chg' : ''}" data-ek="${esc(info.key)}"${info.lock ? ` title="${esc(info.lock)}"` : ` tabindex="0" role="button" title="Bấm để ${info.nw ? 'nhập' : 'sửa'} ${esc(meta.name)}"`}>${esc(val) || (info.nw && !info.lock ? `<span class="ph">${esc(meta.name)}</span>` : '&nbsp;')}</span>`;
   return toHTML(fillText(t.slice(0, m.index), ctx), S.tpl.logo) + span + toHTML(fillText(t.slice(m.index + m[0].length), ctx), S.tpl.logo);
 }
 function printHTML(missing) {
@@ -1230,13 +1244,15 @@ function printHTML(missing) {
       if (row.row.pb && row.i === 0 && started) h += '</tbody></table></div>' + open; // ngắt trang thủ công
       started = true;
       const xk = row.row.rep && row.rec ? `${row.rec.recordId}:${row.r}` : '';
-      h += xk && !ED.paint ? `<tr data-xk="${esc(xk)}">` : '<tr>';
+      const dk = ED.paint && S.mode === 'link' && row.row.rep && row.rec ? String(row.rec.recordId) : '', isN = /\/n:[^/]*$/.test(dk), nid = isN ? dk.slice(dk.lastIndexOf('/n:') + 3) : '';
+      let nb = isN && row.r === S.tpl.rows.findIndex((x) => x.rep);
+      h += xk && !ED.paint ? `<tr data-xk="${esc(xk)}">` : dk ? `<tr data-dk="${esc(dk)}"${isN ? ` class="nrow${NW.fresh.has(nid) ? ' nin' : ''}"` : ''}>` : '<tr>';
       row.row.cells.forEach((c, cc) => {
         if (c.h) return;
         const key = `${row.rec ? row.rec.recordId : '-'}:${row.r}:${cc}`;
         const eh = ED.paint ? edCellHTML(c, row, ctx) : null;
         const html = eh !== null ? eh : S.overrides[key] !== undefined && !ED.paint ? esc(S.overrides[key]) : toHTML(fillText(c.t, ctx), S.tpl.logo);
-        h += `<td data-k="${key}" data-bd="${sides(c).join(',')}" contenteditable="${ED.paint ? 'false' : CE}" spellcheck="false"${c.cs > 1 ? ` colspan="${c.cs}"` : ''}${c.rs > 1 ? ` rowspan="${c.rs}"` : ''} style="${cellStyle(c, false)}">${html}</td>`;
+        h += `<td data-k="${key}" data-bd="${sides(c).join(',')}" contenteditable="${ED.paint ? 'false' : CE}" spellcheck="false"${c.cs > 1 ? ` colspan="${c.cs}"` : ''}${c.rs > 1 ? ` rowspan="${c.rs}"` : ''} style="${cellStyle(c, false)}">${nb ? (nb = false, '<span class="nb" aria-hidden="true">Mới</span>') : ''}${html}</td>`;
       });
       h += '</tr>';
       // v5.15 · dòng trống người dùng thêm dưới dòng lặp (chỉ để in, không ghi vào Base)
@@ -3236,7 +3252,7 @@ async function applyDash(c) {
   S.groupBy = c.groupBy || ''; S.filters = (c.filters || []).map((f) => ({ ...f })); S.lkMatch = c.lkMatch || 'and'; S.fMatch = isDashView() ? (c.fMatch || 'and') : (c.lkMatch || c.fMatch || 'and'); $('fMatch').value = S.fMatch;
   S.manual = c.manual || {}; c.useAll = false; // v5.14.2: mở khối chỉ chọn sẵn 1 bản ghi cho nhanh; in nhiều thì bật Chọn nhiều / Chọn hết
   S.expCfg = c.exp && typeof c.exp === 'object' ? { on: !!c.exp.on, fid: c.exp.fid || '', fname: c.exp.fname || '', fmt: c.exp.fmt === 'png' ? 'png' : 'pdf', tid: c.exp.tid || '' } : { on: false, fid: '', fname: '', fmt: 'pdf' }; S.expFromBlock = true; try { syncExpCfgUI(); } catch (e) {}
-  S.edCfg = c.ed && typeof c.ed === 'object' ? { on: !!c.ed.on, fids: Array.isArray(c.ed.fids) ? c.ed.fids.slice() : [] } : { on: false, fids: [] }; S.edFromBlock = true; S.edTouched = false; dlog('edit.cfg', { on: S.edCfg.on, fids: S.edCfg.fids.length });
+  S.edCfg = c.ed && typeof c.ed === 'object' ? { on: !!c.ed.on, add: !!c.ed.add, fids: Array.isArray(c.ed.fids) ? c.ed.fids.slice() : [] } : { on: false, fids: [] }; S.edFromBlock = true; S.edTouched = false; dlog('edit.cfg', { on: S.edCfg.on, add: S.edCfg.add, fids: S.edCfg.fids.length });
   if (viewOnly) {
     // Chỉ dữ liệu realtime: ở chế độ xem Lark chỉ cho đọc qua getData()/getPreviewData() theo điều kiện nhóm theo cột gói
     if (!(c.packId && c.packCols)) throw new Error('Khối này chưa gắn cột gói nên chưa có dữ liệu realtime. ' + staleHint(c) + ' Cách xử lý: mở Sửa khối → chọn bảng → Tạo / cập nhật cột gói → Lưu khối.');
@@ -4658,10 +4674,10 @@ function pillsSync() {
 addEventListener('resize', () => pillsSync());
 
 /* ---- v5.14 · Sửa dữ liệu: thiết lập, chế độ sửa, trình nhập, xem lại & lưu ---- */
-if (!S.edCfg) S.edCfg = (() => { try { const u = uiLoad(); return u.edCfg && typeof u.edCfg === 'object' ? { on: !!u.edCfg.on, fids: Array.isArray(u.edCfg.fids) ? u.edCfg.fids : [] } : { on: false, fids: [] }; } catch (e) { return { on: false, fids: [] }; } })();
+if (!S.edCfg) S.edCfg = (() => { try { const u = uiLoad(); return u.edCfg && typeof u.edCfg === 'object' ? { on: !!u.edCfg.on, add: !!u.edCfg.add, fids: Array.isArray(u.edCfg.fids) ? u.edCfg.fids : [] } : { on: false, fids: [] }; } catch (e) { return { on: false, fids: [] }; } })();
 // v5.15.1 · trong Base App: chỉ bật khi cấu hình lưu cùng khối có bật, hoặc người thiết kế vừa tự tick ở khối này
 const edOn = () => !!(S.edCfg && S.edCfg.on) && (!S.dash || S.edFromBlock || S.edTouched);
-function edCfgOut() { return { on: edOn(), fids: edOn() ? ((S.edCfg && S.edCfg.fids) || []).slice() : [] }; }
+function edCfgOut() { return { on: edOn(), add: edOn() && !!(S.edCfg && S.edCfg.add), fids: edOn() ? ((S.edCfg && S.edCfg.fids) || []).slice() : [] }; }
 function edCfgSave() { if (S.edFromBlock && !isDashEdit()) return; try { const u = uiLoad(); u.edCfg = edCfgOut(); uiSave(u); } catch (e) {} }
 function edTplMetas() { // các cột xuất hiện trong ô "1 biến" của mẫu
   const seen = new Map();
@@ -4672,6 +4688,7 @@ let ED_TID = '';
 function edCfgUI() {
   { const t = (typeof expTid === 'function' && expTid()) + '|' + ((S.link && S.link.tableId) || ''); if (t !== ED_TID) { ED_TID = t; ED.fmP = null; ED.fm = new Map(); ED.dt = null; } }
   const on = edOn(); $('chkEd').checked = on; $('edCfgBox').hidden = !on; $('edCfgHint').hidden = on; $('edLockNote').hidden = !(on && isDashEdit());
+  $('edAddBox').hidden = S.mode !== 'link'; $('chkEdAdd').checked = !!(S.edCfg && S.edCfg.add);
   if (!on) return;
   const ms = edTplMetas(), LK = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
   if (!ED.fmP) edLoadFm().then(() => { $('edCols').dataset.h = ''; edCfgUI(); });
@@ -4684,9 +4701,10 @@ function edCfgUI() {
 }
 $('chkEd').onchange = () => { S.edTouched = true; S.edCfg.on = $('chkEd').checked; if (S.edCfg.on && S.dash && !S.edFromBlock) S.edCfg.fids = []; edCfgSave(); edCfgUI(); edBtnSync(); if (!S.edCfg.on && ED.on) edExit(true); };
 $('edCols').onclick = (e) => { const b = e.target.closest('.cc[data-f]'); if (!b) return; const f = b.dataset.f, a = S.edCfg.fids; S.edCfg.fids = a.includes(f) ? a.filter((x) => x !== f) : [...a, f]; edCfgSave(); edCfgUI(); edBtnSync(); if (ED.on) render(); };
+$('chkEdAdd').onchange = () => { S.edTouched = true; S.edCfg.add = $('chkEdAdd').checked; edCfgSave(); edBtnSync(); if (ED.on) render(); };
 $('edAll').onclick = () => { S.edCfg.fids = edTplMetas().filter((m) => { const fm = ED.fm.get(edRealFid(m)); return ED_KIND[fm ? fm.type : m.type]; }).map(edRealFid); edCfgSave(); edCfgUI(); edBtnSync(); if (ED.on) render(); };
 function edBtnSync() {
-  const b = $('btnEdit'), fs = (S.edCfg && S.edCfg.fids) || [], can = S.tab === 'print' && edOn() && fs.length > 0 && (!isDashView() || S.edFromBlock) && edTplMetas().some((m) => fs.includes(edRealFid(m)));
+  const b = $('btnEdit'), fs = (S.edCfg && S.edCfg.fids) || [], can = S.tab === 'print' && edOn() && (!isDashView() || S.edFromBlock) && ((fs.length > 0 && edTplMetas().some((m) => fs.includes(edRealFid(m)))) || (edAddOn() && edTplMetas().some(edIsDet)));
   b.hidden = !can && !ED.on; b.classList.toggle('on', ED.on); b.setAttribute('aria-pressed', ED.on ? 'true' : 'false');
   b.querySelector('span').textContent = ED.on ? 'Đang sửa' : 'Sửa';
   ['btnPrint', 'btnDl', 'btnXuat'].forEach((id) => { const x = $(id); if (!x) return; if (ED.on) { if (x.dataset.edDis === undefined) x.dataset.edDis = x.disabled ? '1' : '0'; x.disabled = true; x.dataset.ttOld = x.dataset.ttOld || x.title; x.title = 'Lưu hoặc hủy thay đổi, thoát chế độ sửa trước khi in / tải / xuất'; }
@@ -4695,11 +4713,12 @@ function edBtnSync() {
 }
 function edBarSync() {
   const bar = $('edBar'), show = ED.on && S.tab === 'print', was = !bar.hidden; bar.hidden = !show; if (!show) return;
-  const n = ED.ch.size, nr = new Set([...ED.ch.values()].map((c) => c.hId)).size;
-  bar.innerHTML = `<span aria-hidden="true">✎</span><span class="g"><b>Đang sửa dữ liệu</b> · ${ED.loading ? 'đang đọc cột của bảng…' : n ? `${n} thay đổi · ${nr} bản ghi` : 'bấm vào ô có viền chấm để sửa'}<span class="lg"><i style="outline:1.5px dashed #6b9be0;outline-offset:-2px"></i>sửa được <i style="background:#fff3c4;outline:1.5px solid #e0a100;outline-offset:-2px"></i>đã sửa</span></span>`
+  const oc = edChOld(), nn = edNwCount(), n = oc.length + nn, nr = new Set(oc.map((c) => c.hId)).size, add = edAddOn();
+  const what = [oc.length ? `${oc.length} thay đổi · ${nr} bản ghi` : '', nn ? `${nn} dòng mới` : ''].filter(Boolean).join(' · ');
+  bar.innerHTML = `<span aria-hidden="true">✎</span><span class="g"><b>Đang sửa dữ liệu</b> · ${ED.loading ? 'đang đọc cột của bảng…' : n ? what : 'bấm vào ô có viền chấm để sửa' + (add ? ' · chuột phải vào dòng chi tiết để thêm dòng' : '')}<span class="lg"><i style="outline:1.5px dashed #6b9be0;outline-offset:-2px"></i>sửa được <i style="background:#fff3c4;outline:1.5px solid #e0a100;outline-offset:-2px"></i>đã sửa${add ? '<i style="background:#cdf1da;outline:1.5px solid #16a34a;outline-offset:-2px"></i>dòng mới' : ''}</span></span>`
     + (n ? `<button type="button" class="fit" id="edCancel">Hủy thay đổi</button><button type="button" class="fit primary" id="edReview">Xem lại &amp; lưu (${n})</button>` : `<button type="button" class="fit" id="edDone">Xong</button>`);
   if (!was) { bar.classList.remove('in'); void bar.offsetWidth; bar.classList.add('in'); }
-  if ($('edCancel')) $('edCancel').onclick = () => { if (confirm(`Bỏ ${n} thay đổi chưa lưu?`)) { ED.ch.clear(); edPopClose(); render(); edBtnSync(); } };
+  if ($('edCancel')) $('edCancel').onclick = () => { if (confirm(`Bỏ ${what} chưa lưu?`)) { ED.ch.clear(); ED.nw = new Map(); edPopClose(); render(); edBtnSync(); } };
   if ($('edReview')) $('edReview').onclick = edReview;
   if ($('edDone')) $('edDone').onclick = () => edExit();
 }
@@ -4707,18 +4726,19 @@ async function edEnter() {
   if (S.tab !== 'print') { $('tabPrint').click(); }
   if (!S.sel.length) { toast('Chọn bản ghi cần sửa trước.', 4000); focusRecSec(); return; }
   if (Object.keys(S.overrides).length) { if (!confirm('Chế độ sửa dữ liệu sẽ bỏ các ô đã sửa tay trên phiếu (chỉ dùng cho lần in). Tiếp tục?')) return; S.overrides = {}; }
-  ED.on = true; ED.ch.clear(); ED.loading = true; edBtnSync(); render();
+  ED.on = true; ED.ch.clear(); ED.nw = new Map(); ED.loading = true; edBtnSync(); render();
   ED.dIds = new Map(); await edLoadFm(true); if (!ED.fm.size) toast('Không đọc được cột của bảng nên chưa sửa được. Thử lại sau giây lát.', 6000);
   ED.loading = false; if (ED.on) { render(); edBtnSync(); }
 }
 function edExit(force) {
   if (!ED.on) return true;
-  if (ED.ch.size && !force && !confirm(`Bỏ ${ED.ch.size} thay đổi chưa lưu và thoát chế độ sửa?`)) return false;
-  ED.on = false; ED.ch.clear(); edPopClose(); render(); edBtnSync(); return true;
+  const nc = edChOld().length, nn = edNwCount();
+  if ((nc || nn) && !force && !confirm(`Bỏ ${[nc ? nc + ' thay đổi' : '', nn ? nn + ' dòng mới' : ''].filter(Boolean).join(' và ')} chưa lưu, thoát chế độ sửa?`)) return false;
+  ED.on = false; ED.ch.clear(); ED.nw = new Map(); edPopClose(); render(); edBtnSync(); return true;
 }
 $('btnEdit').onclick = () => { if (ED.on) edExit(); else edEnter(); };
 { const _d = $('tabDesign').onclick; $('tabDesign').onclick = (e) => { if (ED.on && !edExit()) return; _d.call($('tabDesign'), e); }; }
-window.addEventListener('beforeunload', (e) => { if (ED.on && ED.ch.size) { e.preventDefault(); e.returnValue = ''; } });
+window.addEventListener('beforeunload', (e) => { if (ED.on && (ED.ch.size || edNwCount())) { e.preventDefault(); e.returnValue = ''; } });
 // ---- trình nhập theo kiểu cột ----
 let edPopEl = null;
 function edPopClose() { if (edPopEl) { edPopEl.remove(); edPopEl = null; } document.querySelectorAll('#pages .edv.act').forEach((x) => x.classList.remove('act')); }
@@ -4796,14 +4816,17 @@ $('pages').addEventListener('keydown', (e) => { if (!ED.on) return; const sp = e
 // ---- xem lại & lưu ----
 const edLabel = (c) => { const r = S.recMap.get(c.hId); return r ? recLabel(r) : c.hId.replace(/^[kg]:/, ''); };
 function edReview() {
-  const list = [...ED.ch.values()].sort((a, b) => azCmp(edLabel(a), edLabel(b)));
-  if (!list.length) return; edPopClose();
-  const nr = new Set(list.map((c) => c.hId)).size;
-  const rows = list.map((c, i) => `<tr data-i="${i}"><td class="st"><span class="xst wait" aria-hidden="true"></span></td><td><b>${esc(edLabel(c))}</b>${c.det ? `<div class="who">dòng chi tiết${(() => { const d = S.dRecMap && S.dRecMap.get(c.dId); return d ? ' · ' + esc(recSubLabel(d)) : ''; })()}</div>` : ''}<div class="edmsg" hidden></div></td><td>${esc(c.meta.name)}</td><td><span class="old">${esc(c.oldText) || '(trống)'}</span><span class="ar">→</span><span class="new">${esc(c.text) || '(trống)'}</span></td></tr>`).join('');
-  openModal('Xem lại thay đổi trước khi lưu', `<div class="xq rv"><div class="kvs"><span>Bảng</span><b>${esc((S.tableMeta && S.tableMeta.name) || (S.liveCfg && (S.liveCfg.tableName || S.liveCfg.table)) || '')}</b><span>Thay đổi</span><span style="color:inherit"><b>${list.length} ô</b> trên ${nr} bản ghi</span></div>
-    <div class="xql" style="max-height:min(46vh,340px)"><table><thead><tr><th></th><th>Bản ghi</th><th>Cột</th><th>Trước → Sau</th></tr></thead><tbody id="edRows">${rows}</tbody></table></div>
-    <p class="hint" style="margin:0" id="edNote">Lark lưu lịch sử sửa theo tài khoản của bạn. Trước khi ghi, extension đọc lại từng ô: nếu ai đó vừa sửa cùng ô thì dòng đó được hỏi lại thay vì ghi đè.</p>
-    <div class="acts" id="edActs"><button type="button" class="fit" id="edBack">Quay lại sửa</button><button type="button" class="primary fit" id="edSave">Lưu ${list.length} thay đổi vào Base</button></div></div>`);
+  const list = edChOld().sort((a, b) => azCmp(edLabel(a), edLabel(b))), nwl = edNwReviewList(); ED.rvNw = nwl;
+  if (!list.length && !nwl.length) return; edPopClose();
+  const nr = new Set(list.map((c) => c.hId)).size, nOk = nwl.filter((x) => !x.empty).length, tot = list.length + nOk;
+  const rows = list.map((c, i) => `<tr data-i="${i}"><td class="st"><span class="xst wait" aria-hidden="true"></span></td><td><b>${esc(edLabel(c))}</b>${c.det ? `<div class="who">dòng chi tiết${(() => { const d = c.src && c.src.fields ? c.src : null, v = d ? (S.dMetas || []).map((m) => fmtCell(m, d.fields[m.id])).find(Boolean) : ''; return v ? ' · ' + esc(v) : ''; })()}</div>` : ''}<div class="edmsg" hidden></div></td><td>${esc(c.meta.name)}</td><td><span class="old">${esc(c.oldText) || '(trống)'}</span><span class="ar">→</span><span class="new">${esc(c.text) || '(trống)'}</span></td></tr>`).join('');
+  const tn = (S.link && S.link.tableName) || 'bảng chi tiết', lbl = [list.length ? list.length + ' thay đổi' : '', nOk ? nOk + ' dòng mới' : ''].filter(Boolean).join(' + ');
+  const nrows = nwl.map((x, j) => `<tr data-j="${j}" class="${x.empty ? 'skip' : 'nw'}"><td class="st"><span class="xst wait" aria-hidden="true"></span></td><td><b>${esc(edLabel({ hId: x.hId }))}</b><div class="who">dòng mới ${x.pos}</div><div class="edmsg" hidden></div></td><td>${x.empty ? 'Dòng trống, sẽ bỏ qua' : x.vals.map((c) => `<span class="kv">${esc(c.meta.name)}: <b class="new g">${esc(c.text)}</b></span>`).join('')}</td></tr>`).join('');
+  openModal('Xem lại trước khi lưu', `<div class="xq rv"><div class="kvs"><span>Bảng</span><b>${esc((S.tableMeta && S.tableMeta.name) || (S.liveCfg && (S.liveCfg.tableName || S.liveCfg.table)) || '')}</b>${list.length ? `<span>Sửa</span><span style="color:inherit"><b>${list.length} ô</b> trên ${nr} bản ghi</span>` : ''}${nwl.length ? `<span>Thêm mới</span><span style="color:inherit"><b>${nOk} dòng</b> vào bảng ${esc(tn)}${nwl.length > nOk ? ` · bỏ qua ${nwl.length - nOk} dòng trống` : ''}</span>` : ''}</div>
+    <div class="xql" style="max-height:min(50vh,380px)">${list.length ? `${nwl.length ? '<h4><span class="pill">Sửa</span>Ô đã sửa</h4>' : ''}<table><thead><tr><th></th><th>Bản ghi</th><th>Cột</th><th>Trước → Sau</th></tr></thead><tbody id="edRows">${rows}</tbody></table>` : ''}
+    ${nwl.length ? `<h4${list.length ? ' style="margin-top:12px"' : ''}><span class="pill g">Thêm mới</span>Dòng chi tiết mới</h4><table><thead><tr><th></th><th>Phiếu</th><th>Nội dung</th></tr></thead><tbody id="edNRows">${nrows}</tbody></table>` : ''}</div>
+    <p class="hint" style="margin:0" id="edNote">${list.length ? 'Trước khi ghi, extension đọc lại từng ô: nếu ai đó vừa sửa cùng ô thì dòng đó được hỏi lại thay vì ghi đè. ' : ''}${nOk ? `Dòng mới được tạo trong bảng <b>${esc(tn)}</b> rồi gắn vào phiếu qua cột <b>${esc((S.link && S.link.fieldName) || 'liên kết')}</b>, đúng vị trí đã chèn. Cột công thức, tra cứu do Lark tự tính.` : ''}</p>
+    <div class="acts" id="edActs"><button type="button" class="fit" id="edBack">Quay lại sửa</button><button type="button" class="primary fit" id="edSave"${tot ? '' : ' disabled'}>${tot ? `Lưu ${lbl} vào Base` : 'Chưa có gì để lưu'}</button></div></div>`);
   noClose();
   $('edBack').onclick = () => $('modal').classList.remove('show');
   $('edSave').onclick = () => edSave(list, false);
@@ -4812,7 +4835,7 @@ const recSubLabel = (r) => { try { return recLabel(r); } catch (e) { return r.re
 async function edSave(list, force) {
   const acts = $('edActs'); acts.innerHTML = '<span class="hint" style="margin:0 auto 0 0" id="edProg">Đang lưu…</span>';
   const st = (i, s, msg, okMsg) => { const tr = document.querySelector(`#edRows tr[data-i="${i}"]`); if (!tr) return; tr.querySelector('.xst').className = 'xst ' + s; tr.querySelector('.xst').innerHTML = XST[s] || ''; const m = tr.querySelector('.edmsg'); m.hidden = !msg; m.textContent = msg || ''; };
-  let tbl = null; try { tbl = await expTable(); } catch (e) { list.forEach((c, i) => st(i, 'err', friendlyErr(e))); }
+  let tbl = null; if (list.length) try { tbl = await expTable(); } catch (e) { list.forEach((c, i) => st(i, 'err', friendlyErr(e))); }
   const res = []; let k = 0;
   for (let i = 0; i < list.length; i++) {
     const c = list[i]; if (!tbl) { res[i] = 'err'; continue; }
@@ -4828,15 +4851,148 @@ async function edSave(list, force) {
       ED.ch.delete(c.key); dlog('edit.ok', { rid, fid: c.fid });
     } catch (e) { c._st = 'err'; res[i] = 'err'; st(i, 'err', friendlyErr(e)); dlog('edit.err', { id: c.hId, fid: c.fid, err: String(e && e.message || e) }); }
   }
+  const nwr = await edSaveNew(ED.rvNw || []);
+  (ED.rvNw || []).forEach((x) => { if (x.empty) edNwDel(x.hId, x.x.id); }); // dòng trống đã báo bỏ qua
   try { S.searchText && S.searchText.clear && S.searchText.clear(); } catch (e) {}
-  const ok = res.filter((x) => x === 'ok').length, conf = res.filter((x) => x === 'conf').length, bad = res.filter((x) => x === 'err').length;
-  $('edNote').textContent = ok === list.length ? `✓ Đã lưu ${ok} thay đổi vào Base.` : `Đã lưu ${ok}/${list.length}.` + (conf ? ` ${conf} ô vừa bị người khác sửa.` : '') + (bad ? ` ${bad} ô lỗi (xem lý do ở từng dòng).` : '');
+  const ok = res.filter((x) => x === 'ok').length, conf = res.filter((x) => x === 'conf').length, bad0 = res.filter((x) => x === 'err').length, bad = bad0 + nwr.bad;
+  const nAll = nwr.ok + nwr.bad;
+  const doneTxt = (a, b) => a && b ? `Đã lưu ${a} thay đổi và thêm ${b} dòng mới vào Base.` : a ? `Đã lưu ${a} thay đổi vào Base.` : `Đã thêm ${b} dòng mới vào Base.`;
+  $('edNote').textContent = (ok === list.length && !nwr.bad ? '✓ ' + doneTxt(ok, nwr.ok)
+    : (list.length ? `Đã lưu ${ok}/${list.length} thay đổi.` : '') + (nAll ? ` Đã thêm ${nwr.ok}/${nAll} dòng mới.` : '') + (conf ? ` ${conf} ô vừa bị người khác sửa.` : '') + (bad ? ` ${bad} mục lỗi (xem lý do ở từng dòng).` : '')).trim();
   acts.innerHTML = (conf ? `<button type="button" class="fit" id="edForce">Ghi đè ${conf} ô</button>` : '') + (bad ? `<button type="button" class="fit" id="edRetry">Thử lại ${bad} lỗi</button>` : '') + '<button type="button" class="primary fit" id="edClose">Đóng</button>';
   if ($('edForce')) $('edForce').onclick = () => edSave(list, true);
   if ($('edRetry')) $('edRetry').onclick = () => { list.forEach((c) => { if (c._st === 'err') c._st = ''; }); edSave(list.map((c) => c), false); };
-  $('edClose').onclick = () => { $('modal').classList.remove('show'); if (!ED.ch.size) { ED.on = false; } render(); edBtnSync(); if (ok) toast(`Đã lưu ${ok} thay đổi vào Base.`, 4000); };
+  $('edClose').onclick = () => { $('modal').classList.remove('show'); if (!ED.ch.size && !edNwCount()) { ED.on = false; } render(); edBtnSync(); if (ok || nwr.ok) toast(doneTxt(ok, nwr.ok), 4000); };
   render(); edBtnSync();
 }
+
+/* ============ v5.16 · Thêm dòng chi tiết mới vào Base (chỉ kiểu Phiếu & chi tiết, khi đang Sửa) ============ */
+// Dòng nháp nằm trong bộ nhớ (ED.nw: mã phiếu → [{id, after}]); chỉ khi Lưu mới tạo bản ghi ở bảng chi tiết rồi gắn vào phiếu qua cột liên kết
+function edAddOn() { return edOn() && !!(S.edCfg && S.edCfg.add) && S.mode === 'link' && !!(S.link && S.link.fieldId && (S.dTable || S.link.tableId)); }
+const NW = { n: 1, seq: 0, fresh: new Set(), tr: null };
+function edNwList(hId) { return (ED.nw && ED.nw.get(hId)) || []; }
+function edNwCount() { let n = 0; for (const a of (ED.nw || new Map()).values()) n += a.length; return n; }
+function edNwFind(hId, id) { return edNwList(hId).find((x) => x.id === id) || null; }
+function edChOld() { return [...ED.ch.values()].filter((c) => !c.nid); }
+function edNwFields(x) { const f = {}; for (const c of ED.ch.values()) if (c.nid === x.id) f[c.meta.id] = c.kind === 'num' || c.kind === 'date' ? c.raw : c.text; return f; }
+function edSplitDk(dk) { dk = String(dk || ''); if (S.recMap.has(dk)) return { hId: dk, dId: '' }; const i = dk.lastIndexOf('/'); return i > 0 ? { hId: dk.slice(0, i), dId: dk.slice(i + 1) } : { hId: dk, dId: '' }; }
+// Ghép dòng nháp vào danh sách dòng chi tiết của phiếu (ngay dưới dòng được chọn khi thêm)
+function edMergeDet(hId, ds) {
+  const nw = edNwList(hId); if (!nw.length) return ds;
+  const mk = (x) => ({ recordId: 'n:' + x.id, fields: edNwFields(x) }), real = new Set(ds.map((d) => d.recordId)), out = [];
+  for (const d of ds) { out.push(d); for (const x of nw) if (x.after === d.recordId) out.push(mk(x)); }
+  for (const x of nw) if (!real.has(x.after)) out.push(mk(x));
+  return out;
+}
+function edNwAdd(hId, dId, n, end) {
+  ED.nw = ED.nw || new Map(); const a = edNwList(hId).slice(), add = [];
+  for (let i = 0; i < n; i++) add.push({ id: (++NW.seq).toString(36) + Date.now().toString(36).slice(-3), hId, after: '$end' });
+  if (end) a.push(...add);
+  else if (dId.startsWith('n:')) { const j = a.findIndex((x) => x.id === dId.slice(2)), af = j >= 0 ? a[j].after : '$end'; add.forEach((x) => { x.after = af; }); a.splice(j >= 0 ? j + 1 : a.length, 0, ...add); }
+  else { add.forEach((x) => { x.after = dId; }); const j = a.findIndex((x) => x.after === dId); a.splice(j >= 0 ? j : a.length, 0, ...add); }
+  ED.nw.set(hId, a); NW.fresh = new Set(add.map((x) => x.id)); return add;
+}
+function edNwDel(hId, id) {
+  const a = edNwList(hId).filter((x) => x.id !== id); if (a.length) ED.nw.set(hId, a); else if (ED.nw) ED.nw.delete(hId);
+  for (const [k, c] of [...ED.ch]) if (c.nid === id) ED.ch.delete(k);
+}
+function edNwReviewList() {
+  const out = [];
+  for (const [hId, a] of (ED.nw || new Map())) {
+    const g = S.recMap.get(hId), merged = edMergeDet(hId, g ? detailsOf(g) : []);
+    a.forEach((x) => { const vals = [...ED.ch.values()].filter((c) => c.nid === x.id), i = merged.findIndex((d) => d.recordId === 'n:' + x.id); out.push({ x, hId, vals, empty: !vals.length, pos: i >= 0 ? `· dòng ${i + 1}/${merged.length}` : '' }); });
+  }
+  return out;
+}
+function edLinkVal(cur, ids, tid) {
+  const b = cur && typeof cur === 'object' && !Array.isArray(cur) ? { ...cur } : {}; delete b.record_ids; delete b.table_id;
+  return { ...b, type: b.type || 'text', text: b.text || '', tableId: (cur && (cur.tableId || cur.table_id)) || tid, recordIds: ids };
+}
+async function edSaveNew(nwl) {
+  const st = (j, s, msg) => { const tr = document.querySelector(`#edNRows tr[data-j="${j}"]`); if (!tr) return; const x = tr.querySelector('.xst'); x.className = 'xst ' + s; x.innerHTML = XST[s] || ''; const m = tr.querySelector('.edmsg'); m.hidden = !msg; m.textContent = msg || ''; };
+  const todo = nwl.map((n, j) => ({ n, j })).filter((t) => !t.n.empty && !t.n.done);
+  const done = () => ({ ok: nwl.filter((n) => n.done).length, bad: nwl.filter((n) => !n.empty && !n.done).length });
+  if (!todo.length) return done();
+  let mt, dt;
+  try { mt = await expTable(); dt = await edDetTable(); if (!dt || typeof dt.addRecord !== 'function') throw new Error('Lark chưa cho extension thêm bản ghi ở đây.'); }
+  catch (e) { todo.forEach((t) => st(t.j, 'err', friendlyErr(e))); return done(); }
+  const groups = new Map(); todo.forEach((t) => { if (!groups.has(t.n.hId)) groups.set(t.n.hId, []); groups.get(t.n.hId).push(t); });
+  let k = 0;
+  for (const [hId, ts] of groups) {
+    let mrid = ''; try { mrid = await expRid(mt, hId); } catch (e) { ts.forEach((t) => st(t.j, 'err', 'Không tìm thấy phiếu trong bảng: ' + friendlyErr(e))); continue; }
+    const made = [];
+    for (const t of ts) {
+      st(t.j, 'run'); const pg = $('edProg'); if (pg) pg.textContent = `Đang thêm dòng mới ${++k}/${todo.length}…`;
+      try {
+        if (!t.n.rid) { const fields = {}; t.n.vals.forEach((c) => { if (c.val !== null && c.val !== undefined) fields[c.fid] = c.val; }); t.n.rid = await withTimeout(dt.addRecord({ fields }), 15000); if (!t.n.rid) throw new Error('Lark không trả về mã bản ghi mới.'); dlog('edit.add', { rid: t.n.rid, cols: Object.keys(fields).length }); }
+        made.push(t);
+      } catch (e) { st(t.j, 'err', friendlyErr(e)); dlog('edit.add.err', String(e && e.message || e)); }
+    }
+    if (!made.length) continue;
+    // Gắn vào phiếu đúng vị trí: đọc lại danh sách liên kết hiện tại của phiếu rồi chèn mã mới sau dòng neo
+    let cur = null; try { cur = await withTimeout(mt.getCellValue(S.link.fieldId, mrid), 10000); } catch (e) {}
+    const ids = linkIds(cur).filter((id) => !made.some((t) => t.n.rid === id)), last = new Map();
+    for (const t of made) {
+      let a = ''; const af = t.n.x.after; if (af && af !== '$end') { try { a = await edDetRid({ hId, dId: af }); } catch (e) { a = ''; } }
+      const base = a ? (last.get(a) || a) : '', i = base ? ids.indexOf(base) : -1;
+      if (i >= 0) ids.splice(i + 1, 0, t.n.rid); else ids.push(t.n.rid); if (a) last.set(a, t.n.rid);
+    }
+    let linked = false, why = '';
+    try { await withTimeout(mt.setCellValue(S.link.fieldId, mrid, edLinkVal(cur, ids, S.link.tableId)), 15000); linked = true; }
+    catch (e) {
+      why = friendlyErr(e); dlog('edit.link.err', String(e && e.message || e));
+      if (S.link.backId) { try { for (const t of made) await withTimeout(dt.setCellValue(S.link.backId, t.n.rid, edLinkVal(null, [mrid], expTid())), 15000); linked = true; } catch (e2) { why = friendlyErr(e2); } }
+    }
+    if (!linked) { made.forEach((t) => st(t.j, 'err', 'Đã tạo dòng trong bảng chi tiết nhưng chưa gắn được vào phiếu: ' + why)); continue; }
+    dlog('edit.link', { phieu: hId, n: made.length, total: ids.length });
+    // Cập nhật dữ liệu đang xem để phiếu hiện ngay dòng mới (cột công thức / tra cứu đọc lại từ Lark)
+    const got = await Promise.all(made.map((t) => withTimeout(dt.getRecordById(t.n.rid), 10000).then((r) => (r && (r.fields || r)) || null).catch(() => null)));
+    const g = S.recMap.get(hId);
+    if (g && g._det) {
+      const merged = edMergeDet(hId, g._det);
+      g._det = merged.map((d) => { if (!String(d.recordId).startsWith('n:')) return d; const q = made.findIndex((t) => 'n:' + t.n.x.id === d.recordId); return q >= 0 ? { recordId: made[q].n.rid, fields: { ...d.fields, ...(got[q] || {}) } } : null; }).filter(Boolean);
+    } else {
+      made.forEach((t, q) => S.dRecMap.set(t.n.rid, { recordId: t.n.rid, fields: got[q] || edNwFields(t.n.x) }));
+      if (g) g.fields[S.link.fieldId] = edLinkVal(cur, ids, S.link.tableId);
+    }
+    made.forEach((t) => { t.n.done = true; st(t.j, 'ok'); edNwDel(hId, t.n.x.id); });
+  }
+  return done();
+}
+// Chuột phải vào dòng chi tiết khi đang Sửa → thêm dòng nháp
+function edNwDo(end) {
+  const t = NW.tr; if (!t) return; const add = edNwAdd(t.hId, t.dId, NW.n, end);
+  render(); edBtnSync(); NW.fresh = new Set();
+  const sp = document.querySelector(`#pages tr.nrow[data-dk$="/n:${add[0].id}"] .edv:not(.lk)`);
+  if (sp) { sp.scrollIntoView({ block: 'nearest' }); sp.focus({ preventScroll: true }); }
+  if (add.length > 1) toast(`Đã thêm ${add.length} dòng mới. Bấm vào ô viền xanh để nhập.`, 3000);
+}
+Object.assign(CTX_ACT, {
+  nAdd: () => edNwDo(false), nEnd: () => edNwDo(true),
+  nDel: () => { const t = NW.tr; if (!t || !t.dId.startsWith('n:')) return; edNwDel(t.hId, t.dId.slice(2)); render(); edBtnSync(); },
+  nDelAll: () => { const t = NW.tr; if (!t) return; const a = edNwList(t.hId), filled = a.filter((x) => [...ED.ch.values()].some((c) => c.nid === x.id)).length;
+    if (filled && !confirm(`Xóa ${a.length} dòng mới của phiếu này (${filled} dòng đã nhập dữ liệu)?`)) return; a.forEach((x) => edNwDel(t.hId, x.id)); render(); edBtnSync(); },
+});
+$('pages').addEventListener('contextmenu', (e) => {
+  if (S.tab !== 'print' || !ED.on) return; const tr = e.target.closest('tr[data-dk]'); if (!tr || !edAddOn()) return;
+  e.preventDefault(); e.stopPropagation(); edPopClose(); qvClose(false);
+  const { hId, dId } = edSplitDk(tr.dataset.dk), isN = dId.startsWith('n:'), nAll = edNwList(hId).length; NW.tr = { hId, dId };
+  const lbl = () => { const k = NW.n > 1 ? NW.n + ' ' : ''; return [`Thêm ${k}dòng bên dưới`, `Thêm ${k}dòng ở cuối phiếu`]; };
+  const svg = (p) => `<svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+  const btn = (a, ic, t) => `<button type="button" role="menuitem" data-a="${a}">${svg(ic)}<span>${esc(t)}</span></button>`;
+  const L = lbl();
+  ctx.innerHTML = `<div class="ctxhd" title="Dòng mới được tạo trong bảng ${esc((S.link && S.link.tableName) || 'chi tiết')}"><i></i>Thêm vào Base · ${esc((S.link && S.link.tableName) || 'bảng chi tiết')}</div>`
+    + `<div class="ctxnum"><span>Số dòng thêm</span><button type="button" data-n="-1" aria-label="Bớt 1 dòng">−</button><input type="number" min="1" max="20" value="${NW.n}" aria-label="Số dòng thêm"><button type="button" data-n="1" aria-label="Thêm 1 dòng">+</button></div>`
+    + btn('nAdd', CTX_IC.rowDown, L[0]) + btn('nEnd', '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>', L[1])
+    + (isN || nAll ? '<hr>' : '') + (isN ? btn('nDel', CTX_IC.del, 'Xóa dòng mới') : '') + (nAll ? btn('nDelAll', CTX_IC.del, `Xóa toàn bộ dòng mới (${nAll})`) : '')
+    + '<div class="ctxnote g">Dòng mới chỉ được tạo trong Base khi bấm <b>Lưu</b>. Cột công thức, tra cứu do Lark tự tính sau khi lưu.</div>';
+  ctx.hidden = false; const w = ctx.offsetWidth, h = ctx.offsetHeight;
+  ctx.style.left = Math.max(8, Math.min(e.clientX, innerWidth - w - 8)) + 'px'; ctx.style.top = Math.max(8, e.clientY + h > innerHeight - 8 ? e.clientY - h : e.clientY) + 'px';
+  const f = ctx.querySelector('button[data-a]'); if (f) f.focus({ preventScroll: true });
+  const inp = ctx.querySelector('.ctxnum input'), upd = (v) => { NW.n = Math.max(1, Math.min(20, Math.round(+v) || 1)); inp.value = NW.n; const x = lbl(); const a = ctx.querySelector('[data-a=nAdd] span'), b = ctx.querySelector('[data-a=nEnd] span'); if (a) a.textContent = x[0]; if (b) b.textContent = x[1]; };
+  ctx.querySelectorAll('.ctxnum button').forEach((b) => b.onclick = (ev) => { ev.stopPropagation(); upd(NW.n + +b.dataset.n); });
+  inp.oninput = () => upd(inp.value); inp.onkeydown = (ev) => { if (ev.key === 'Enter') { ev.preventDefault(); ev.stopPropagation(); ctxClose(); CTX_ACT.nAdd(); } };
+});
 { const _r = render; render = function (...a) { const v = _r.apply(this, a); try { edCfgUI(); edBtnSync(); } catch (e) {} return v; }; }
 
 S.tpl = defaultTpl(); render(); renderChips(); boot();
